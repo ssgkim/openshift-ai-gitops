@@ -36,7 +36,7 @@
 - [x] `claude-context/version-matrix.md` 초기값
 - [x] `claude-context/handoff-notes.md` Session 01 엔트리
 - [x] `.env.example` 템플릿
-- [ ] (선택) `GEMINI.md` / `AGENTS.md` 심볼릭 링크
+- [x] `GEMINI.md` / `AGENTS.md` 심볼릭 링크 (Codex / Gemini CLI 호환)
 
 **완료 기준**: 처음 보는 사람이 `README.md` + `guidelines/` 읽고 작업 이어받을 수 있음.
 
