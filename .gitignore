@@ -1,0 +1,28 @@
+# 비밀값
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*pull-secret*
+kubeconfig*
+
+# 클러스터 설치 산출물
+install-configs/*.yaml
+!install-configs/*.tmpl
+.openshift_install*
+auth/
+metadata.json
+
+# 임시
+*.log
+*.tmp
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# 로컬 세션 전용 (커밋 금지)
+.claude/settings.local.json
+scratch/
