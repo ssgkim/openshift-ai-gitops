@@ -1,0 +1,79 @@
+{
+  "version": "1",
+  "description": "프롬프트 컨텍스트 기반 guidelines 파일 자동 제안 규칙. keywords는 대소문자 무관 부분 매칭.",
+  "rules": {
+    "methodology": {
+      "priority": "critical",
+      "keywords": [
+        "methodology", "방법론", "4계층", "4-layer", "4 layer",
+        "불변 원칙", "immutable principle", "철학"
+      ],
+      "suggest": "guidelines/00-methodology.md"
+    },
+    "layer-contracts": {
+      "priority": "high",
+      "keywords": [
+        "layer contract", "레이어 계약", "work-plans/", "claude-context/",
+        "runbooks/", "infra/", "layer 1", "layer 2", "layer 3", "layer 4",
+        "계약 위반"
+      ],
+      "suggest": "guidelines/01-layer-contracts.md"
+    },
+    "session-protocol": {
+      "priority": "critical",
+      "keywords": [
+        "session start", "세션 시작", "checkpoint", "체크포인트",
+        "세션 종료", "session end", "session protocol", "세션 프로토콜"
+      ],
+      "suggest": "guidelines/02-session-protocol.md"
+    },
+    "handoff-protocol": {
+      "priority": "high",
+      "keywords": [
+        "handoff", "인수인계", "handoff-notes", "다음 세션",
+        "next session", "이어받"
+      ],
+      "suggest": "guidelines/03-handoff-protocol.md"
+    },
+    "naming-conventions": {
+      "priority": "medium",
+      "keywords": [
+        "naming", "네이밍", "파일명", "file name", "commit message",
+        "커밋 메시지", "branch name", "브랜치 이름"
+      ],
+      "suggest": "guidelines/04-naming-conventions.md"
+    },
+    "state-management": {
+      "priority": "high",
+      "keywords": [
+        "version-matrix", "constraints.md", "current-state", "active-task",
+        "state 파일", "상태 파일", "state management"
+      ],
+      "suggest": "guidelines/05-state-management.md"
+    },
+    "failure-recovery": {
+      "priority": "critical",
+      "keywords": [
+        "failure", "실패", "rollback", "롤백", "복구", "recovery",
+        "막혔", "에러", "error recovery", "abort", "중단"
+      ],
+      "suggest": "guidelines/06-failure-recovery.md"
+    },
+    "dual-env-strategy": {
+      "priority": "medium",
+      "keywords": [
+        "air-gap", "airgap", "듀얼 환경", "oc-mirror", "gitea",
+        "quay", "connected", "mirror registry", "미러 레지스트리"
+      ],
+      "suggest": "work-plans/001-dual-env-strategy.md"
+    },
+    "preflight": {
+      "priority": "high",
+      "keywords": [
+        "preflight", "프리플라이트", "oc get csv", "oc version",
+        "클러스터 조사", "cluster survey", "전제 조건"
+      ],
+      "suggest": "runbooks/00-preflight.md"
+    }
+  }
+}
