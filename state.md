@@ -46,15 +46,16 @@
 
 **목표**: 재사용할 클러스터의 현황을 파악하고 `version-matrix.md`·`constraints.md`를 채운다.
 
-- [ ] `.env` 작성 (`KUBECONFIG`, `CLUSTER_DOMAIN` 등)
+- [ ] `.env` 작성 (`KUBECONFIG`, `CLUSTER_DOMAIN`, `OCP_AI_ENV_MODE` 등)
 - [ ] `runbooks/00-preflight.md` 작성 (읽기 전용 점검 스크립트)
 - [ ] OpenShift 버전 확인 → `version-matrix.md`
 - [ ] 기존 설치된 Operator 목록 → `version-matrix.md`
 - [ ] 기존 네임스페이스·ArgoCD 유무 → `constraints.md`
 - [ ] RHOAI 호환 매트릭스에서 목표 버전 확정 → `version-matrix.md`
-- [ ] `work-plans/001-gitops-boundary.md` — Day-0/1 경계 결정
+- [ ] `work-plans/001-dual-env-strategy.md` Open Questions 해소 (구조 옵션 B 확정 / ApplicationSet 여부 / Quay vs internal registry 역할)
+- [ ] `work-plans/002-gitops-boundary.md` — Day-0/1 경계 결정 (※ 듀얼 환경 확정 후 작성)
 
-**완료 기준**: `current-state.md`의 placeholder 3개 (버전·endpoint·도메인) 모두 채워짐 + `version-matrix.md` 주요 행 확정.
+**완료 기준**: `current-state.md`의 placeholder 3개 (버전·endpoint·도메인) 모두 채워짐 + `version-matrix.md` 주요 행 확정 + `001-dual-env-strategy.md` Decision 확정.
 
 ---
 
