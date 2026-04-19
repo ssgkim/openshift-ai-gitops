@@ -51,3 +51,19 @@
   3. `work-plans/001-dual-env-strategy.md` Open Questions 중 클러스터 확인으로 결정되는 항목 결론 기록
   4. 이후 `work-plans/002-gitops-boundary.md` 초안
 - 발견된 제약: 싱크 방식 확정(oc-mirror/GitHub/SSD/1회성)으로 air-gap runbook이 Phase 2 이후 구체화 가능해짐
+
+---
+
+## 2026-04-19 Session 04 — Phase 1 Survey 인프라 구축
+
+- 완료:
+  - `scripts/cluster-survey.sh` 작성 — `.env` 변수 참조, 파라메터화, idempotent, OCP 4.x 범용, `--save` 옵션으로 결과 파일 저장
+  - `runbooks/01-cluster-survey.md` 작성 — 스크립트 사용법·기대 출력·결과 기록 위치·실패 대응 포함
+  - `claude-context/current-state.md` 갱신 — Phase 1 진행 현황 반영, 미확인 항목 명시
+  - `claude-context/active-task.md` 갱신 — 다음 세션 태스크(survey 실행·결과 반영) 명시
+  - 재사용성 원칙 적용: 클러스터 하드코딩 없음, `.env` 변수만 참조
+- 블로커: 샌드박스에서 클러스터 DNS 미해석 (프록시 allowlist 차단) → 실제 survey는 사람이 로컬에서 실행 필요
+- 다음 세션이 할 일:
+  1. `bash scripts/cluster-survey.sh --save` 로컬 실행 후 출력 공유
+  2. Claude가 `constraints.md` 갱신, 사람이 `version-matrix.md` 갱신
+  3. ArgoCD · RHOAI 채널 확정 → Phase 2(`runbooks/10-argocd-operator-install.md`) 시작
