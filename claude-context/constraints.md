@@ -48,6 +48,34 @@
 
 ---
 
+## 2026-04-19: Cluster Proxy 설정 존재 (Session 06 survey 확인)
+
+- 맥락: `survey-20260419-155529.txt` 섹션 1-G, `oc get proxy cluster -o json`
+- 내용: 클러스터 Proxy 오브젝트(`proxy/cluster`)가 존재. 현재 `httpProxy`/`httpsProxy` 미설정이나 `trustedCA.name`이 빈 값으로 설정된 상태.
+  - OpenShift GitOps(ArgoCD) 설치 시: ArgoCD 컨트롤러가 외부 git 레포에 접근할 때 proxy 설정 상속 여부 확인 필요
+  - RHOAI 설치 시: `DSCInitialization` CR의 `devFlags.logMode` 및 proxy 설정 반영 여부 확인 필요
+  - 향후 `httpProxy`/`httpsProxy` 값이 추가되는 경우, 모든 Operator 설치 runbook에 proxy 환경변수 주입 절차 추가 필요
+- 영향 범위:
+  - `runbooks/10-argocd-operator-install.md` — ArgoCD CSV 배포 전 proxy 전파 확인 절차 포함
+  - `runbooks/20-rhoai-operator-install.md` — DSCInitialization proxy 필드 검토
+  - Air-gap 환경 — proxy 설정이 내부 레지스트리와 충돌하지 않도록 `noProxy` 항목 검토 필요
+
+---
+
+## 2026-04-19: GPU 노드 없음 — GPU Workload 불가 (Session 06 survey 확인)
+
+- 맥락: `survey-20260419-155529.txt` 섹션 1-G, GPU 노드 라벨·NFD/GPU Operator CSV 조회
+- 내용: GPU 라벨(`nvidia.com/gpu`) 노드 없음. NFD Operator·NVIDIA GPU Operator 미설치.
+  - GPU 가속 워크벤치·모델 서빙(KServe GPU backend) 불가
+  - Connected PoC 범위에서 GPU 워크로드는 제외
+  - 향후 GPU 노드 추가 시 NFD → GPU Operator 순서 설치 필요 (`constraints.md`에 추가 기록)
+- 영향 범위:
+  - `version-matrix.md` — NFD·GPU Operator 항목 "N/A (GPU 노드 없음)"으로 명시
+  - `work-plans/` — PoC 항목에서 GPU 추론·분산 훈련 제외 (Phase 5 검토)
+  - `infra/rhoai/datasciencecluster.yaml` — kserve ServingRuntime GPU 설정 비활성화
+
+---
+
 ## 2026-04-17: 듀얼 환경(Connected + Air-gap) 요구
 
 - 맥락: Connected에서 1차 PoC 완료 후, **별도 Air-gap 환경**에서 동일 구성 재현 필요

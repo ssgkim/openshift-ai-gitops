@@ -6,17 +6,17 @@
 
 ## 핵심 컴포넌트
 
-| 컴포넌트 | 버전 | 채널 | 출처 |
-|---|---|---|---|
-| OpenShift | **4.20.18** | **stable-4.20** | survey 실행 확인 (2026-04-19) |
-| OpenShift GitOps | (미정) | (미정) | OperatorHub 조회 |
-| cert-manager | (미정) | (미정) | OperatorHub 조회 |
-| ServiceMesh | (미정) | (미정) | OperatorHub 조회 |
-| Serverless | (미정) | (미정) | OperatorHub 조회 |
-| Pipelines | (미정) | (미정) | OperatorHub 조회 |
-| NFD | (미정) | (미정) | OperatorHub 조회 (GPU 필요 시) |
-| NVIDIA GPU Operator | (미정) | (미정) | OperatorHub 조회 (GPU 필요 시) |
-| OpenShift AI (RHOAI) | **3.3** | (미정 — OperatorHub 확인 필요) | 사용자 확인 (2026-04-19) |
+| 컴포넌트 | 버전 | 채널 | 소스 | 상태 |
+|---|---|---|---|---|
+| OpenShift | **4.20.18** | **stable-4.20** | — | ✅ 설치됨 |
+| cert-manager | **1.18.1** | **stable-v1** | redhat-operators | ✅ 설치됨 (Succeeded) |
+| OpenShift GitOps | (미정) | (미정) | redhat-operators | ❌ 미설치 — Phase 2에서 설치 |
+| OpenShift AI (RHOAI) | **3.3** (목표) | (미정 — OperatorHub 확인 필요) | redhat-operators | ❌ 미설치 — Phase 3에서 설치 |
+| ServiceMesh | (미정) | (미정) | redhat-operators | ❌ 미설치 |
+| Serverless | (미정) | (미정) | redhat-operators | ❌ 미설치 |
+| Pipelines | (미정) | (미정) | redhat-operators | ❌ 미설치 |
+| NFD | N/A | N/A | — | ⛔ 해당 없음 (GPU 노드 없음) |
+| NVIDIA GPU Operator | N/A | N/A | — | ⛔ 해당 없음 (GPU 노드 없음) |
 
 ---
 
@@ -38,6 +38,9 @@
 
 - 2026-04-19: OpenShift 4.20 (stable) 확정 — 사용자 제공 정보
 - 2026-04-19: RHOAI 3.3 확정 — 사용자 제공 정보
+- 2026-04-19: cert-manager 1.18.1 / stable-v1 확정 — survey-20260419-155529.txt CSV 조회 (Session 06)
+- 2026-04-19: OpenShift GitOps 미설치 확인 — survey-20260419-155529.txt GitOps CSV 없음 (Session 06)
+- 2026-04-19: NFD·GPU Operator N/A 확정 — GPU 노드 없음, 현 PoC 범위 외 (Session 06)
 
 ---
 

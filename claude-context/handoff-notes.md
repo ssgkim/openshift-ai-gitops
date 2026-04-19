@@ -71,6 +71,22 @@
 
 ---
 
+## 2026-04-19 Session 06 — Phase 1 완료 + 클러스터 현황 전면 문서화
+
+- 완료:
+  - `survey-20260419-155529.txt` 전체 섹션(1-A~1-G) 분석 반영
+  - `claude-context/current-state.md` — 노드(3+3), 스토리지(gp3-csi default), Operator 실제 설치 상태 전면 갱신. Phase 1 완료 선언.
+  - `claude-context/constraints.md` — proxy 오브젝트 존재 + GPU 없음 제약 신규 append
+  - `claude-context/version-matrix.md` — cert-manager 1.18.1/stable-v1 확정, GitOps/RHOAI 미설치 명시, NFD/GPU N/A 기록
+  - `claude-context/active-task.md` — Phase 2(OpenShift GitOps 설치)로 교체
+- 블로커: 없음 (Phase 1 정보 수집 완전 종료)
+- 다음 세션이 할 일:
+  1. `runbooks/10-argocd-operator-install.md` 작성 (AI 초안 가능)
+  2. OperatorHub에서 `openshift-gitops-operator` 최신 채널 조회 → `version-matrix.md` 기록
+  3. 사람이 Subscription + OperatorGroup 적용 → CSV Succeeded 확인 후 공유
+
+---
+
 ## 2026-04-19 Session 04 — Phase 1 Survey 인프라 구축
 
 - 완료:

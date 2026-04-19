@@ -4,30 +4,37 @@
 
 ## 태스크
 
-수정된 `cluster-survey.sh`로 survey를 재실행하여 노드·Operator·StorageClass 정보를 수집한 후, Phase 1 조사를 완료하고 Phase 2 시작 여부를 결정한다.
+**Phase 2: OpenShift GitOps (ArgoCD) Operator 설치**
+
+`runbooks/10-argocd-operator-install.md`를 작성하고, ArgoCD Operator를 클러스터에 설치한다. 설치 완료 후 ArgoCD 채널·버전을 `version-matrix.md`에 확정 기록한다.
 
 ## 성공 기준 (Capabilities)
 
-- [ ] `bash scripts/cluster-survey.sh --save` **재실행** → 전체 섹션(1-A ~ 1-G) 정상 완료
-- [ ] `current-state.md` — Operator 설치 체크박스 실제 값으로 업데이트
-- [ ] `version-matrix.md` — 설치된 Operator 버전·채널 기재 (survey 결과 기반)
-- [ ] ArgoCD 설치 여부 확정 → 미설치 시 `runbooks/10-argocd-operator-install.md` 진입
-- [ ] RHOAI 3.3 구독 채널 확정 → `version-matrix.md`에 기록
+- [ ] `runbooks/10-argocd-operator-install.md` 작성 — `.env` 변수 참조, 재사용 가능
+- [ ] OperatorHub에서 `openshift-gitops-operator` 채널 조회 → `version-matrix.md`에 채널 기록
+- [ ] `oc apply` 로 Subscription + OperatorGroup 생성 → CSV `Succeeded` 확인
+- [ ] ArgoCD 기본 인스턴스(`openshift-gitops` 네임스페이스) 정상 동작 확인
+- [ ] `current-state.md` — OpenShift GitOps 체크박스 ✅ 갱신
+- [ ] `version-matrix.md` — GitOps 채널·버전 확정 기록
 
-## 배경 (Session 05 완료 사항)
+## 배경 (Phase 1 완료 사항)
 
-- OCP **4.20.18 / stable-4.20** 확정 ✅
-- 자가서명 TLS 인증서 확인 → `constraints.md` 기록 ✅
-- `scripts/cluster-survey.sh` jsonpath 버그 수정 (`history[0:3]` → `history[*]` + head -3) ✅
+- OCP **4.20.18 / stable-4.20** ✅
+- cert-manager **1.18.1 / stable-v1** 이미 설치 ✅
+- RHOAI·ArgoCD 미설치 확인 ✅
+- Proxy 오브젝트 존재 (httpProxy 미설정, trustedCA 빈 값) → runbook에서 proxy 전파 확인 절차 포함 필요
+- GPU 노드 없음 → NFD/GPU Operator 설치 불필요
 
 ## 참조 (Required Inputs)
 
-- `scripts/cluster-survey.sh` (수정 완료) — 재실행 가능
-- `claude-context/version-matrix.md` (Operator 버전 기록 위치)
-- `claude-context/constraints.md` (제약 기록 위치)
+- `.env` — `${OCP_API_URL}`, `${OCP_TOKEN}`, `${OCP_INSECURE}` 등 변수
+- `claude-context/constraints.md` — TLS·proxy 제약
+- `claude-context/version-matrix.md` — 채널 기록 위치
+- `guidelines/01-layer-contracts.md` — runbook 작성 규칙
 
 ## 블로커 (Constraints)
 
-- **사람이 로컬에서 `bash scripts/cluster-survey.sh --save` 재실행 필요**
-  - `oc` CLI 설치 및 클러스터 네트워크 접근 가능한 환경에서 실행
-  - 결과 파일(`survey-output/*.txt`)을 Claude에게 공유하면 나머지는 Claude가 처리
+- `runbooks/10-argocd-operator-install.md`는 AI가 초안 작성 가능 (Layer 3)
+- 실제 `oc apply` 실행은 사람이 로컬에서 수행
+  - 클러스터 쓰기 권한 필요 (`admin` 계정)
+  - 실행 결과(CSV 상태·ArgoCD Route URL)를 공유하면 Claude가 state 파일 갱신
