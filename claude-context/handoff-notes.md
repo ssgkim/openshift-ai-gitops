@@ -87,6 +87,24 @@
 
 ---
 
+## 2026-04-19 Session 07 — Phase 2 IaC 준비 완료 (채널 확정 + infra/ + runbook)
+
+- 완료:
+  - `oc get packagemanifest` 실행 — GitOps: `latest`/v1.20.1, RHOAI: `stable-3.3`/3.3.2 확정
+  - `claude-context/version-matrix.md` 갱신 — 두 채널 확정 기록
+  - `infra/argocd/namespace.yaml` + `infra/argocd/subscription.yaml` 작성
+  - `infra/rhoai/namespace.yaml` + `operator-group.yaml` + `subscription.yaml` + `datasciencecluster.yaml` 작성
+  - `runbooks/10-argocd-operator-install.md` 작성 — `.env` 변수 참조, proxy 확인 절차 포함
+  - `claude-context/current-state.md` + `active-task.md` 갱신
+- 진행중: 없음 (AI 할 일 완료)
+- 블로커: 사람이 `runbooks/10-argocd-operator-install.md` 로컬 실행 후 결과 공유 필요
+- 다음 세션이 할 일:
+  1. 사람이 runbook 실행 → CSV Succeeded + ArgoCD Route URL 공유
+  2. Claude가 `current-state.md` GitOps 체크박스 ✅ 갱신
+  3. Phase 3 (`runbooks/20-rhoai-operator-install.md`) 시작
+
+---
+
 ## 2026-04-19 Session 04 — Phase 1 Survey 인프라 구축
 
 - 완료:

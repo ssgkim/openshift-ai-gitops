@@ -10,8 +10,8 @@
 |---|---|---|---|---|
 | OpenShift | **4.20.18** | **stable-4.20** | — | ✅ 설치됨 |
 | cert-manager | **1.18.1** | **stable-v1** | redhat-operators | ✅ 설치됨 (Succeeded) |
-| OpenShift GitOps | (미정) | (미정) | redhat-operators | ❌ 미설치 — Phase 2에서 설치 |
-| OpenShift AI (RHOAI) | **3.3** (목표) | (미정 — OperatorHub 확인 필요) | redhat-operators | ❌ 미설치 — Phase 3에서 설치 |
+| OpenShift GitOps | **1.20.1** (latest 채널) | **latest** | redhat-operators | ❌ 미설치 — Phase 2에서 설치 예정 |
+| OpenShift AI (RHOAI) | **3.3.2** | **stable-3.3** | redhat-operators | ❌ 미설치 — Phase 3에서 설치 예정 |
 | ServiceMesh | (미정) | (미정) | redhat-operators | ❌ 미설치 |
 | Serverless | (미정) | (미정) | redhat-operators | ❌ 미설치 |
 | Pipelines | (미정) | (미정) | redhat-operators | ❌ 미설치 |
@@ -41,6 +41,8 @@
 - 2026-04-19: cert-manager 1.18.1 / stable-v1 확정 — survey-20260419-155529.txt CSV 조회 (Session 06)
 - 2026-04-19: OpenShift GitOps 미설치 확인 — survey-20260419-155529.txt GitOps CSV 없음 (Session 06)
 - 2026-04-19: NFD·GPU Operator N/A 확정 — GPU 노드 없음, 현 PoC 범위 외 (Session 06)
+- 2026-04-19: OpenShift GitOps 채널 latest / CSV v1.20.1 확정 — oc get packagemanifest 실행 결과 (Session 07)
+- 2026-04-19: RHOAI 채널 stable-3.3 / CSV rhods-operator.3.3.2 확정 — oc get packagemanifest 실행 결과 (Session 07)
 
 ---
 

@@ -1,6 +1,6 @@
 # 현재 상태 (2026-04-19 Session 06 기준)
 
-> **현재 상태: Phase 1 완료 — survey 전체 섹션(1-A~1-G) 정상 수집 완료. 클러스터 현황 전면 반영. Phase 2(OpenShift GitOps Operator 설치) 진입 준비 완료.** 이 파일을 읽으면 클러스터 설치 현황, 미결 사항, 최근 이벤트를 한눈에 파악할 수 있다.
+> **현재 상태: Phase 2 진행 중 — infra/argocd/ + infra/rhoai/ YAML 작성 완료, runbooks/10 작성 완료. 채널 확정(GitOps: latest/v1.20.1, RHOAI: stable-3.3/3.3.2). 사람이 `runbooks/10-argocd-operator-install.md` 실행 후 CSV Succeeded 결과 공유 필요.** 이 파일을 읽으면 클러스터 설치 현황, 미결 사항, 최근 이벤트를 한눈에 파악할 수 있다.
 
 ## 클러스터
 
@@ -66,12 +66,11 @@
 
 ## 최근 이벤트 (최대 3건)
 
+- 2026-04-19 Session 07: GitOps 채널 latest(v1.20.1) + RHOAI 채널 stable-3.3(3.3.2) 확정. infra/argocd/ 2개 + infra/rhoai/ 4개 YAML 작성. runbooks/10-argocd-operator-install.md 작성. version-matrix.md 갱신.
 - 2026-04-19 Session 06: survey 전체 완료 — 노드 3+3, cert-manager v1.18.1 확인, RHOAI·ArgoCD 미설치, proxy 설정 존재, GPU 없음. Phase 1 완전 종료. Phase 2 진입.
 - 2026-04-19 Session 05: survey 부분 완료 — OCP **4.20.18 / stable-4.20** 확정. 스크립트 jsonpath 버그 수정.
-- 2026-04-19 Session 04: Phase 1 survey 인프라 구축 — `scripts/cluster-survey.sh` + `runbooks/01-cluster-survey.md` 완성.
 
 ## 미결 사항
 
-- ArgoCD 구독 채널 확정 — OperatorHub에서 최신 채널 확인 후 `version-matrix.md`에 기록 (Phase 2 시작 시)
-- RHOAI 3.3 구독 채널 확정 — OperatorHub에서 `rhoai-3.3` 채널 존재 여부 확인 (Phase 3 시작 시)
+- runbooks/10 실행 결과 공유 필요 — 사람이 로컬에서 실행 후 CSV 버전·ArgoCD Route URL을 공유하면 current-state.md 체크박스 갱신
 - PoC 항목 미정 — Phase 5에서 결정

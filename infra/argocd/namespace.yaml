@@ -1,0 +1,9 @@
+# 출처: OpenShift GitOps Operator가 자동 생성하는 네임스페이스
+# Operator 설치 완료 시 이미 존재하지만 IaC로 명시적 관리
+# claude-context/version-matrix.md — GitOps latest / v1.20.1
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: openshift-gitops
+  labels:
+    openshift.io/cluster-monitoring: "true"

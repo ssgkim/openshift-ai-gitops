@@ -1,0 +1,34 @@
+# 출처: Red Hat OpenShift AI 3.3 DataScienceCluster API 스펙
+# claude-context/constraints.md — GPU 노드 없음, ray/codeflare/kueue/trainingoperator Removed
+# claude-context/version-matrix.md — RHOAI 3.3 / stable-3.3
+# kserve: ServiceMesh + Serverless 미설치 시 Removed (Phase 3 진입 시 재검토)
+apiVersion: datasciencecluster.opendatahub.io/v1
+kind: DataScienceCluster
+metadata:
+  name: default-dsc
+spec:
+  components:
+    dashboard:
+      managementState: Managed
+    workbenches:
+      managementState: Managed
+    datasciencepipelines:
+      managementState: Managed
+    modelmeshserving:
+      managementState: Managed
+    # GPU 워크로드 비활성화 (constraints.md — GPU 노드 없음)
+    ray:
+      managementState: Removed
+    codeflare:
+      managementState: Removed
+    kueue:
+      managementState: Removed
+    trainingoperator:
+      managementState: Removed
+    # ServiceMesh + Serverless 미설치 → KServe 비활성화 (Phase 3 재검토)
+    kserve:
+      managementState: Removed
+    modelregistry:
+      managementState: Removed
+    trustyai:
+      managementState: Removed
