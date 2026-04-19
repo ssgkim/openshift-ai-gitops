@@ -1,6 +1,6 @@
 # 버전 매트릭스
 
-사람이 결정한 값만 기재. AI는 제안만 가능 (`guidelines/05-state-management.md`).
+> **이 파일을 읽으면 프로젝트에서 사용하는 모든 컴포넌트의 확정 버전·채널·출처를 파악할 수 있다.** 사람이 결정한 값만 기재. AI는 제안만 가능 (`guidelines/05-state-management.md`).
 
 ---
 
@@ -8,7 +8,7 @@
 
 | 컴포넌트 | 버전 | 채널 | 출처 |
 |---|---|---|---|
-| OpenShift | (미정) | — | 기존 클러스터 `oc get clusterversion` |
+| OpenShift | **4.20** | stable | 사용자 확인 (2026-04-19) |
 | OpenShift GitOps | (미정) | (미정) | OperatorHub 조회 |
 | cert-manager | (미정) | (미정) | OperatorHub 조회 |
 | ServiceMesh | (미정) | (미정) | OperatorHub 조회 |
@@ -16,7 +16,7 @@
 | Pipelines | (미정) | (미정) | OperatorHub 조회 |
 | NFD | (미정) | (미정) | OperatorHub 조회 (GPU 필요 시) |
 | NVIDIA GPU Operator | (미정) | (미정) | OperatorHub 조회 (GPU 필요 시) |
-| OpenShift AI (RHOAI) | (미정) | (미정) | OperatorHub 조회 |
+| OpenShift AI (RHOAI) | **3.3** | (미정 — OperatorHub 확인 필요) | 사용자 확인 (2026-04-19) |
 
 ---
 
@@ -36,7 +36,8 @@
 
 ## 결정 기록
 
-- (아직 없음 — Phase 1 완료 후 채움)
+- 2026-04-19: OpenShift 4.20 (stable) 확정 — 사용자 제공 정보
+- 2026-04-19: RHOAI 3.3 확정 — 사용자 제공 정보
 
 ---
 
