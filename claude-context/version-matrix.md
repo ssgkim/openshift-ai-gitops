@@ -8,7 +8,7 @@
 
 | 컴포넌트 | 버전 | 채널 | 출처 |
 |---|---|---|---|
-| OpenShift | **4.20** | stable | 사용자 확인 (2026-04-19) |
+| OpenShift | **4.20.18** | **stable-4.20** | survey 실행 확인 (2026-04-19) |
 | OpenShift GitOps | (미정) | (미정) | OperatorHub 조회 |
 | cert-manager | (미정) | (미정) | OperatorHub 조회 |
 | ServiceMesh | (미정) | (미정) | OperatorHub 조회 |

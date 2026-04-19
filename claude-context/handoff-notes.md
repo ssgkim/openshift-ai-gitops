@@ -54,6 +54,23 @@
 
 ---
 
+## 2026-04-19 Session 05 — Survey 실행 + 부분 결과 반영 + 스크립트 수정
+
+- 완료:
+  - `survey-output/survey-20260419-154527.txt` 분석 — OCP **4.20.18 / stable-4.20** 채널 확정
+  - `claude-context/current-state.md` 갱신 — 패치 버전·TLS 경고·survey 중단 상황 반영
+  - `claude-context/constraints.md` append — 자가서명 인증서 / survey 조기 중단 사유 기록
+  - `claude-context/version-matrix.md` 갱신 — OCP 4.20.18 / stable-4.20 확정
+  - `scripts/cluster-survey.sh` 버그 수정 — `history[0:3]` jsonpath → `history[*]` + `head -3` (array index OOB 방지)
+  - `claude-context/active-task.md` 갱신 — 재실행 태스크로 교체
+- 블로커: survey가 1-B 이후 중단되어 노드·Operator·StorageClass 미수집 → 스크립트 수정 완료, 재실행 필요
+- 다음 세션이 할 일:
+  1. `bash scripts/cluster-survey.sh --save` 재실행 (수정 완료, 전체 섹션 정상 동작 예상)
+  2. 결과 파일 공유 → Claude가 Operator 체크박스·version-matrix 채움
+  3. ArgoCD 설치 여부 확정 후 Phase 2(`runbooks/10-argocd-operator-install.md`) 진입 결정
+
+---
+
 ## 2026-04-19 Session 04 — Phase 1 Survey 인프라 구축
 
 - 완료:

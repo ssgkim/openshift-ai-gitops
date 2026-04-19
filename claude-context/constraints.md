@@ -23,6 +23,31 @@
 
 ---
 
+## 2026-04-19: 자가서명 TLS 인증서 (Session 05 survey 확인)
+
+- 맥락: `bash scripts/cluster-survey.sh --save` 실행, 섹션 1-A 로그인 단계
+- 내용: 클러스터 API 서버가 **자가서명 인증서** 사용. `oc login` 시 `WARNING: Using insecure TLS client config` 경고 발생.
+  - 모든 `oc` 명령에 `--insecure-skip-tls-verify=true` 옵션 필요 (또는 `.env`의 `OC_INSECURE=true` 활용)
+  - ArgoCD가 클러스터 API에 연결할 때도 TLS 검증 비활성화 설정 필요할 수 있음
+- 영향 범위:
+  - `runbooks/` — `oc` 명령 예시에 insecure 플래그 명시 또는 kubeconfig 활용
+  - `infra/argocd/` — ArgoCD cluster secret에 `insecure: true` 또는 CA 번들 주입 고려
+  - Air-gap 환경 — 동일 제약 예상
+
+---
+
+## 2026-04-19: survey 스크립트 조기 중단 (Session 05)
+
+- 맥락: `bash scripts/cluster-survey.sh --save` 실행 결과 (`survey-output/survey-20260419-154527.txt`)
+- 내용: 스크립트가 **1-B 섹션(OCP 버전) 이후 중단**. 파일 36줄에서 종료. 노드·Operator·StorageClass 정보 미수집.
+  - ClusterVersion jsonpath 오류 (`array index out of bounds: index 2, length 1`) — 업데이트 이력이 1건뿐이라 발생. 스크립트 중단 원인은 별도 확인 필요.
+  - 다음 재실행 전 `scripts/cluster-survey.sh`의 jsonpath 쿼리 방어 코드 검토 권장
+- 영향 범위:
+  - Phase 2 시작 전 **survey 재실행 필수** — Operator 설치 여부 미확인 상태
+  - `version-matrix.md`의 Operator 버전 항목 아직 미채움
+
+---
+
 ## 2026-04-17: 듀얼 환경(Connected + Air-gap) 요구
 
 - 맥락: Connected에서 1차 PoC 완료 후, **별도 Air-gap 환경**에서 동일 구성 재현 필요

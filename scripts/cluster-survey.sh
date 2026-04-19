@@ -137,9 +137,13 @@ section "1-B. OCP 버전 및 노드 구성"
 
 echo "--- ClusterVersion ---"
 oc get clusterversion version \
-  -o jsonpath='버전: {.status.desired.version}{"\n"}채널: {.status.channel}{"\n"}업데이트 이력(최근 3): '
+  -o jsonpath='버전: {.status.desired.version}{"\n"}채널: {.spec.channel}{"\n"}'
+# history 슬라이스([0:3])는 항목이 3개 미만이면 array index out of bounds로 실패.
+# range .status.history[*] 로 전체를 순회하고 head로 최근 3개만 표시.
+echo -n "업데이트 이력(최근 3): "
 oc get clusterversion version \
-  -o jsonpath='{range .status.history[0:3]}{.version}({.state}) {end}'; echo
+  -o jsonpath='{range .status.history[*]}{.version}({.state}) {end}' 2>/dev/null \
+  | tr ' ' '\n' | head -3 | tr '\n' ' '; echo
 
 echo
 echo "--- 노드 목록 ---"
