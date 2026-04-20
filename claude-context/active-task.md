@@ -12,7 +12,7 @@ RHOAI 3.3.2 설치 완료. Dashboard Pod Running이나 Route URL 미확인. PoC 
 
 - [x] Phase 3 완료 — RHOAI 3.3.2 CSV Succeeded, DataScienceCluster Ready ✅
 - [x] `runbooks/20-rhoai-operator-install.md` 작성 완료 ✅
-- [ ] RHOAI Dashboard Route URL 확인 — `oc get routes -n redhat-ods-applications`
+- [x] RHOAI Dashboard Gateway URL 확인 — `data-science-gateway.apps.cluster-95w9g.95w9g.sandbox2661.opentlc.com` ✅
 - [ ] PoC 항목 결정 (사람 결정 필요)
 - [ ] `runbooks/60-a-notebook.md` 작성 — 워크벤치 생성 절차
 
