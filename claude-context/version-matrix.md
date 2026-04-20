@@ -10,8 +10,8 @@
 |---|---|---|---|---|
 | OpenShift | **4.20.18** | **stable-4.20** | — | ✅ 설치됨 |
 | cert-manager | **1.18.1** | **stable-v1** | redhat-operators | ✅ 설치됨 (Succeeded) |
-| OpenShift GitOps | **1.20.1** (latest 채널) | **latest** | redhat-operators | ❌ 미설치 — Phase 2에서 설치 예정 |
-| OpenShift AI (RHOAI) | **3.3.2** | **stable-3.3** | redhat-operators | ❌ 미설치 — Phase 3에서 설치 예정 |
+| OpenShift GitOps | **1.20.1** | **latest** | redhat-operators | ✅ 설치됨 (2026-04-20) |
+| OpenShift AI (RHOAI) | **3.3.2** | **stable-3.3** | redhat-operators | ✅ 설치됨 (2026-04-20) |
 | ServiceMesh | (미정) | (미정) | redhat-operators | ❌ 미설치 |
 | Serverless | (미정) | (미정) | redhat-operators | ❌ 미설치 |
 | Pipelines | (미정) | (미정) | redhat-operators | ❌ 미설치 |

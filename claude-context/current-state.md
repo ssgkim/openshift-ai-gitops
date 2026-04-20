@@ -1,6 +1,6 @@
 # 현재 상태 (2026-04-19 Session 06 기준)
 
-> **현재 상태: Phase 2 완료 — OpenShift GitOps(ArgoCD) v1.20.1 설치 완료(CSV Succeeded). ArgoCD Route: `openshift-gitops-server-openshift-gitops.apps.cluster-95w9g.95w9g.sandbox2661.opentlc.com`. Phase 3(RHOAI Operator 설치) 진입 준비 완료.** 이 파일을 읽으면 클러스터 설치 현황, 미결 사항, 최근 이벤트를 한눈에 파악할 수 있다.
+> **현재 상태: Phase 3 완료 — RHOAI 3.3.2(stable-3.3) CSV Succeeded, DataScienceCluster Ready, Dashboard Pod Running. Dashboard Route URL 미확인(추후 확인). Phase 4 이전 PoC 항목 결정 필요.** 이 파일을 읽으면 클러스터 설치 현황, 미결 사항, 최근 이벤트를 한눈에 파악할 수 있다.
 
 ## 클러스터
 
@@ -41,8 +41,8 @@
 - [ ] Pipelines Operator — 미설치 (RHOAI 의존성 여부 확인 필요)
 - [ ] NFD Operator — 미설치 (GPU 노드 없음, 현재 불필요)
 - [ ] NVIDIA GPU Operator — 미설치 (GPU 노드 없음, 현재 불필요)
-- [ ] OpenShift AI Operator (RHOAI) — **미설치** → Phase 3에서 설치 예정
-- [ ] DataScienceCluster 적용 — (RHOAI 설치 후)
+- [x] OpenShift AI Operator (RHOAI) — **3.3.2 / stable-3.3** ✅ (2026-04-20, CSV Succeeded)
+- [x] DataScienceCluster 적용 — **default-dsc Ready** ✅ (2026-04-20, Dashboard/Pipelines/Workbenches Managed)
 - [ ] 워크벤치 1개 생성
 
 ## OperatorHub 카탈로그 상태
@@ -66,11 +66,12 @@
 
 ## 최근 이벤트 (최대 3건)
 
+- 2026-04-20 Session 09: RHOAI 3.3.2 설치 완료 — CSV Succeeded, DataScienceCluster Ready, Dashboard Pod Running. Dashboard Route URL 미확인. Phase 3 완료.
 - 2026-04-20 Session 08: OpenShift GitOps v1.20.1 설치 완료 — CSV Succeeded, 전체 Pod Running. Route: `openshift-gitops-server-openshift-gitops.apps.cluster-95w9g.95w9g.sandbox2661.opentlc.com`. Phase 2 완료.
 - 2026-04-19 Session 07: GitOps 채널 latest(v1.20.1) + RHOAI 채널 stable-3.3(3.3.2) 확정. infra/ 6개 YAML + runbooks/10 작성 완료.
 - 2026-04-19 Session 06: survey 전체 완료 — 노드 3+3, cert-manager v1.18.1 확인, RHOAI·ArgoCD 미설치, proxy 설정 존재, GPU 없음. Phase 1 완전 종료.
 
 ## 미결 사항
 
+- RHOAI Dashboard Route URL 미확인 — `oc get routes -n redhat-ods-applications` 로 확인 필요 (Pod은 Running)
 - PoC 항목 미정 — Phase 5에서 결정
-- Phase 3 시작 전 ArgoCD 웹 UI 접속 확인 권장 (Route URL로 브라우저 접속)

@@ -4,26 +4,23 @@
 
 ## 태스크
 
-**Phase 3: OpenShift AI (RHOAI) Operator 설치**
+**Phase 3 완료 → 다음: Dashboard Route URL 확인 + PoC 항목 결정**
 
-`runbooks/20-rhoai-operator-install.md`를 작성하고, RHOAI Operator + DataScienceCluster를 클러스터에 설치한다.
+RHOAI 3.3.2 설치 완료. Dashboard Pod Running이나 Route URL 미확인. PoC 항목 결정 후 워크벤치 생성으로 진행.
 
 ## 성공 기준 (Capabilities)
 
-- [x] Phase 2 완료 — ArgoCD v1.20.1 설치 완료, CSV Succeeded, 전체 Pod Running ✅
-- [ ] `runbooks/20-rhoai-operator-install.md` 작성
-- [ ] `oc apply -f infra/rhoai/` 실행 → CSV Succeeded 확인
-- [ ] DataScienceCluster `default-dsc` 적용 → `Ready` 확인
-- [ ] RHOAI Dashboard Route URL 확인
-- [ ] `current-state.md` — RHOAI 체크박스 ✅ 갱신
-- [ ] `version-matrix.md` — RHOAI 설치 상태 갱신
+- [x] Phase 3 완료 — RHOAI 3.3.2 CSV Succeeded, DataScienceCluster Ready ✅
+- [x] `runbooks/20-rhoai-operator-install.md` 작성 완료 ✅
+- [ ] RHOAI Dashboard Route URL 확인 — `oc get routes -n redhat-ods-applications`
+- [ ] PoC 항목 결정 (사람 결정 필요)
+- [ ] `runbooks/60-a-notebook.md` 작성 — 워크벤치 생성 절차
 
 ## 참조 (Required Inputs)
 
-- `infra/rhoai/` — namespace, operator-group, subscription, datasciencecluster YAML
 - `.env` — 클러스터 접속 정보
-- `claude-context/constraints.md` — TLS·proxy 제약
+- `claude-context/version-matrix.md` — RHOAI 3.3.2 설치 확인
 
 ## 블로커 (Constraints)
 
-- 없음 (infra/rhoai/ YAML 이미 작성 완료)
+- PoC 항목은 사람이 결정 (Phase 5 계획 필요)

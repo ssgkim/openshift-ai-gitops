@@ -87,6 +87,24 @@
 
 ---
 
+## 2026-04-20 Session 09 — Phase 3 완료 (RHOAI 3.3.2 설치 완료)
+
+- 완료:
+  - `runbooks/20-rhoai-operator-install.md` 작성
+  - `infra/rhoai/` 순서대로 적용 — namespace, operator-group, subscription, datasciencecluster
+  - CSV `rhods-operator.3.3.2` Succeeded 확인
+  - DataScienceCluster `default-dsc` Ready 확인 (DashboardReady, AIPipelinesReady, ComponentsReady)
+  - Dashboard Pod Running (`redhat-ods-applications`)
+  - ServiceMesh Operator RHOAI 의존성으로 자동 설치됨 (servicemeshoperator3.v3.1.0)
+  - `version-matrix.md`, `current-state.md`, `active-task.md` 갱신
+- 블로커: Dashboard Route URL 미확인 (`oc get routes -n redhat-ods-applications` 로 확인 필요)
+- 다음 세션이 할 일:
+  1. `oc get routes -n redhat-ods-applications` 로 Dashboard URL 확인
+  2. PoC 항목 결정 (사람 판단)
+  3. `runbooks/60-a-notebook.md` 작성 + 워크벤치 생성
+
+---
+
 ## 2026-04-20 Session 08 — Phase 2 완료 (ArgoCD v1.20.1 설치 완료)
 
 - 완료:
