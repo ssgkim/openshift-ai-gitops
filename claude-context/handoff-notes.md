@@ -87,6 +87,24 @@
 
 ---
 
+## 2026-04-20 Session 08 — Phase 2 완료 (ArgoCD v1.20.1 설치 완료)
+
+- 완료:
+  - `runbooks/10-argocd-operator-install.md` 순서대로 실행 — CSV Succeeded, 전체 Pod Running
+  - CSV: `openshift-gitops-operator.v1.20.1` / 상태: `Succeeded`
+  - ArgoCD Route: `openshift-gitops-server-openshift-gitops.apps.cluster-95w9g.95w9g.sandbox2661.opentlc.com`
+  - Proxy: httpProxy/httpsProxy 미설정 — 추가 조치 불필요
+  - `claude-context/current-state.md` GitOps 체크박스 ✅ 갱신
+  - `claude-context/active-task.md` Phase 3으로 교체
+- 블로커: 없음
+- 다음 세션이 할 일:
+  1. `runbooks/20-rhoai-operator-install.md` 작성
+  2. `oc apply -f infra/rhoai/` 실행 → CSV Succeeded 확인
+  3. DataScienceCluster `default-dsc` 적용 → Ready 확인
+  4. RHOAI Dashboard Route URL 확인 후 state 갱신
+
+---
+
 ## 2026-04-19 Session 07 — Phase 2 IaC 준비 완료 (채널 확정 + infra/ + runbook)
 
 - 완료:

@@ -4,27 +4,26 @@
 
 ## 태스크
 
-**Phase 2 실행 대기: runbooks/10-argocd-operator-install.md 실행 + 결과 반영**
+**Phase 3: OpenShift AI (RHOAI) Operator 설치**
 
-infra/ YAML과 runbook이 준비됐다. 사람이 runbook을 로컬에서 실행하고 결과를 공유하면 state 파일을 갱신한다.
+`runbooks/20-rhoai-operator-install.md`를 작성하고, RHOAI Operator + DataScienceCluster를 클러스터에 설치한다.
 
 ## 성공 기준 (Capabilities)
 
-- [x] `runbooks/10-argocd-operator-install.md` 작성 완료
-- [x] `openshift-gitops-operator` 채널 latest / CSV v1.20.1 확정 → `version-matrix.md` 기록 완료
-- [x] `infra/argocd/namespace.yaml` + `infra/argocd/subscription.yaml` 작성 완료
-- [x] `infra/rhoai/` 4개 파일 작성 완료 (namespace, operator-group, subscription, datasciencecluster)
-- [ ] 사람이 `runbooks/10-argocd-operator-install.md` 실행 → CSV `Succeeded` 확인
-- [ ] ArgoCD 기본 인스턴스(`openshift-gitops` 네임스페이스) 정상 동작 확인
-- [ ] `current-state.md` — OpenShift GitOps 체크박스 ✅ 갱신
+- [x] Phase 2 완료 — ArgoCD v1.20.1 설치 완료, CSV Succeeded, 전체 Pod Running ✅
+- [ ] `runbooks/20-rhoai-operator-install.md` 작성
+- [ ] `oc apply -f infra/rhoai/` 실행 → CSV Succeeded 확인
+- [ ] DataScienceCluster `default-dsc` 적용 → `Ready` 확인
+- [ ] RHOAI Dashboard Route URL 확인
+- [ ] `current-state.md` — RHOAI 체크박스 ✅ 갱신
+- [ ] `version-matrix.md` — RHOAI 설치 상태 갱신
 
 ## 참조 (Required Inputs)
 
-- `runbooks/10-argocd-operator-install.md` — 실행할 runbook
-- `infra/argocd/namespace.yaml`, `infra/argocd/subscription.yaml` — 적용할 매니페스트
+- `infra/rhoai/` — namespace, operator-group, subscription, datasciencecluster YAML
 - `.env` — 클러스터 접속 정보
+- `claude-context/constraints.md` — TLS·proxy 제약
 
 ## 블로커 (Constraints)
 
-- 실제 `oc apply` 실행은 사람이 로컬에서 수행 (클러스터 쓰기 권한 필요)
-- 실행 결과(CSV 상태·ArgoCD Route URL)를 공유하면 Claude가 state 파일 갱신
+- 없음 (infra/rhoai/ YAML 이미 작성 완료)
