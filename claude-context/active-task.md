@@ -4,37 +4,23 @@
 
 ## 태스크
 
-**Phase 2: OpenShift GitOps (ArgoCD) Operator 설치**
+**Phase 3 완료 → 다음: Dashboard Route URL 확인 + PoC 항목 결정**
 
-`runbooks/10-argocd-operator-install.md`를 작성하고, ArgoCD Operator를 클러스터에 설치한다. 설치 완료 후 ArgoCD 채널·버전을 `version-matrix.md`에 확정 기록한다.
+RHOAI 3.3.2 설치 완료. Dashboard Pod Running이나 Route URL 미확인. PoC 항목 결정 후 워크벤치 생성으로 진행.
 
 ## 성공 기준 (Capabilities)
 
-- [ ] `runbooks/10-argocd-operator-install.md` 작성 — `.env` 변수 참조, 재사용 가능
-- [ ] OperatorHub에서 `openshift-gitops-operator` 채널 조회 → `version-matrix.md`에 채널 기록
-- [ ] `oc apply` 로 Subscription + OperatorGroup 생성 → CSV `Succeeded` 확인
-- [ ] ArgoCD 기본 인스턴스(`openshift-gitops` 네임스페이스) 정상 동작 확인
-- [ ] `current-state.md` — OpenShift GitOps 체크박스 ✅ 갱신
-- [ ] `version-matrix.md` — GitOps 채널·버전 확정 기록
-
-## 배경 (Phase 1 완료 사항)
-
-- OCP **4.20.18 / stable-4.20** ✅
-- cert-manager **1.18.1 / stable-v1** 이미 설치 ✅
-- RHOAI·ArgoCD 미설치 확인 ✅
-- Proxy 오브젝트 존재 (httpProxy 미설정, trustedCA 빈 값) → runbook에서 proxy 전파 확인 절차 포함 필요
-- GPU 노드 없음 → NFD/GPU Operator 설치 불필요
+- [x] Phase 3 완료 — RHOAI 3.3.2 CSV Succeeded, DataScienceCluster Ready ✅
+- [x] `runbooks/20-rhoai-operator-install.md` 작성 완료 ✅
+- [x] RHOAI Dashboard Gateway URL 확인 — `data-science-gateway.apps.cluster-95w9g.95w9g.sandbox2661.opentlc.com` ✅
+- [ ] PoC 항목 결정 (사람 결정 필요)
+- [ ] `runbooks/60-a-notebook.md` 작성 — 워크벤치 생성 절차
 
 ## 참조 (Required Inputs)
 
-- `.env` — `${OCP_API_URL}`, `${OCP_TOKEN}`, `${OCP_INSECURE}` 등 변수
-- `claude-context/constraints.md` — TLS·proxy 제약
-- `claude-context/version-matrix.md` — 채널 기록 위치
-- `guidelines/01-layer-contracts.md` — runbook 작성 규칙
+- `.env` — 클러스터 접속 정보
+- `claude-context/version-matrix.md` — RHOAI 3.3.2 설치 확인
 
 ## 블로커 (Constraints)
 
-- `runbooks/10-argocd-operator-install.md`는 AI가 초안 작성 가능 (Layer 3)
-- 실제 `oc apply` 실행은 사람이 로컬에서 수행
-  - 클러스터 쓰기 권한 필요 (`admin` 계정)
-  - 실행 결과(CSV 상태·ArgoCD Route URL)를 공유하면 Claude가 state 파일 갱신
+- PoC 항목은 사람이 결정 (Phase 5 계획 필요)

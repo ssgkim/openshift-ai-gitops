@@ -87,6 +87,60 @@
 
 ---
 
+## 2026-04-20 Session 09 — Phase 3 완료 (RHOAI 3.3.2 설치 완료)
+
+- 완료:
+  - `runbooks/20-rhoai-operator-install.md` 작성
+  - `infra/rhoai/` 순서대로 적용 — namespace, operator-group, subscription, datasciencecluster
+  - CSV `rhods-operator.3.3.2` Succeeded 확인
+  - DataScienceCluster `default-dsc` Ready 확인 (DashboardReady, AIPipelinesReady, ComponentsReady)
+  - Dashboard Pod Running (`redhat-ods-applications`)
+  - ServiceMesh Operator RHOAI 의존성으로 자동 설치됨 (servicemeshoperator3.v3.1.0)
+  - `version-matrix.md`, `current-state.md`, `active-task.md` 갱신
+- 블로커: Dashboard Route URL 미확인 (`oc get routes -n redhat-ods-applications` 로 확인 필요)
+- 다음 세션이 할 일:
+  1. `oc get routes -n redhat-ods-applications` 로 Dashboard URL 확인
+  2. PoC 항목 결정 (사람 판단)
+  3. `runbooks/60-a-notebook.md` 작성 + 워크벤치 생성
+
+---
+
+## 2026-04-20 Session 08 — Phase 2 완료 (ArgoCD v1.20.1 설치 완료)
+
+- 완료:
+  - `runbooks/10-argocd-operator-install.md` 순서대로 실행 — CSV Succeeded, 전체 Pod Running
+  - CSV: `openshift-gitops-operator.v1.20.1` / 상태: `Succeeded`
+  - ArgoCD Route: `openshift-gitops-server-openshift-gitops.apps.cluster-95w9g.95w9g.sandbox2661.opentlc.com`
+  - Proxy: httpProxy/httpsProxy 미설정 — 추가 조치 불필요
+  - `claude-context/current-state.md` GitOps 체크박스 ✅ 갱신
+  - `claude-context/active-task.md` Phase 3으로 교체
+- 블로커: 없음
+- 다음 세션이 할 일:
+  1. `runbooks/20-rhoai-operator-install.md` 작성
+  2. `oc apply -f infra/rhoai/` 실행 → CSV Succeeded 확인
+  3. DataScienceCluster `default-dsc` 적용 → Ready 확인
+  4. RHOAI Dashboard Route URL 확인 후 state 갱신
+
+---
+
+## 2026-04-19 Session 07 — Phase 2 IaC 준비 완료 (채널 확정 + infra/ + runbook)
+
+- 완료:
+  - `oc get packagemanifest` 실행 — GitOps: `latest`/v1.20.1, RHOAI: `stable-3.3`/3.3.2 확정
+  - `claude-context/version-matrix.md` 갱신 — 두 채널 확정 기록
+  - `infra/argocd/namespace.yaml` + `infra/argocd/subscription.yaml` 작성
+  - `infra/rhoai/namespace.yaml` + `operator-group.yaml` + `subscription.yaml` + `datasciencecluster.yaml` 작성
+  - `runbooks/10-argocd-operator-install.md` 작성 — `.env` 변수 참조, proxy 확인 절차 포함
+  - `claude-context/current-state.md` + `active-task.md` 갱신
+- 진행중: 없음 (AI 할 일 완료)
+- 블로커: 사람이 `runbooks/10-argocd-operator-install.md` 로컬 실행 후 결과 공유 필요
+- 다음 세션이 할 일:
+  1. 사람이 runbook 실행 → CSV Succeeded + ArgoCD Route URL 공유
+  2. Claude가 `current-state.md` GitOps 체크박스 ✅ 갱신
+  3. Phase 3 (`runbooks/20-rhoai-operator-install.md`) 시작
+
+---
+
 ## 2026-04-19 Session 04 — Phase 1 Survey 인프라 구축
 
 - 완료:
