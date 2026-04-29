@@ -132,3 +132,13 @@
 - 블로커: 후속 테스트는 Scope 4/5 완료 후 사람 선택으로 하나씩 `active-task.md`에 승격 필요
 - 다음 세션이 할 일: [CHECKPOINT] 후 Scope 4 Application IaC 작성/dry-run/sync
 - 발견된 제약: 카탈로그는 새 Scope가 아니며 현재 active task를 대체하지 않음
+
+---
+
+## 2026-04-30 Session 26 — 다음 진입지점 기록
+
+- 완료: 세션 진입 프로토콜을 수행하고 Scope 4 진행안을 제안했으나, 승인 전 사용자가 다음 진입지점 기록을 요청해 문서만 갱신
+- 진행중: Scope 4 PoC(`workbench-smoke`, `llm-cpu`) Application 편입 CHECKPOINT 승인 대기
+- 블로커: Scope 4 실행 승인 전에는 `oc apply`/sync/Application operation patch 금지
+- 다음 세션이 할 일: [CHECKPOINT] 후 PoC를 별도 Application 2개로 편입하는 안을 확정하고 IaC 작성/dry-run/sync 진행
+- 발견된 제약: Git 최신 커밋은 Session 25였으나 handoff에는 Session 25 엔트리 없음; Session 25는 `active-task.md` 크기 정합화만 수행

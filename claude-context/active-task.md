@@ -6,6 +6,8 @@
 
 **Scope 4: PoC Application 편입**
 
+**다음 진입지점 (Session 26 기록):** 세션 시작 프로토콜을 다시 확인한 뒤, Scope 4 진행 CHECKPOINT에서 멈춘다. 추천안은 `workbench-smoke`와 `llm-cpu`를 각각 별도 ArgoCD Application으로 편입하는 방식이다. 승인 전에는 `oc apply`, `argocd app sync`, Application operation patch 등 클러스터 변경 명령을 실행하지 않는다.
+
 Session 18에서 `ai-accelerator` 참고 패턴을 검토하고, 한 번에 ApplicationSet으로 흡수하지 않도록 `work-plans/002-gitops-handover-scope.md`에 Scope 0~5 단계 계획을 추가했다.
 
 Session 19에서 Scope 1을 완료했다. `infra/argocd/bootstrap/kustomization.yaml`, AppProject 3개(`platform-operators`, `rhoai-core`, `rhoai-poc`), `rhoai` Application의 `rhoai-core` 프로젝트 편입, repo config replacement 패턴을 작성했고 `kubectl kustomize` 및 `oc apply --dry-run=client -k infra/argocd/bootstrap` 검증을 통과했다.
@@ -14,7 +16,7 @@ Session 20~22에서 Scope 2를 완료했다. `rhoai` Application은 ArgoCD `Sync
 
 Session 23에서 Scope 3을 완료했다. `jobset`, `lws`, `maas-gateway` Application은 모두 ArgoCD `Synced/Healthy`이며, `default-dsc Ready=True`, JobSet/LWS/Gateway drift 0을 확인했다. MaaS Gateway sync에는 ArgoCD application-controller의 Gateway API patch 권한이 필요해 `infra/argocd/rbac/platform-operators-maas-gateway.yaml` ClusterRole/Binding으로 보강했다.
 
-다음 세션은 **Scope 4: PoC(`workbench-smoke`, `llm-cpu`) Application 편입**만 진행한다. 실제 `oc apply` 또는 sync는 CHECKPOINT 승인 후 실행한다.
+다음 세션은 **Scope 4: PoC(`workbench-smoke`, `llm-cpu`) Application 편입**만 진행한다. 실제 `oc apply` 또는 sync는 CHECKPOINT 승인 후 실행한다. Session 26에서는 승인 전 기록 요청으로 실행하지 않았다.
 
 ## 성공 기준 (Capabilities)
 
