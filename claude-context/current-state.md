@@ -1,6 +1,6 @@
-# 현재 상태 (2026-04-29 Session 17 기준)
+# 현재 상태 (2026-04-30 Session 18 기준)
 
-> **현재 상태: 부트스트랩 단계 마무리. RHOAI 기준선 정상 (`default-dsc Ready=True`, drift 0), PoC 스모크 워크벤치 통과, CPU LLM 모델(`smollm2-135m-cpu`) KServe 배포 및 OpenAI-compatible completion 검증 완료. ArgoCD Application IaC + sync runbook 작성으로 운영 모드 전환 준비 완료.** 이 파일을 읽으면 클러스터 설치 현황, 미결 사항, 최근 이벤트를 한눈에 파악할 수 있다.
+> **현재 상태: 부트스트랩 단계 마무리. RHOAI 기준선 정상 (`default-dsc Ready=True`, drift 0), PoC 스모크 워크벤치 통과, CPU LLM 모델(`smollm2-135m-cpu`) KServe 배포 및 OpenAI-compatible completion 검증 완료. ArgoCD 인계는 한 번에 ApplicationSet으로 흡수하지 않고 Scope 0~5로 분할해 진행하기로 계획화했다.** 이 파일을 읽으면 클러스터 설치 현황, 미결 사항, 최근 이벤트를 한눈에 파악할 수 있다.
 
 ## 클러스터
 
@@ -73,13 +73,13 @@
 
 ## 최근 이벤트 (최대 3건)
 
+- 2026-04-30 Session 18: `ai-accelerator` 참고 패턴을 검토하고 GitOps 인계 범위를 `work-plans/002-gitops-handover-scope.md`로 분리. Scope 0~5 체크리스트를 `active-task.md`에 반영했으며 클러스터/infra 변경은 하지 않음.
 - 2026-04-29 Session 17: 초기 PoC 프로젝트 세팅 및 CPU LLM 배포 — `rhoai-poc-llm-cpu` 네임스페이스, vLLM CPU x86 ServingRuntime, `SmolLM2-135M-Instruct` InferenceService 적용. `/v1/models`, `/v1/completions` 검증 통과.
 - 2026-04-29 Session 15: 부트스트랩 마무리 — DSC IaC를 v2 live 스펙과 정합화(drift 0), ArgoCD `rhoai` Application IaC + `runbooks/30-argocd-app-sync.md` 작성, PoC 스모크 워크벤치(`rhoai-poc-smoke/smoke-wb`) 생성 및 Python 셀 스모크 통과.
-- 2026-04-29 Session 16: 프레임워크 정합화 — BOOTSTRAP → 완료 선언 → OPS 단계 모델로 진입 문서/state/context를 정리하고, runbook 번호·infra 디렉토리·PoC 네이밍 계약을 실제 구조에 맞춤.
 
 ## 미결 사항
 
-- ArgoCD App-of-Apps/ApplicationSet 구조 미완성 — Session 15에서 RHOAI 단일 Application IaC만 작성, 의존성(JobSet/LWS/MaaS Gateway/PoC)은 운영 모드 트리거 시 ApplicationSet으로 흡수 필요.
+- ArgoCD App-of-Apps/ApplicationSet 구조 미완성 — Session 18에서 한 번에 흡수하지 않고 Scope 1~5로 분할하기로 계획화. 다음은 Scope 1(관리 뼈대 정리)만 진행.
 - 운영 모드 전환 트리거 미실행 — `infra/argocd/applications/rhoai.yaml`의 repoURL은 실제 URL로 치환 완료. 다음은 `runbooks/30-argocd-app-sync.md` 절차로 Application 등록/diff/sync 검증 필요.
 - CPU LLM PoC는 직접 적용 상태다. OPS 전환 전 `infra/poc/llm-cpu`를 별도 ArgoCD Application 또는 ApplicationSet에 편입 필요.
 - PoC 항목(스모크/CPU LLM 외) 미정 — Phase 5에서 결정 (사람 판단 필요).

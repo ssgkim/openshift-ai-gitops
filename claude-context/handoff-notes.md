@@ -82,3 +82,13 @@
 - 블로커: OPS 전환 전 PoC/의존성 리소스 관리 범위 결정 필요
 - 다음 세션이 할 일: `rhoai`, JobSet/LWS/MaaS Gateway, PoC 리소스를 ArgoCD 관리 범위에 편입 후 sync 검증
 - 발견된 제약: CPU vLLM은 KV cache/model length 튜닝과 Recreate rollout 필요 (`constraints.md` 반영)
+
+---
+
+## 2026-04-30 Session 18 — GitOps 인계 범위 분할
+
+- 완료: `ai-accelerator` installation/overview 패턴을 참고해 `work-plans/002-gitops-handover-scope.md` 작성
+- 진행중: BOOTSTRAP 산출물의 ArgoCD 인계를 Scope 1~5로 순차 진행
+- 블로커: Git remote 공개/비공개 여부와 ArgoCD repository secret 필요 여부 미확정
+- 다음 세션이 할 일: [CHECKPOINT] 후 Scope 1(AppProject/repo config/root bootstrap 구조)만 진행
+- 발견된 제약: 한 번에 ApplicationSet 흡수 금지, Scope 단위 체크리스트 갱신 후 다음 단계 진행
