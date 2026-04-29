@@ -1,0 +1,25 @@
+# 출처: work-plans/002-gitops-handover-scope.md Scope 1 결정
+# 목적: RHOAI Operator/DataScienceCluster 기준선을 PoC와 분리해 먼저 인계
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: rhoai-core
+  namespace: openshift-gitops
+spec:
+  sourceRepos:
+    - https://github.com/ssgkim/openshift-ai-gitops.git
+  destinations:
+    - server: https://kubernetes.default.svc
+      namespace: redhat-ods-operator
+    - server: https://kubernetes.default.svc
+      namespace: redhat-ods-applications
+    - server: https://kubernetes.default.svc
+      namespace: rhoai-model-registries
+    - server: https://kubernetes.default.svc
+      namespace: rhods-notebooks
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  namespaceResourceWhitelist:
+    - group: '*'
+      kind: '*'

@@ -1,0 +1,23 @@
+# 출처: work-plans/002-gitops-handover-scope.md Scope 1 결정
+# 목적: RHOAI 의존성 Operator(JobSet/LWS 등)를 RHOAI core와 분리해 순차 인계
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: platform-operators
+  namespace: openshift-gitops
+spec:
+  sourceRepos:
+    - https://github.com/ssgkim/openshift-ai-gitops.git
+  destinations:
+    - server: https://kubernetes.default.svc
+      namespace: openshift-jobset-operator
+    - server: https://kubernetes.default.svc
+      namespace: openshift-lws-operator
+    - server: https://kubernetes.default.svc
+      namespace: openshift-ingress
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  namespaceResourceWhitelist:
+    - group: '*'
+      kind: '*'

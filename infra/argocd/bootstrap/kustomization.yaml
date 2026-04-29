@@ -1,0 +1,39 @@
+# 출처: Red Hat AI Accelerator clusters/overlays repo config replacement 패턴
+# https://github.com/redhat-ai-services/ai-accelerator/blob/main/clusters/overlays/rhoai-stable-3.x-aws-gpu/kustomization.yaml
+# 목적: Scope 1에서는 ArgoCD 관리 뼈대만 생성한다. 실제 sync는 Scope 2 CHECKPOINT 이후 수행.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: openshift-gitops
+
+resources:
+  - ../projects
+  - ../applications
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+configMapGenerator:
+  - name: gitops-repo-config
+    literals:
+      - repoURL=https://github.com/ssgkim/openshift-ai-gitops.git
+      - targetRevision=main
+
+replacements:
+  - source:
+      kind: ConfigMap
+      name: gitops-repo-config
+      fieldPath: data.repoURL
+    targets:
+      - select:
+          kind: Application
+        fieldPaths:
+          - spec.source.repoURL
+  - source:
+      kind: ConfigMap
+      name: gitops-repo-config
+      fieldPath: data.targetRevision
+    targets:
+      - select:
+          kind: Application
+        fieldPaths:
+          - spec.source.targetRevision

@@ -92,3 +92,13 @@
 - 블로커: Git remote 공개/비공개 여부와 ArgoCD repository secret 필요 여부 미확정
 - 다음 세션이 할 일: [CHECKPOINT] 후 Scope 1(AppProject/repo config/root bootstrap 구조)만 진행
 - 발견된 제약: 한 번에 ApplicationSet 흡수 금지, Scope 단위 체크리스트 갱신 후 다음 단계 진행
+
+---
+
+## 2026-04-30 Session 19 — Scope 1 ArgoCD 관리 뼈대 작성
+
+- 완료: `infra/argocd/bootstrap`, `applications/kustomization.yaml`, AppProject 3개(`platform-operators`, `rhoai-core`, `rhoai-poc`) 작성
+- 진행중: Scope 2 `rhoai` Application 등록/diff/sync 검증 대기
+- 블로커: ArgoCD가 최신 IaC를 읽으려면 로컬 커밋을 GitHub `main`에 push해야 함
+- 다음 세션이 할 일: [CHECKPOINT] 후 Scope 2 server dry-run → apply → diff → sync
+- 발견된 제약: GitHub repo는 public 조회 가능해 repository secret은 현재 불필요

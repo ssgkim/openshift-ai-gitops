@@ -15,12 +15,10 @@ metadata:
   namespace: openshift-gitops
   labels:
     app.kubernetes.io/part-of: openshift-ai-gitops
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
 spec:
-  project: default
+  project: rhoai-core
   source:
-    # Session 15에서 실제 GitHub URL로 치환 완료.
+    # Scope 1 bootstrap kustomization의 gitops-repo-config로 동일 값을 재주입한다.
     repoURL: https://github.com/ssgkim/openshift-ai-gitops.git
     targetRevision: main
     path: infra/rhoai
@@ -35,6 +33,7 @@ spec:
     syncOptions:
       - CreateNamespace=false       # namespace.yaml로 명시 관리
       - ApplyOutOfSyncOnly=true
+      - Prune=false
       - ServerSideApply=true
     retry:
       limit: 3

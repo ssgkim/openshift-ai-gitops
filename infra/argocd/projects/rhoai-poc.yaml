@@ -1,0 +1,21 @@
+# 출처: work-plans/002-gitops-handover-scope.md Scope 1 결정
+# 목적: PoC 리소스를 RHOAI core와 분리해 장애 영향을 격리
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: rhoai-poc
+  namespace: openshift-gitops
+spec:
+  sourceRepos:
+    - https://github.com/ssgkim/openshift-ai-gitops.git
+  destinations:
+    - server: https://kubernetes.default.svc
+      namespace: rhoai-poc-smoke
+    - server: https://kubernetes.default.svc
+      namespace: rhoai-poc-llm-cpu
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  namespaceResourceWhitelist:
+    - group: '*'
+      kind: '*'

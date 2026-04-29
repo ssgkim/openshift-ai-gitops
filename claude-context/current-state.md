@@ -1,6 +1,6 @@
-# 현재 상태 (2026-04-30 Session 18 기준)
+# 현재 상태 (2026-04-30 Session 19 기준)
 
-> **현재 상태: 부트스트랩 단계 마무리. RHOAI 기준선 정상 (`default-dsc Ready=True`, drift 0), PoC 스모크 워크벤치 통과, CPU LLM 모델(`smollm2-135m-cpu`) KServe 배포 및 OpenAI-compatible completion 검증 완료. ArgoCD 인계는 한 번에 ApplicationSet으로 흡수하지 않고 Scope 0~5로 분할해 진행하기로 계획화했다.** 이 파일을 읽으면 클러스터 설치 현황, 미결 사항, 최근 이벤트를 한눈에 파악할 수 있다.
+> **현재 상태: 부트스트랩 단계 마무리. RHOAI 기준선 정상 (`default-dsc Ready=True`, drift 0), PoC 스모크 워크벤치 통과, CPU LLM 모델(`smollm2-135m-cpu`) KServe 배포 및 OpenAI-compatible completion 검증 완료. ArgoCD 인계는 Scope 0~5로 분할 진행 중이며, Scope 1(AppProject/repo config/root bootstrap 구조) 로컬 검증까지 완료했다.** 이 파일을 읽으면 클러스터 설치 현황, 미결 사항, 최근 이벤트를 한눈에 파악할 수 있다.
 
 ## 클러스터
 
@@ -49,6 +49,7 @@
 - [x] DataScienceCluster 적용 — **default-dsc Ready** (Session 14)
 - [x] DataScienceCluster IaC 정합화 — `infra/rhoai/datasciencecluster.yaml` v2, drift 0 (Session 15)
 - [x] ArgoCD Application IaC + sync runbook 작성 — `infra/argocd/applications/rhoai.yaml`, `runbooks/30-argocd-app-sync.md` (Session 15)
+- [x] ArgoCD Scope 1 관리 뼈대 작성 — `infra/argocd/bootstrap/kustomization.yaml`, AppProject 3개, repo config replacement, dry-run 통과 (Session 19)
 - [x] 워크벤치 1개 생성 — `rhoai-poc-smoke/smoke-wb` Pod Running 2/2, Python 셀 스모크 통과 (Session 15)
 - [x] CPU LLM 모델 배포 — `rhoai-poc-llm-cpu/smollm2-135m-cpu` Ready=True, `/v1/completions` 응답 확인 (Session 17)
 
@@ -73,13 +74,14 @@
 
 ## 최근 이벤트 (최대 3건)
 
+- 2026-04-30 Session 19: Scope 1 완료 — `infra/argocd`에 AppProject 3개, applications/bootstrap kustomization, repo config replacement를 추가하고 `rhoai` Application을 `rhoai-core` 프로젝트로 편입. `kubectl kustomize`, `oc apply --dry-run=client -k infra/argocd/bootstrap`, `git ls-remote` 검증 통과.
 - 2026-04-30 Session 18: `ai-accelerator` 참고 패턴을 검토하고 GitOps 인계 범위를 `work-plans/002-gitops-handover-scope.md`로 분리. Scope 0~5 체크리스트를 `active-task.md`에 반영했으며 클러스터/infra 변경은 하지 않음.
 - 2026-04-29 Session 17: 초기 PoC 프로젝트 세팅 및 CPU LLM 배포 — `rhoai-poc-llm-cpu` 네임스페이스, vLLM CPU x86 ServingRuntime, `SmolLM2-135M-Instruct` InferenceService 적용. `/v1/models`, `/v1/completions` 검증 통과.
-- 2026-04-29 Session 15: 부트스트랩 마무리 — DSC IaC를 v2 live 스펙과 정합화(drift 0), ArgoCD `rhoai` Application IaC + `runbooks/30-argocd-app-sync.md` 작성, PoC 스모크 워크벤치(`rhoai-poc-smoke/smoke-wb`) 생성 및 Python 셀 스모크 통과.
 
 ## 미결 사항
 
-- ArgoCD App-of-Apps/ApplicationSet 구조 미완성 — Session 18에서 한 번에 흡수하지 않고 Scope 1~5로 분할하기로 계획화. 다음은 Scope 1(관리 뼈대 정리)만 진행.
-- 운영 모드 전환 트리거 미실행 — `infra/argocd/applications/rhoai.yaml`의 repoURL은 실제 URL로 치환 완료. 다음은 `runbooks/30-argocd-app-sync.md` 절차로 Application 등록/diff/sync 검증 필요.
+- ArgoCD App-of-Apps/ApplicationSet 구조 미완성 — Scope 1 완료. 다음은 Scope 2(`rhoai` 단일 Application 등록/diff/sync)만 진행.
+- 운영 모드 전환 트리거 미실행 — `infra/argocd/bootstrap/kustomization.yaml` dry-run 통과. 다음은 CHECKPOINT 후 server dry-run → apply → diff → sync 검증 필요.
+- 로컬 커밋이 GitHub `main`에 push되어야 ArgoCD가 최신 IaC를 읽을 수 있다.
 - CPU LLM PoC는 직접 적용 상태다. OPS 전환 전 `infra/poc/llm-cpu`를 별도 ArgoCD Application 또는 ApplicationSet에 편입 필요.
 - PoC 항목(스모크/CPU LLM 외) 미정 — Phase 5에서 결정 (사람 판단 필요).
