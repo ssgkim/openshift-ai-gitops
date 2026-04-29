@@ -3,7 +3,6 @@
 ## 출처
 
 요즘IT, "제한된 DevOps 리소스로 AI와 함께 쿠버네티스를 운영하는 법"
-https://yozm.wishket.com/magazine/detail/3710/
 
 원문은 대규모 Kubernetes 인프라 변경을 Claude Code 같은 AI와 "동료로" 수행하기 위한 구조적 방법론을 제시한다. 본 프로젝트는 이 방법론을 **OpenShift + OpenShift AI + GitOps** 도메인에 적응한다.
 
