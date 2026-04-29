@@ -2,13 +2,13 @@
 
 전체 로드맵의 체크리스트. 세션 단위의 세부 상태는 [`claude-context/current-state.md`](claude-context/current-state.md), 누적 인수인계는 [`claude-context/handoff-notes.md`](claude-context/handoff-notes.md) 참조.
 
-**진척 요약**: 새 샌드박스 접근 확인 완료 · OCP 4.21.9 / RHOAI 목표 3.4.0(관측 CSV 3.4.0-ea.1) 확정 · GitOps 1.20.2 설치됨 · 운영 유지관리 모드로 전환 · JobSet/LeaderWorkerSet/MaaS Gateway 의존성 보강 완료 · DSC Ready 확인
+**진척 요약**: 새 샌드박스 접근 확인 완료 · OCP 4.21.9 / RHOAI 목표 3.4.0(관측 CSV 3.4.0-ea.1) 확정 · GitOps 1.20.2 설치됨 · JobSet/LeaderWorkerSet/MaaS Gateway 의존성 보강 완료 · DSC Ready 및 drift 0 확인 · PoC 스모크 워크벤치 통과 · 운영 전환 트리거 대기
 
 ---
 
 ## 📍 현재 Phase
 
-> **운영 유지관리 모드 / Phase 4 검증 중** — 새 샌드박스 접근과 GitOps/RHOAI 설치 확인 완료. 사용자 승인 하에 JobSet Operator, LeaderWorkerSet Operator, MaaS Gateway 의존성을 보강해 `default-dsc` Ready를 확보했다. 다음은 live DSC 스펙 정합화와 워크벤치 스모크 검증이다.
+> **BOOTSTRAP 마무리 / OPS 전환 대기** — 새 샌드박스 접근과 GitOps/RHOAI 설치 확인 완료. RHOAI 의존성 보강, `default-dsc` Ready, DSC IaC drift 0, 워크벤치 스모크 검증까지 완료했다. 다음은 ArgoCD `rhoai` Application 인계/sync를 검증하고 사람이 초기 구축 완료를 선언하는 것이다.
 
 ---
 
@@ -37,7 +37,7 @@
 - [x] `claude-context/handoff-notes.md` Session 01 엔트리
 - [x] `.env.example` 템플릿
 - [x] `GEMINI.md` / `AGENTS.md` 심볼릭 링크 (Codex / Gemini CLI 호환)
-- [x] 운영 유지관리 모드 권한 원칙 반영 — 부트스트랩 권한은 예외, 기본은 읽기 진단 + Git/IaC 변경안
+- [x] 단계별 권한 원칙 반영 — BOOTSTRAP은 승인된 직접 적용 가능, OPS는 읽기 진단 + Git/IaC + ArgoCD 중심
 
 **완료 기준**: 처음 보는 사람이 `README.md` + `guidelines/` 읽고 작업 이어받을 수 있음.
 
@@ -65,15 +65,15 @@
 
 **목표**: ArgoCD 설치 + App-of-Apps 구조로 이후 자동화의 기반 마련.
 
-- [ ] `work-plans/002-argocd-strategy.md` (AppProject 분리 정책 등) — ※ 직접 `oc apply` 방식 채택으로 보류
+- [ ] `work-plans/002-argocd-strategy.md` (AppProject 분리 정책 등) — ※ 운영 전환 후 App-of-Apps/ApplicationSet 단계에서 재검토
 - [ ] `infra/argocd/bootstrap/` — App-of-Apps 루트 매니페스트 (※ 미적용)
-- [ ] `infra/argocd/applications/` — 각 Application CR (※ 미적용)
+- [x] `infra/argocd/applications/rhoai.yaml` — RHOAI 단일 Application CR 작성 및 repoURL 치환 완료
 - [x] `runbooks/10-argocd-operator-install.md` (Session 07)
 - [ ] `runbooks/20-app-of-apps.md` (※ 현재는 단순 `oc apply` 경로, 향후 App-of-Apps 재검토 필요)
 - [x] OpenShift GitOps Operator 설치 성공 — v1.20.2 / latest (Route 확인)
-- [ ] 첫 App-of-Apps sync 성공 (※ 보류)
+- [ ] 첫 ArgoCD `rhoai` Application sync 성공
 
-**완료 기준**: ArgoCD 웹콘솔 접속 + App-of-Apps가 `Synced & Healthy`.
+**완료 기준**: ArgoCD 웹콘솔 접속 + 최소 1개 핵심 Application(`rhoai`)이 `Synced & Healthy`. App-of-Apps/ApplicationSet은 운영 전환 후 확장 단계에서 완료.
 
 ---
 
@@ -103,11 +103,11 @@
 - [ ] `work-plans/004-openshift-ai-topology.md` — 컴포넌트 선택 근거 (※ 사후 문서화 필요)
 - [x] `infra/rhoai/subscription.yaml` — RHOAI Operator (Session 07, 실제 경로 `infra/rhoai/`)
 - [x] `infra/rhoai/datasciencecluster.yaml` — `default-dsc` 구성 (Session 07)
-- [x] `runbooks/20-rhoai-operator-install.md` (Session 09) — ※ 번호는 `guidelines/01-layer-contracts.md` 할당(50)과 상이. 재정렬 여부 별도 결정.
+- [x] `runbooks/20-rhoai-operator-install.md` (Session 09) — RHOAI 부트스트랩 번호로 계약 정합화 완료(Session 16)
 - [x] MaaS Gateway — `openshift-ingress/maas-default-gateway` Programmed=True
 - [x] DSC 상태 `Ready` — JobSet Operator + LeaderWorkerSet Operator + MaaS Gateway 의존성 보강 후 확인
 - [x] 웹콘솔 RHOAI 대시보드 접근 — `data-science-gateway` / `rhods-dashboard` Route 확인
-- [ ] 워크벤치 1개 생성 성공
+- [x] 워크벤치 1개 생성 성공 — `rhoai-poc-smoke/smoke-wb`, Python 셀 스모크 통과
 
 **완료 기준**: 워크벤치에서 Python 셀 실행 성공.
 
@@ -145,6 +145,8 @@
 - **2026-04-29** Session 12 — 실제 클러스터 접근 확인, Console/API URL 확인, GitOps 1.20.2 설치 확인, DSC NotReady 원인 확인
 - **2026-04-29** Session 13 — 프로젝트 목적을 운영 유지관리로 재정의, 부트스트랩 권한과 운영 권한 분리
 - **2026-04-29** Session 14 — JobSet Operator, LeaderWorkerSet Operator, MaaS Gateway 의존성 보강, `default-dsc` Ready 확인
+- **2026-04-29** Session 15 — DSC v2 IaC 정합화(drift 0), `rhoai` Application IaC 작성, PoC 스모크 워크벤치 통과, repoURL 치환
+- **2026-04-29** Session 16 — BOOTSTRAP/OPS 단계 모델, runbook 번호 계약, infra 디렉토리 계약, PoC 네이밍 정합화
 
 ---
 

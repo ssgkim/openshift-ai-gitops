@@ -62,3 +62,13 @@
 - 블로커: `.env`의 `GITHUB_REMOTE`가 placeholder, ArgoCD repository 인증 수단 미확정
 - 다음 세션이 할 일: `runbooks/30-argocd-app-sync.md` 따라 RHOAI Application 등록 → diff → sync 후 drift 0 유지 확인
 - 발견된 제약: RHOAI 3.4의 워크벤치 인증 사이드카는 `oauth-proxy`가 아니라 `kube-rbac-proxy`로 자동 주입됨 (ArgoCD `ignoreDifferences` 후보)
+
+---
+
+## 2026-04-29 Session 16 — 프레임워크 정합화
+
+- 완료: `CLAUDE.md`/`README.md`/state/context를 BOOTSTRAP → 완료 선언 → OPS 단계 모델로 정리하고 runbook 번호·infra 구조·PoC 네이밍 계약을 실제 구조에 맞춤
+- 진행중: OPS 전환 트리거 대기
+- 블로커: ArgoCD Application sync 검증과 사람의 초기 구축 완료 선언 필요
+- 다음 세션이 할 일: `runbooks/30-argocd-app-sync.md`로 `rhoai` Application 등록/diff/sync 검증
+- 발견된 제약: 단계 모델 정정은 `constraints.md`에 append-only로 기록

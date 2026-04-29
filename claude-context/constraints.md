@@ -146,3 +146,14 @@
 - 영향 범위:
   - `infra/operators/job-set/`, `infra/operators/leader-worker-set/`, `infra/rhoai/gateway/`를 RHOAI 3.4 운영 기준선에 포함한다.
   - `infra/rhoai/datasciencecluster.yaml`는 live v2 스펙과 차이가 있어 정합화 전 직접 적용하지 않는다.
+
+---
+
+## 2026-04-29: 단계 모델 정정 — BOOTSTRAP 완료 선언 전 OPS 아님
+
+- 맥락: Session 15 후 전체 아키텍처/프레임워크 리뷰
+- 내용: 현재 프로젝트는 초기 구축(BOOTSTRAP) 마무리 단계이며, 사람이 "초기 구축 완료"를 선언하고 ArgoCD 인계/sync가 검증된 뒤 OPS 유지관리 단계로 전환한다.
+- 영향 범위:
+  - `CLAUDE.md`, `README.md`, `state.md`, `claude-context/active-task.md`는 BOOTSTRAP → 완료 선언 → OPS 전환 모델을 기준으로 해석한다.
+  - BOOTSTRAP 단계의 승인된 직접 적용은 허용되지만, 반드시 IaC와 상태 문서에 정합화해야 한다.
+  - OPS 전환 후에는 ArgoCD 관리 리소스 직접 변경을 break-glass로 취급한다.

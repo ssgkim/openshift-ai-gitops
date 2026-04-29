@@ -4,14 +4,14 @@
 
 ## 태스크
 
-**운영 모드 전환 트리거 — ArgoCD가 RHOAI IaC를 인계받도록 sync 시작**
+**OPS 전환 트리거 — ArgoCD가 RHOAI IaC를 인계받도록 sync 검증**
 
-Session 15에서 부트스트랩 산출물이 자리잡았다(DSC v2 정합화 drift 0, ArgoCD Application IaC, sync runbook, PoC 스모크 워크벤치). 다음 세션은 사람이 명시적으로 "운영 모드 전환 트리거"를 발동하고, ArgoCD가 `infra/rhoai/`를 sync한 뒤 drift 0를 유지하는지 검증한다.
+Session 15에서 부트스트랩 산출물이 자리잡았다(DSC v2 정합화 drift 0, ArgoCD Application IaC, repoURL 실제 URL 치환, sync runbook, PoC 스모크 워크벤치). 다음 세션은 사람이 명시적으로 "OPS 전환 트리거"를 발동하고, ArgoCD가 `infra/rhoai/`를 sync한 뒤 drift 0를 유지하는지 검증한다. 이 검증이 통과하고 사람이 "초기 구축 완료"를 선언하면 이후 기본 단계는 OPS다.
 
 ## 성공 기준 (Capabilities)
 
-- [ ] `.env` 의 `GITHUB_REMOTE` 를 ArgoCD가 접근 가능한 실제 https URL로 교체 (현재 `git@github.com:org/...` placeholder)
-- [ ] `infra/argocd/applications/rhoai.yaml` 의 `spec.source.repoURL` 을 실제 URL로 치환 (현재 `REPLACE-ORG`)
+- [x] `infra/argocd/applications/rhoai.yaml` 의 `spec.source.repoURL` 을 실제 URL로 치환
+- [ ] `.env` 의 `GITHUB_REMOTE` 가 ArgoCD repoURL과 일치하는지 확인
 - [ ] (필요 시) ArgoCD에 repository secret 등록 — private repo면 SSH key 또는 token
 - [ ] `runbooks/30-argocd-app-sync.md` 절차 단계별 실행 — dry-run → 등록 → diff → sync
 - [ ] `oc -n openshift-gitops get application rhoai` → `Synced/Healthy`
@@ -28,15 +28,15 @@ Session 15에서 부트스트랩 산출물이 자리잡았다(DSC v2 정합화 d
 ## 참조 (Required Inputs)
 
 - `runbooks/30-argocd-app-sync.md` — ArgoCD Application 등록/diff/sync 표준 절차
-- `infra/argocd/applications/rhoai.yaml` — RHOAI Application CR (repoURL placeholder)
+- `infra/argocd/applications/rhoai.yaml` — RHOAI Application CR (repoURL 치환 완료)
 - `infra/rhoai/datasciencecluster.yaml` — Session 15에서 v2 live 스펙과 정합화 (drift 0)
-- `.env` — `GITHUB_REMOTE` placeholder 교체 대상
+- `.env` — `GITHUB_REMOTE` 확인 대상
 - `claude-context/current-state.md` — Session 15 종료 시점 클러스터 상태
-- `CLAUDE.md` — 운영 모드 권한 경계
+- `CLAUDE.md` — BOOTSTRAP/OPS 단계별 권한 경계
 
 ## 블로커 (Constraints)
 
-- ArgoCD가 사용할 Git 원격 URL과 인증 수단 미확정 — 사람 결정 필요
-- 운영 모드 전환은 사람만 발동 (트리거 자동화는 별도 검토)
+- ArgoCD가 사용할 Git 원격 인증 수단 확인 필요 — public repo면 별도 secret 불필요
+- OPS 전환은 사람만 발동하며, 초기 구축 완료 선언도 사람 판단
 - sync 후 운영자 자동 주입 필드와의 drift 가능성 — 발생 시 `ignoreDifferences` 적용
 - `--prune=false` 보장 필요 — Session 14에서 직접 적용된 의존성(JobSet/LWS/MaaS Gateway)이 IaC에 빠져 있을 경우 자동 삭제 방지

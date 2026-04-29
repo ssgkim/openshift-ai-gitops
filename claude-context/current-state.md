@@ -1,4 +1,4 @@
-# 현재 상태 (2026-04-29 Session 15 기준)
+# 현재 상태 (2026-04-29 Session 16 기준)
 
 > **현재 상태: 부트스트랩 단계 마무리. RHOAI 기준선 정상 (`default-dsc Ready=True`, drift 0), `infra/rhoai/datasciencecluster.yaml` 가 live v2 스펙과 정합화됨. ArgoCD Application IaC + sync runbook 작성으로 운영 모드 전환 준비 완료. PoC 스모크 워크벤치(`rhoai-poc-smoke/smoke-wb`) 생성 + Python 셀 스모크 통과.** 이 파일을 읽으면 클러스터 설치 현황, 미결 사항, 최근 이벤트를 한눈에 파악할 수 있다.
 
@@ -10,7 +10,7 @@
 - Ingress 도메인: `.env`의 `${OCP_DOMAIN}` 참조 ✅ (`apps.ocp.9qn8g.sandbox805.opentlc.com` 새 survey 확인)
 - OS: Red Hat Enterprise Linux CoreOS 9.6.20260401-0 (Plow)
 - Kubernetes: v1.34.6
-- 환경: OPS 유지관리 / Connected (인터넷 연결 가능)
+- 환경: BOOTSTRAP 마무리 / OPS 전환 대기 / Connected (인터넷 연결 가능)
 - 인증: htpasswd (`admin` / cluster-admin) ✅ — 로그인 확인
 - TLS: 자가서명 인증서 ⚠️ — `--insecure-skip-tls-verify` 필요 (`constraints.md` 참조)
 - 접근 가능 프로젝트: 96개 (2026-04-29 로그인 확인)
@@ -71,13 +71,13 @@
 
 ## 최근 이벤트 (최대 3건)
 
+- 2026-04-29 Session 16: 프레임워크 정합화 — BOOTSTRAP → 완료 선언 → OPS 단계 모델로 진입 문서/state/context를 정리하고, runbook 번호·infra 디렉토리·PoC 네이밍 계약을 실제 구조에 맞춤.
 - 2026-04-29 Session 15: 부트스트랩 마무리 — DSC IaC를 v2 live 스펙과 정합화(drift 0), ArgoCD `rhoai` Application IaC + `runbooks/30-argocd-app-sync.md` 작성, PoC 스모크 워크벤치(`rhoai-poc-smoke/smoke-wb`) 생성 및 Python 셀 스모크 통과.
 - 2026-04-29 Session 14: 사용자 승인 하에 RHOAI 의존성 보강 — JobSet Operator, LeaderWorkerSet Operator, `maas-default-gateway` 생성, `default-dsc` Ready 확인.
-- 2026-04-29 Session 12: 실제 클러스터 접근 확인 — 로그인 성공(admin), API/Console URL 확인, OpenShift 4.21.9, GitOps 1.20.2 Route 확인, DSC NotReady 원인 확인.
 
 ## 미결 사항
 
 - ArgoCD App-of-Apps/ApplicationSet 구조 미완성 — Session 15에서 RHOAI 단일 Application IaC만 작성, 의존성(JobSet/LWS/MaaS Gateway/PoC)은 운영 모드 트리거 시 ApplicationSet으로 흡수 필요.
-- 운영 모드 전환 트리거 미실행 — `.env`의 `GITHUB_REMOTE`(현재 placeholder)를 실제 https URL로 치환하고 `infra/argocd/applications/rhoai.yaml`의 repoURL 갱신 후 `runbooks/30-argocd-app-sync.md` 절차 실행 필요.
+- 운영 모드 전환 트리거 미실행 — `infra/argocd/applications/rhoai.yaml`의 repoURL은 실제 URL로 치환 완료. 다음은 `runbooks/30-argocd-app-sync.md` 절차로 Application 등록/diff/sync 검증 필요.
 - GPU Operator/NFD는 설치됐지만 GPU allocatable 노드는 없음.
 - PoC 항목(스모크 외) 미정 — Phase 5에서 결정 (사람 판단 필요).

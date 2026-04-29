@@ -11,7 +11,8 @@
 - [ ] `infra/rhoai/datasciencecluster.yaml` 가 live와 정합 — `oc diff -f infra/rhoai/datasciencecluster.yaml` exit 0 (Session 15에서 정합화 완료)
 - [ ] `infra/argocd/applications/rhoai.yaml` 존재
 - [ ] 사람의 운영 모드 전환 승인 (CHECKPOINT)
-- [ ] `.env`의 `GITHUB_REMOTE` 가 ArgoCD가 접근 가능한 실제 https URL — placeholder(`REPLACE-ORG`)면 중단
+- [ ] `infra/argocd/applications/rhoai.yaml`의 `repoURL` 이 ArgoCD가 접근 가능한 실제 https URL
+- [ ] `.env`의 `GITHUB_REMOTE` 가 Application `repoURL`과 일치
 
 ## 실행
 
@@ -26,13 +27,21 @@ oc login "${CLUSTER_API_URL}" \
   --insecure-skip-tls-verify=true
 ~~~
 
-### 1. Application 매니페스트의 repoURL 치환 확인
+### 1. Application 매니페스트의 repoURL 확인
 
 ~~~bash
-# placeholder가 남아 있으면 절대 적용하지 않음
-grep -n "REPLACE-ORG" infra/argocd/applications/rhoai.yaml \
-  && { echo "❌ repoURL placeholder 미치환 — 중단"; exit 1; } \
-  || echo "✅ repoURL 치환 완료"
+# placeholder가 남아 있으면 절대 적용하지 않음.
+grep -n "REPLACE-ORG\\|<org>\\|placeholder" infra/argocd/applications/rhoai.yaml \
+  && { echo "repoURL placeholder 미치환 — 중단"; exit 1; } \
+  || echo "repoURL placeholder 없음"
+
+APP_REPO_URL="$(awk '$1 == "repoURL:" { print $2; exit }' infra/argocd/applications/rhoai.yaml)"
+test -n "${APP_REPO_URL}" && test "${APP_REPO_URL}" != "null"
+
+if [ -n "${GITHUB_REMOTE:-}" ] && [ "${GITHUB_REMOTE}" != "${APP_REPO_URL}" ]; then
+  echo "GITHUB_REMOTE(${GITHUB_REMOTE}) != Application repoURL(${APP_REPO_URL}) — 확인 필요"
+  exit 1
+fi
 ~~~
 
 ### 2. (선택) ArgoCD repo connection 사전 점검
@@ -134,7 +143,7 @@ oc get datasciencecluster default-dsc \
 - **Application이 OutOfSync에서 풀리지 않음** → step 5 diff 결과 정밀 분석. live가 IaC보다 더 많은 필드를 가지고 있다면 IaC 측에 보강 필요. live가 빠진 필드를 가지고 있다면 운영자 자동 주입 — `ignoreDifferences`로 해결.
 - **sync 후 DSC NotReady** → `oc describe dsc default-dsc` 컨디션 확인. 의존성(JobSet/LWS/MaaS Gateway)이 ArgoCD 외부에서 관리되고 있다면 직접 적용 상태 유지 — Session 14에서 보강된 의존성을 sync가 prune하지 않는지 확인 (`--prune=false` 보장).
 - **repoURL 인증 실패** → step 2의 repository secret 확인. SSH 키/토큰 만료 가능성.
-- **placeholder가 남아 있음 (step 1 차단)** → `.env`의 `GITHUB_REMOTE`와 `infra/argocd/applications/rhoai.yaml`의 `repoURL` 동시 갱신 후 재실행.
+- **repoURL 확인 실패 (step 1 차단)** → `.env`의 `GITHUB_REMOTE`와 `infra/argocd/applications/rhoai.yaml`의 `repoURL` 일치 여부를 확인 후 재실행.
 
 ## 완료 후 기록
 

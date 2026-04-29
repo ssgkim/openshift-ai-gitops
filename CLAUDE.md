@@ -1,8 +1,8 @@
 # OpenShift AI GitOps 프로젝트
 
-기존 OpenShift 클러스터에 GitOps(ArgoCD) 기반으로 OpenShift AI 스택과 PoC 검증 환경을 **유지관리·운영**한다.
+기존 OpenShift 클러스터에 GitOps(ArgoCD) 기반으로 OpenShift AI 스택과 PoC 검증 환경을 구축하고, 완료 선언 이후에는 유지관리·운영한다.
 
-초기 구축 세션은 부트스트랩을 전제로 넓은 권한을 사용했을 수 있다. 현재 프로젝트의 기본 목적은 운영 레벨 유지관리이며, 직접 `oc apply/create/patch/delete`는 기본 경로가 아니다.
+현재 상태는 **초기 구축(BOOTSTRAP) 마무리 / 운영 전환 대기**다. 사람이 "초기 구축 완료"를 선언하고 ArgoCD 인계가 검증된 뒤부터 기본 목적을 운영 레벨 유지관리로 전환한다.
 
 ---
 
@@ -26,18 +26,18 @@
 - 비밀값(pull-secret, kubeconfig, token 등) 커밋
 - ArgoCD가 관리하는 리소스를 `oc`로 직접 수정 (sync drift 유발)
 - 기존 클러스터의 기존 설정·네임스페이스·Operator를 승인 없이 변경
-- 운영 유지관리 모드에서 클러스터 변경 명령(`oc apply/create/patch/delete`, `argocd app sync` 등)을 사람 승인 없이 실행
+- 초기 구축 단계라도 클러스터 변경 명령(`oc apply/create/patch/delete`, `argocd app sync` 등)을 사람 승인 없이 실행
 - 값의 "추정" — 버전·채널·도메인 등은 반드시 `infra/` 또는 공식 문서 근거
 
 ## 🛡️ 환경별 권한
 
 | 환경 | 설정 파일 | 허용 작업 |
 |---|---|---|
-| OPS (현재 기본) | `.claude/settings.prod.json` 또는 읽기 전용 local 설정 | 읽기·describe·logs·diff·문서/IaC 변경안 작성 |
-| BOOTSTRAP (명시 승인 시) | `.claude/settings.local.json` (gitignored) | 초기 설치·복구 목적의 제한적 쓰기. 각 변경 전 CHECKPOINT 필요 |
+| BOOTSTRAP (현재 단계) | `.claude/settings.local.json` (gitignored) | 초기 설치·복구 목적의 제한적 쓰기. 각 변경 전 CHECKPOINT 필요 |
+| OPS (완료 선언 후 기본) | `.claude/settings.prod.json` 또는 읽기 전용 local 설정 | 읽기·describe·logs·diff·문서/IaC 변경안 작성 |
 | PROD | `.claude/settings.prod.json` (공유) | 읽기·describe·logs·argocd 읽기만 |
 
-환경 전환은 사람만 수행. AI는 세션 시작 시 현재 활성 설정이 어느 환경인지 확인할 것. 운영 모드에서는 Git/IaC 변경과 ArgoCD 동기화 제안이 기본이며, 클러스터 직접 변경은 break-glass로 취급한다.
+환경 전환은 사람만 수행. AI는 세션 시작 시 현재 활성 설정이 어느 환경인지 확인할 것. BOOTSTRAP에서는 승인된 직접 적용이 가능하되 기록과 IaC 정합화를 남긴다. OPS 전환 후에는 Git/IaC 변경과 ArgoCD 동기화 제안이 기본이며, 클러스터 직접 변경은 break-glass로 취급한다.
 
 ## 📋 레이어 요약
 

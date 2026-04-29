@@ -52,14 +52,14 @@
 - `openshift-gitops` — ArgoCD (Operator 기본값, 변경 금지)
 - `openshift-operators` — 일반 Operator (기본값)
 - `redhat-ods-applications`, `redhat-ods-operator` — RHOAI (기본값, 변경 금지)
-- PoC 전용: `ocp-ai-poc-<kebab-name>` 접두어
+- PoC 전용: `rhoai-poc-<kebab-name>` 접두어
 
 ---
 
 ## ArgoCD 리소스
 
-- `Application` 이름: `<area>-<component>`
-  - 예: `platform-servicemesh`, `rhoai-core`, `poc-notebook`
+- `Application` 이름: `<area>-<component>` 또는 단일 핵심 영역은 `<area>`
+  - 예: `platform-servicemesh`, `rhoai`, `poc-notebook`
 - `ApplicationSet` 이름: `<area>-all` (예: `platform-all`)
 - `AppProject` 이름: `<area>` (예: `platform`, `rhoai`, `poc`)
 

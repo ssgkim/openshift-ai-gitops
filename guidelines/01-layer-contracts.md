@@ -120,10 +120,12 @@
 | 번호 | 의미 |
 |---|---|
 | 00 | preflight / 전제조건 점검 (읽기 전용) |
-| 10–20 | 부트스트랩 (OpenShift GitOps 설치, App-of-Apps) |
-| 30–40 | 플랫폼 Operator 설치 (ServiceMesh / Serverless / Pipelines / cert-manager) |
+| 10 | OpenShift GitOps Operator 부트스트랩 |
+| 20 | OpenShift AI Operator + DataScienceCluster 부트스트랩 |
+| 30 | ArgoCD Application 인계 / diff / sync |
+| 40 | 플랫폼 Operator 추가 설치 (ServiceMesh / Serverless / Pipelines / cert-manager 등 필요 시) |
 | 45 | GPU 스택 (NFD + NVIDIA GPU Operator) — 선택 |
-| 50 | OpenShift AI Operator + DataScienceCluster |
+| 50 | RHOAI 토폴로지 정합화 / 의존성 보강 |
 | 60–69 | PoC 검증 (노트북 / 서빙 / 파이프라인 / 분산) |
 | 70 | 종합 검증 |
 | 80 | 예약 |
@@ -192,8 +194,10 @@ infra/
 │   ├── bootstrap/         App-of-Apps 루트
 │   └── applications/      각 App의 Application CR
 ├── operators/
-│   └── subscriptions/     OperatorGroup + Subscription
-├── openshift-ai/          DataScienceCluster + 관련 CR
+│   ├── subscriptions/     공통 OperatorGroup + Subscription
+│   └── <operator-name>/   개별 Operator 의존성 묶음
+├── rhoai/                 RHOAI Operator + DataScienceCluster + 관련 CR
+│   └── gateway/           RHOAI Gateway API 리소스
 └── poc/                   각 PoC의 매니페스트
 ```
 

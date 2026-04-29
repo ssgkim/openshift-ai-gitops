@@ -6,9 +6,8 @@
 #   - 의존성(JobSet Operator / LeaderWorkerSet Operator / MaaS Gateway)은
 #     별도 Application으로 분리해 추후 ApplicationSet으로 흡수한다.
 # 운영 모드 전환 체크리스트:
-#   1. .env의 GITHUB_REMOTE를 실제 https URL로 교체 (예: https://github.com/<org>/openshift-ai-gitops.git)
-#   2. 본 파일의 spec.source.repoURL을 실제 URL로 치환
-#   3. runbooks/30-argocd-app-sync.md 절차에 따라 diff → sync
+#   1. .env의 GITHUB_REMOTE와 본 파일의 spec.source.repoURL 일치 확인
+#   2. runbooks/30-argocd-app-sync.md 절차에 따라 diff → sync
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -21,7 +20,7 @@ metadata:
 spec:
   project: default
   source:
-    # 부트스트랩 단계 placeholder. 운영 모드 전환 전에 실제 URL로 치환할 것.
+    # Session 15에서 실제 GitHub URL로 치환 완료.
     repoURL: https://github.com/ssgkim/openshift-ai-gitops.git
     targetRevision: main
     path: infra/rhoai

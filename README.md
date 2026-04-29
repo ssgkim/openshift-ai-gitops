@@ -1,8 +1,8 @@
 # OpenShift AI GitOps
 
-기존 OpenShift 클러스터에 GitOps(ArgoCD) 기반으로 **OpenShift AI 스택**과 **PoC 검증 환경**을 유지관리·운영하는 프로젝트.
+기존 OpenShift 클러스터에 GitOps(ArgoCD) 기반으로 **OpenShift AI 스택**과 **PoC 검증 환경**을 구축하고, 완료 선언 이후 유지관리·운영하는 프로젝트.
 
-초기 구축 단계에서는 부트스트랩을 위해 넓은 클러스터 권한을 사용했다. 현재 프로젝트의 기본 목적은 운영 레벨 유지관리이며, 변경은 Git/IaC와 ArgoCD를 통한 선언형 흐름으로 관리한다.
+현재 상태는 초기 구축(BOOTSTRAP) 마무리 단계다. 사람이 "초기 구축 완료"를 선언하고 ArgoCD 인계가 검증되면 운영 유지관리(OPS) 단계로 전환한다.
 
 ---
 
@@ -44,11 +44,12 @@ Layer 4 (infra/)            불변 IaC (YAML)
 5. **실패는 데이터** — 은폐 금지, `constraints.md`에 누적
 6. **계약 위반 시 중단** — 사람 승인 없이 우회 금지
 
-### 운영 모드 원칙
+### 단계별 권한 원칙
 
-- 부트스트랩 권한은 초기 설치·복구용 예외로만 사용한다.
-- 현재 기본 모드는 운영 유지관리다. 읽기 진단, 문서 갱신, IaC 변경안 작성, ArgoCD diff 확인이 기본 작업이다.
-- `oc apply/create/patch/delete`, `argocd app sync` 같은 변경 명령은 사람의 명시 승인과 CHECKPOINT 이후에만 실행한다.
+- BOOTSTRAP 단계에서는 초기 설치·복구를 위해 승인된 직접 적용을 사용할 수 있다.
+- 모든 변경 명령(`oc apply/create/patch/delete`, `argocd app sync`)은 사람의 명시 승인과 CHECKPOINT 이후에만 실행한다.
+- BOOTSTRAP 변경도 반드시 Git/IaC와 상태 문서에 정합화해 다음 단계에서 ArgoCD가 인계받을 수 있게 한다.
+- OPS 전환 이후에는 읽기 진단, 문서 갱신, IaC 변경안 작성, ArgoCD diff 확인이 기본 작업이다.
 - ArgoCD가 관리하는 리소스는 Git/IaC를 고친 뒤 ArgoCD로 반영한다.
 
 ---
@@ -77,7 +78,7 @@ Layer 4 (infra/)            불변 IaC (YAML)
 └── infra/                     Layer 4 — IaC (YAML)
     ├── argocd/
     ├── operators/
-    ├── openshift-ai/
+    ├── rhoai/
     └── poc/
 ```
 
