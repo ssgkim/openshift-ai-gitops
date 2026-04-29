@@ -1,0 +1,42 @@
+# 출처: work-plans/002-gitops-handover-scope.md Scope 3 — 의존성 분리 편입 (B-2)
+# 대상: infra/operators/leader-worker-set (namespace, operator-group, subscription, lws-operator CR)
+# 의도:
+#   - RHOAI KServe LLMInferenceService Wide Expert Parallelism 의존성을 ArgoCD가 인계받게 한다.
+#   - drift 0 상태에서 prune=false로 안전 sync.
+#   - cluster-scoped LeaderWorkerSetOperator CR patch 권한은
+#     infra/argocd/rbac/platform-operators-cluster-cr.yaml에서 보강.
+# 운영 모드 전환 체크리스트:
+#   1. infra/argocd/bootstrap/kustomization.yaml의 gitops-repo-config로 repoURL/targetRevision 자동 주입
+#   2. runbooks/31-rhoai-dependency-app-sync.md 절차에 따라 dry-run → diff → sync
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: lws
+  namespace: openshift-gitops
+  labels:
+    app.kubernetes.io/part-of: openshift-ai-gitops
+    app.kubernetes.io/component: rhoai-dependency
+spec:
+  project: platform-operators
+  source:
+    # bootstrap kustomization의 gitops-repo-config replacement로 동일 값을 재주입한다.
+    repoURL: https://github.com/ssgkim/openshift-ai-gitops.git
+    targetRevision: main
+    path: infra/operators/leader-worker-set
+    directory:
+      recurse: false
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: openshift-lws-operator
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=false       # namespace.yaml로 명시 관리
+      - ApplyOutOfSyncOnly=true
+      - Prune=false
+      - ServerSideApply=true
+    retry:
+      limit: 3
+      backoff:
+        duration: 30s
+        factor: 2
+        maxDuration: 5m

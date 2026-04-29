@@ -112,3 +112,13 @@
 - 블로커: Scope 3에서 의존성을 하나로 묶을지 각각 분리할지 결정 필요
 - 다음 세션이 할 일: [CHECKPOINT] 후 Scope 3 Application IaC 작성/dry-run/sync
 - 발견된 제약: ArgoCD DSC 전용 RBAC, OperatorGroup live 이름, tracking annotation 정합화 필요
+
+---
+
+## 2026-04-30 Session 23 — Scope 3 RHOAI 의존성 Application sync 완료
+
+- 완료: `jobset`, `lws`, `maas-gateway` Application 등록/sync 완료, 모두 `Synced/Healthy`
+- 진행중: Scope 4 PoC(`workbench-smoke`, `llm-cpu`) Application 편입 대기
+- 블로커: Scope 4에서 PoC를 개별 Application으로 둘지 묶을지 결정 필요
+- 다음 세션이 할 일: [CHECKPOINT] 후 Scope 4 Application IaC 작성/dry-run/sync
+- 발견된 제약: MaaS Gateway sync에는 Gateway API ClusterRole/Binding 필요, `argocd` CLI 없으면 Application operation patch 사용

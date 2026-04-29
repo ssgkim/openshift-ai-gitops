@@ -61,7 +61,7 @@
 - [x] `GITHUB_REMOTE` 값이 실제 ArgoCD repoURL과 일치하는가 — `.env`와 `infra/argocd` 모두 `https://github.com/ssgkim/openshift-ai-gitops.git`
 - [x] 현재 Git 원격이 public인지 private인지, ArgoCD repository secret이 필요한가 — `git ls-remote` 인증 없이 성공, 현재 기준 repository secret 불필요
 - [x] AppProject를 `platform-operators`, `rhoai-core`, `rhoai-poc`로 나눌지 또는 더 단순화할지 — Scope 1에서 3개 AppProject로 분리
-- [ ] Scope 3에서 JobSet/LWS/MaaS Gateway를 하나의 `rhoai-dependencies` Application으로 묶을지 각각 분리할지
+- [x] Scope 3에서 JobSet/LWS/MaaS Gateway를 하나의 `rhoai-dependencies` Application으로 묶을지 각각 분리할지 — Session 23에서 각각 분리(`jobset`, `lws`, `maas-gateway`)
 - [ ] Scope 4에서 PoC Application을 개별 파일로 둘지 ApplicationSet 승격까지 기다릴지
 - [ ] ApplicationSet 승격 시점은 Scope 5 이후로 둘지, Scope 1에서 skeleton만 둘지
 

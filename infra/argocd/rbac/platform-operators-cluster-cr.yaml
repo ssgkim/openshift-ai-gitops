@@ -1,0 +1,36 @@
+# 출처: Scope 3 RHOAI 의존성 인계 (2026-04-30)
+# 원인: ArgoCD application-controller는 platform-operators 프로젝트 범위에서
+#       cluster-scoped operand CR (jobsetoperators / leaderworkersetoperators)를
+#       patch할 기본 권한이 없다. Scope 2의 RHOAI DSC와 동일한 패턴으로 RBAC를 보강한다.
+# 범위: JobSet/LWS 의존성 인계에 필요한 cluster-scoped operand 리소스만 허용한다.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: openshift-ai-gitops-platform-operators-cluster-cr
+rules:
+  - apiGroups:
+      - operator.openshift.io
+    resources:
+      - jobsetoperators
+      - leaderworkersetoperators
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - update
+      - patch
+      - delete
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: openshift-ai-gitops-platform-operators-cluster-cr
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: openshift-ai-gitops-platform-operators-cluster-cr
+subjects:
+  - kind: ServiceAccount
+    name: openshift-gitops-argocd-application-controller
+    namespace: openshift-gitops

@@ -1,6 +1,6 @@
-# 현재 상태 (2026-04-30 Session 22 기준)
+# 현재 상태 (2026-04-30 Session 23 기준)
 
-> **현재 상태: 부트스트랩 단계 마무리. RHOAI 기준선 정상 (`default-dsc Ready=True`, drift 0), PoC 스모크 워크벤치 통과, CPU LLM 모델(`smollm2-135m-cpu`) KServe 배포 및 OpenAI-compatible completion 검증 완료. ArgoCD 인계는 Scope 0~5로 분할 진행 중이며, Scope 2(`rhoai` 단일 Application 인계/sync)까지 완료했다.** 이 파일을 읽으면 클러스터 설치 현황, 미결 사항, 최근 이벤트를 한눈에 파악할 수 있다.
+> **현재 상태: 부트스트랩 단계 마무리. RHOAI 기준선 정상 (`default-dsc Ready=True`, drift 0), PoC 스모크 워크벤치 통과, CPU LLM 모델(`smollm2-135m-cpu`) KServe 배포 및 OpenAI-compatible completion 검증 완료. ArgoCD 인계는 Scope 0~5로 분할 진행 중이며, Scope 3(RHOAI 의존성 JobSet/LWS/MaaS Gateway Application 인계/sync)까지 완료했다.** 이 파일을 읽으면 클러스터 설치 현황, 미결 사항, 최근 이벤트를 한눈에 파악할 수 있다.
 
 ## 클러스터
 
@@ -51,6 +51,7 @@
 - [x] ArgoCD Application IaC + sync runbook 작성 — `infra/argocd/applications/rhoai.yaml`, `runbooks/30-argocd-app-sync.md` (Session 15)
 - [x] ArgoCD Scope 1 관리 뼈대 작성 — `infra/argocd/bootstrap/kustomization.yaml`, AppProject 3개, repo config replacement, dry-run 통과 (Session 19)
 - [x] ArgoCD Scope 2 RHOAI core 인계 — `rhoai` Application Synced/Healthy, `default-dsc Ready=True`, `oc diff` exit 0 (Session 22)
+- [x] ArgoCD Scope 3 RHOAI 의존성 인계 — `jobset`, `lws`, `maas-gateway` Application Synced/Healthy, `default-dsc Ready=True`, 의존성 drift 0 (Session 23)
 - [x] 워크벤치 1개 생성 — `rhoai-poc-smoke/smoke-wb` Pod Running 2/2, Python 셀 스모크 통과 (Session 15)
 - [x] CPU LLM 모델 배포 — `rhoai-poc-llm-cpu/smollm2-135m-cpu` Ready=True, `/v1/completions` 응답 확인 (Session 17)
 
@@ -75,13 +76,13 @@
 
 ## 최근 이벤트 (최대 3건)
 
+- 2026-04-30 Session 23: Scope 3 완료 — `jobset`, `lws`, `maas-gateway` Application을 등록/sync해 모두 `Synced/Healthy` 확인. MaaS Gateway sync 권한을 ClusterRole/Binding으로 보강했고 `default-dsc Ready=True`, JobSet/LWS/Gateway drift 0 유지.
 - 2026-04-30 Session 22: Scope 2 완료 — `rhoai` Application을 ArgoCD에 등록/sync해 `Synced/Healthy` 확인. DSC 전용 ArgoCD RBAC, live OperatorGroup 이름, tracking annotation을 정합화했고 `default-dsc Ready=True`, `oc diff` exit 0, PoC 영향 없음.
 - 2026-04-30 Session 19: Scope 1 완료 — `infra/argocd`에 AppProject 3개, applications/bootstrap kustomization, repo config replacement를 추가하고 `rhoai` Application을 `rhoai-core` 프로젝트로 편입. `kubectl kustomize`, `oc apply --dry-run=client -k infra/argocd/bootstrap`, `git ls-remote` 검증 통과.
-- 2026-04-30 Session 18: `ai-accelerator` 참고 패턴을 검토하고 GitOps 인계 범위를 `work-plans/002-gitops-handover-scope.md`로 분리. Scope 0~5 체크리스트를 `active-task.md`에 반영했으며 클러스터/infra 변경은 하지 않음.
 
 ## 미결 사항
 
-- ArgoCD App-of-Apps/ApplicationSet 구조 미완성 — Scope 2 완료. 다음은 Scope 3(RHOAI 의존성 JobSet/LWS/MaaS Gateway Application 편입)만 진행.
-- 운영 모드 전환 트리거는 부분 실행됨 — RHOAI core는 ArgoCD owned. 의존성/PoC는 아직 별도 Application으로 편입 전.
+- ArgoCD App-of-Apps/ApplicationSet 구조 미완성 — Scope 3 완료. 다음은 Scope 4(PoC `workbench-smoke`/`llm-cpu` Application 편입)만 진행.
+- 운영 모드 전환 트리거는 부분 실행됨 — RHOAI core와 의존성은 ArgoCD owned. PoC는 아직 별도 Application으로 편입 전.
 - CPU LLM PoC는 직접 적용 상태다. OPS 전환 전 `infra/poc/llm-cpu`를 별도 ArgoCD Application 또는 ApplicationSet에 편입 필요.
 - PoC 항목(스모크/CPU LLM 외) 미정 — Phase 5에서 결정 (사람 판단 필요).

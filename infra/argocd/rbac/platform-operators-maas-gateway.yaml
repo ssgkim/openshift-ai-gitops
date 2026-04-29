@@ -1,0 +1,35 @@
+# 출처: Scope 3 RHOAI 의존성 인계 (2026-04-30)
+# 원인: maas-gateway Application sync 시 ArgoCD application-controller가
+#       openshift-ingress 네임스페이스의 Gateway를 patch할 권한이 필요하다.
+# 범위: Gateway API 리소스만 허용한다. Role은 bootstrap namespace transformer로
+#       openshift-gitops에 재작성되므로 ClusterRole/ClusterRoleBinding을 사용한다.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: openshift-ai-gitops-maas-gateway
+rules:
+  - apiGroups:
+      - gateway.networking.k8s.io
+    resources:
+      - gateways
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - update
+      - patch
+      - delete
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: openshift-ai-gitops-maas-gateway
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: openshift-ai-gitops-maas-gateway
+subjects:
+  - kind: ServiceAccount
+    name: openshift-gitops-argocd-application-controller
+    namespace: openshift-gitops
