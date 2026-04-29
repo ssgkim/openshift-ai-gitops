@@ -22,7 +22,7 @@ spec:
   project: default
   source:
     # 부트스트랩 단계 placeholder. 운영 모드 전환 전에 실제 URL로 치환할 것.
-    repoURL: https://github.com/REPLACE-ORG/openshift-ai-gitops.git
+    repoURL: https://github.com/ssgkim/openshift-ai-gitops.git
     targetRevision: main
     path: infra/rhoai
     directory:
