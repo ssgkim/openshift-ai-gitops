@@ -6,6 +6,8 @@ kind: Subscription
 metadata:
   name: rhods-operator
   namespace: redhat-ods-operator
+  annotations:
+    argocd.argoproj.io/tracking-id: rhoai:operators.coreos.com/Subscription:redhat-ods-operator/rhods-operator
 spec:
   channel: beta
   installPlanApproval: Automatic

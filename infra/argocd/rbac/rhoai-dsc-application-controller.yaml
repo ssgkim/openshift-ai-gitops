@@ -1,0 +1,33 @@
+# 출처: Scope 2 ArgoCD sync 실패 (2026-04-30)
+# 원인: openshift-gitops application-controller가 cluster-scoped DataScienceCluster를 patch할 권한 없음.
+# 범위: RHOAI DSC 인계에 필요한 datascienceclusters 리소스만 허용한다.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: openshift-ai-gitops-rhoai-dsc-manager
+rules:
+  - apiGroups:
+      - datasciencecluster.opendatahub.io
+    resources:
+      - datascienceclusters
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - update
+      - patch
+      - delete
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: openshift-ai-gitops-rhoai-dsc-manager
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: openshift-ai-gitops-rhoai-dsc-manager
+subjects:
+  - kind: ServiceAccount
+    name: openshift-gitops-argocd-application-controller
+    namespace: openshift-gitops

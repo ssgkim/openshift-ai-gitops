@@ -189,3 +189,25 @@
   - `infra/rhoai/operator-group.yaml`은 현재 클러스터 live 이름인 `redhat-ods-operator-wx7bd`와 정합화한다.
   - 샌드박스 교체 시 OperatorGroup 이름이 달라질 수 있으므로 새 클러스터에서는 survey/diff 후 이름을 재확인한다.
   - `rhoai` Application sync 전에 `oc diff -f infra/rhoai/operator-group.yaml`가 exit 0 또는 의도한 metadata-only 차이인지 확인한다.
+
+---
+
+## 2026-04-30: ArgoCD application-controller RHOAI DSC RBAC 필요
+
+- 맥락: Scope 2 `rhoai` Application 첫 sync 실패
+- 내용: `openshift-gitops-argocd-application-controller` ServiceAccount가 cluster-scoped `datascienceclusters.datasciencecluster.opendatahub.io`를 patch할 권한이 없어 sync가 실패했다.
+- 영향 범위:
+  - `infra/argocd/rbac/rhoai-dsc-application-controller.yaml`에서 DSC 리소스에 한정한 ClusterRole/Binding을 부여한다.
+  - `ai-accelerator`의 cluster-admin 부여 패턴은 참고만 하고, 현재 프로젝트는 최소 권한으로 제한한다.
+  - Scope 2 재시도 전 `oc auth can-i patch datascienceclusters.datasciencecluster.opendatahub.io --as=system:serviceaccount:openshift-gitops:openshift-gitops-argocd-application-controller`가 `yes`인지 확인한다.
+
+---
+
+## 2026-04-30: ArgoCD tracking annotation과 `oc diff`
+
+- 맥락: Scope 2 `rhoai` Application sync 후 ArgoCD는 `Synced/Healthy`이나 `oc diff`가 non-zero 반환
+- 내용: live 리소스에 ArgoCD가 `argocd.argoproj.io/tracking-id` annotation을 추가했고, 로컬 IaC에 해당 annotation이 없어 `oc diff`가 metadata-only 차이를 보고했다.
+- 영향 범위:
+  - `infra/rhoai/{namespace,operator-group,subscription,datasciencecluster}.yaml`에는 현재 `rhoai` Application 기준 tracking annotation을 명시한다.
+  - Application 이름 또는 destination namespace를 변경하면 tracking-id 값도 함께 갱신해야 한다.
+  - spec drift와 metadata tracking drift를 구분해 판단한다.

@@ -6,6 +6,7 @@ kind: Kustomization
 namespace: openshift-gitops
 
 resources:
+  - ../rbac
   - ../projects
   - ../applications
 
