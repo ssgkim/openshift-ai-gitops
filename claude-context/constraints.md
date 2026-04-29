@@ -178,3 +178,14 @@
 - 영향 범위:
   - GPU PoC를 완전히 제외하지 말고 Phase 5에서 선택 가능한 항목으로 재검토한다.
   - CPU LLM PoC는 GPU request를 넣지 않았으므로 이번 배포와는 무관하다.
+
+---
+
+## 2026-04-30: RHOAI OperatorGroup live 이름 정합화 필요
+
+- 맥락: Scope 2 `rhoai` Application diff 검토 중 확인
+- 내용: live `redhat-ods-operator` 네임스페이스의 OperatorGroup은 `generateName` 기반 `redhat-ods-operator-wx7bd` 이름으로 존재한다. IaC가 `redhat-ods-operator` 고정 이름을 사용하면 ArgoCD sync 시 두 번째 OperatorGroup 생성을 시도할 수 있다.
+- 영향 범위:
+  - `infra/rhoai/operator-group.yaml`은 현재 클러스터 live 이름인 `redhat-ods-operator-wx7bd`와 정합화한다.
+  - 샌드박스 교체 시 OperatorGroup 이름이 달라질 수 있으므로 새 클러스터에서는 survey/diff 후 이름을 재확인한다.
+  - `rhoai` Application sync 전에 `oc diff -f infra/rhoai/operator-group.yaml`가 exit 0 또는 의도한 metadata-only 차이인지 확인한다.

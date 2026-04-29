@@ -1,9 +1,12 @@
-# 출처: Red Hat OpenShift AI 공식 설치 문서
+# 출처: live `redhat-ods-operator` 네임스페이스 OperatorGroup (2026-04-30 Scope 2 diff)
 # RHOAI는 AllNamespaces 모드로 설치 (targetNamespaces 비어있음)
+# 현재 클러스터에는 OperatorGroup이 generateName으로 생성되어 `redhat-ods-operator-wx7bd` 이름을 사용한다.
+# ArgoCD sync가 `redhat-ods-operator`라는 두 번째 OperatorGroup을 만들지 않도록 live 이름과 정합화한다.
 # claude-context/version-matrix.md — RHOAI 3.4.0 / beta
 apiVersion: operators.coreos.com/v1
 kind: OperatorGroup
 metadata:
-  name: redhat-ods-operator
+  name: redhat-ods-operator-wx7bd
   namespace: redhat-ods-operator
-spec: {}
+spec:
+  upgradeStrategy: Default
