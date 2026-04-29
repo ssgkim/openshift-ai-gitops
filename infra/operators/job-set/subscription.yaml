@@ -1,0 +1,14 @@
+# 출처: oc get packagemanifest job-set -n openshift-marketplace 2026-04-29 실행 결과
+# stable-v1.0 / currentCSV: jobset-operator.v1.0.0
+# 목적: RHOAI 3.4 TrainerReady 의존성 충족
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: job-set
+  namespace: openshift-jobset-operator
+spec:
+  channel: stable-v1.0
+  installPlanApproval: Automatic
+  name: job-set
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace

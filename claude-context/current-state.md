@@ -1,6 +1,6 @@
-# 현재 상태 (2026-04-29 Session 12 기준)
+# 현재 상태 (2026-04-29 Session 14 기준)
 
-> **현재 상태: 새 샌드박스 접근 확인 완료. OpenShift 4.21.9, Console/API URL 확인, GitOps 1.20.2 설치됨, RHOAI 3.4.0-ea.1 설치됨. DataScienceCluster는 `modelsasservice`와 `trainer` 때문에 NotReady 상태다.** 이 파일을 읽으면 클러스터 설치 현황, 미결 사항, 최근 이벤트를 한눈에 파악할 수 있다.
+> **현재 상태: 새 샌드박스 접근 확인 완료. OpenShift 4.21.9, Console/API URL 확인, GitOps 1.20.2 설치됨, RHOAI 3.4.0-ea.1 설치됨. JobSet Operator, LeaderWorkerSet Operator, MaaS Gateway 의존성을 보강해 `default-dsc`가 Ready 상태로 수렴했다.** 이 파일을 읽으면 클러스터 설치 현황, 미결 사항, 최근 이벤트를 한눈에 파악할 수 있다.
 
 ## 클러스터
 
@@ -42,7 +42,10 @@
 - [x] NFD Operator — **4.21.0-202604200440 / stable** (GPU 노드 없음)
 - [x] NVIDIA GPU Operator — **v26.3.1 / v26.3** (GPU 노드 없음)
 - [x] OpenShift AI Operator (RHOAI) — 목표 **3.4.0**, 관측 CSV **3.4.0-ea.1** / beta (새 survey)
-- [ ] DataScienceCluster 적용 — **default-dsc NotReady** (새 survey)
+- [x] JobSet Operator — **v1.0.0 / stable-v1.0** (`openshift-jobset-operator`)
+- [x] LeaderWorkerSet Operator — **v1.0.0 / stable-v1.0** (`openshift-lws-operator`)
+- [x] MaaS Gateway — `openshift-ingress/maas-default-gateway` Programmed=True
+- [x] DataScienceCluster 적용 — **default-dsc Ready**
 - [ ] 워크벤치 1개 생성
 
 ## OperatorHub 카탈로그 상태
@@ -66,13 +69,14 @@
 
 ## 최근 이벤트 (최대 3건)
 
+- 2026-04-29 Session 14: 사용자 승인 하에 RHOAI 의존성 보강 — JobSet Operator, LeaderWorkerSet Operator, `maas-default-gateway` 생성, `default-dsc` Ready 확인.
 - 2026-04-29 Session 12: 실제 클러스터 접근 확인 — 로그인 성공(admin), API/Console URL 확인, OpenShift 4.21.9, GitOps 1.20.2 Route 확인, DSC NotReady 원인 확인.
-- 2026-04-29: 사용자 지시로 새 샌드박스 RHOAI 목표를 3.4.0으로 확정. 현재 관측 CSV는 3.4.0-ea.1이며 DSC는 NotReady.
-- 2026-04-29 Session 10 복구: 미커밋 중단점 확인 중 새 샌드박스 survey(`survey-20260422-210156.txt`) 발견 — OCP 4.21.9, RHOAI 3.4.0-ea.1, GitOps 미설치, DSC NotReady.
+- 2026-04-29: 사용자 지시로 새 샌드박스 RHOAI 목표를 3.4.0으로 확정. 관측 CSV는 3.4.0-ea.1이며 Session 14에서 DSC Ready로 수렴.
 
 ## 미결 사항
 
-- `default-dsc NotReady` 원인: `modelsasservice`는 `openshift-ingress/maas-default-gateway` 없음, `trainer`는 JobSet Operator 미설치
+- `infra/rhoai/datasciencecluster.yaml`는 live `default-dsc` v2 스펙과 차이가 있어 바로 적용하면 운영 drift/축소 위험이 있다. 별도 정합화 필요.
+- App-of-Apps/ArgoCD 소유권 구조는 아직 미완성이다. 이번 변경은 의존성 IaC를 추가하고 승인된 직접 적용으로 클러스터 정상화를 먼저 완료했다.
 - GPU Operator/NFD는 설치됐지만 GPU allocatable 노드는 없음
 - 프로젝트 운영 모드 전환 반영: 부트스트랩 권한은 예외, 기본은 읽기 진단 + Git/IaC 변경안 + ArgoCD 기반 반영
 - PoC 항목 미정 — Phase 5에서 결정 (사람 판단 필요)

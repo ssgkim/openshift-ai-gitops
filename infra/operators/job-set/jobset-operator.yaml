@@ -1,0 +1,8 @@
+# 출처: jobset-operator.v1.0.0 CSV owned CRD
+# 목적: RHOAI TrainerReady 의존성 충족을 위해 JobSet operand 활성화
+apiVersion: operator.openshift.io/v1
+kind: JobSetOperator
+metadata:
+  name: cluster
+spec:
+  managementState: Managed

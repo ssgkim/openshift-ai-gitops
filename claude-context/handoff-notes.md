@@ -42,3 +42,13 @@
 - 블로커: 운영 모드에서는 직접 클러스터 변경이 기본 경로가 아니며 Git/IaC + ArgoCD 반영 절차 필요
 - 다음 세션이 할 일: ModelsAsService/Trainer 처리 방향을 IaC 변경안으로 정리
 - 발견된 제약: 부트스트랩 권한은 예외, 운영 기본 권한은 읽기 진단 중심 (`constraints.md` 반영)
+
+---
+
+## 2026-04-29 Session 14 — RHOAI 의존성 보강 및 DSC Ready 확보
+
+- 완료: JobSet(v1.0.0), LeaderWorkerSet(v1.0.0), `openshift-ingress/maas-default-gateway`를 설치/생성해 `default-dsc` Ready 확인
+- 진행중: live DSC v2 스펙과 `infra/rhoai/datasciencecluster.yaml` 정합화 필요
+- 블로커: App-of-Apps/ArgoCD 소유권 구조 미완성, PoC 항목 미정
+- 다음 세션이 할 일: DSC IaC 정합화 후 워크벤치 1개 생성 및 Python 셀 스모크 검증
+- 발견된 제약: JobSet은 `openshift-jobset-operator`, LWS는 `openshift-lws-operator`, MaaS는 `maas-default-gateway` 필요

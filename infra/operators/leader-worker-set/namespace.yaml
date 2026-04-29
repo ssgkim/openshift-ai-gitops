@@ -1,0 +1,5 @@
+# Source: leader-worker-set package manifest suggested namespace, 2026-04-29.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: openshift-lws-operator

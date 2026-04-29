@@ -132,3 +132,17 @@
   - `oc apply/create/patch/delete`, `argocd app sync` 등은 CHECKPOINT와 사람 승인 후에만 실행한다.
   - DSC NotReady 해소도 우선 `infra/rhoai/datasciencecluster.yaml` 변경안으로 관리하고, 운영 반영은 ArgoCD 경로를 따른다.
   - 로컬 도구 권한 설정은 가능하면 읽기 중심으로 낮추고, 부트스트랩 권한은 별도 예외로 취급한다.
+
+---
+
+## 2026-04-29: RHOAI 3.4 정상화 의존성 — JobSet / LeaderWorkerSet / MaaS Gateway
+
+- 맥락: 사용자 승인 하에 현재 클러스터의 RHOAI 정상 상태를 확보하기 위해 `default-dsc` NotReady 원인을 해소
+- 내용:
+  - TrainerReady는 JobSet Operator가 필요하며, 설치 네임스페이스는 `openshift-jobset-operator`다. `openshift-job-set` 네임스페이스는 잘못된 초기 시도였고 삭제했다.
+  - KServe LLMInferenceService Wide Expert Parallelism 의존성은 LeaderWorkerSet Operator가 필요하며, 설치 네임스페이스는 `openshift-lws-operator`다.
+  - ModelsAsServiceReady는 `openshift-ingress/maas-default-gateway`가 필요하다. 기존 `data-science-gateway-class`, `data-science-gateway-config`, `data-science-gateway-service-tls`를 사용해 Gateway를 생성했다.
+  - 적용 후 `default-dsc`는 Ready=True로 수렴했다.
+- 영향 범위:
+  - `infra/operators/job-set/`, `infra/operators/leader-worker-set/`, `infra/rhoai/gateway/`를 RHOAI 3.4 운영 기준선에 포함한다.
+  - `infra/rhoai/datasciencecluster.yaml`는 live v2 스펙과 차이가 있어 정합화 전 직접 적용하지 않는다.

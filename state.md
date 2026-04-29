@@ -2,13 +2,13 @@
 
 전체 로드맵의 체크리스트. 세션 단위의 세부 상태는 [`claude-context/current-state.md`](claude-context/current-state.md), 누적 인수인계는 [`claude-context/handoff-notes.md`](claude-context/handoff-notes.md) 참조.
 
-**진척 요약**: 새 샌드박스 접근 확인 완료 · OCP 4.21.9 / RHOAI 목표 3.4.0(관측 CSV 3.4.0-ea.1) 확정 · GitOps 1.20.2 설치됨 · 운영 유지관리 모드로 전환 · DSC NotReady 원인 확인됨
+**진척 요약**: 새 샌드박스 접근 확인 완료 · OCP 4.21.9 / RHOAI 목표 3.4.0(관측 CSV 3.4.0-ea.1) 확정 · GitOps 1.20.2 설치됨 · 운영 유지관리 모드로 전환 · JobSet/LeaderWorkerSet/MaaS Gateway 의존성 보강 완료 · DSC Ready 확인
 
 ---
 
 ## 📍 현재 Phase
 
-> **운영 유지관리 모드 / Phase 4 복구 중** — 새 샌드박스 접근과 GitOps/RHOAI 설치는 확인됨. `default-dsc`가 ModelsAsService/Trainer 의존성 때문에 NotReady라 Git/IaC 기반으로 컴포넌트 제거 또는 의존성 설치 결정을 해야 한다.
+> **운영 유지관리 모드 / Phase 4 검증 중** — 새 샌드박스 접근과 GitOps/RHOAI 설치 확인 완료. 사용자 승인 하에 JobSet Operator, LeaderWorkerSet Operator, MaaS Gateway 의존성을 보강해 `default-dsc` Ready를 확보했다. 다음은 live DSC 스펙 정합화와 워크벤치 스모크 검증이다.
 
 ---
 
@@ -88,6 +88,8 @@
 - [x] ServiceMesh Operator — 새 샌드박스 설치됨 (servicemeshoperator3.v3.3.2)
 - [ ] Serverless Operator — RHOAI 3.4.0 PoC 구성에 따라 재검토
 - [x] Pipelines Operator — 새 샌드박스 설치됨 (openshift-pipelines-operator-rh.v1.22.0)
+- [x] JobSet Operator — RHOAI Trainer 의존성, v1.0.0 / stable-v1.0
+- [x] LeaderWorkerSet Operator — RHOAI KServe LLMInferenceService WEP 의존성, v1.0.0 / stable-v1.0
 - [x] NFD + NVIDIA GPU Operator — Operator 설치됨, GPU allocatable 노드 없음
 
 **완료 기준**: 모든 Operator CSV가 `Succeeded`, ArgoCD에서 모두 Healthy.
@@ -102,7 +104,8 @@
 - [x] `infra/rhoai/subscription.yaml` — RHOAI Operator (Session 07, 실제 경로 `infra/rhoai/`)
 - [x] `infra/rhoai/datasciencecluster.yaml` — `default-dsc` 구성 (Session 07)
 - [x] `runbooks/20-rhoai-operator-install.md` (Session 09) — ※ 번호는 `guidelines/01-layer-contracts.md` 할당(50)과 상이. 재정렬 여부 별도 결정.
-- [ ] DSC 상태 `Ready` — 새 샌드박스 `default-dsc NotReady` (`modelsasservice`, `trainer`)
+- [x] MaaS Gateway — `openshift-ingress/maas-default-gateway` Programmed=True
+- [x] DSC 상태 `Ready` — JobSet Operator + LeaderWorkerSet Operator + MaaS Gateway 의존성 보강 후 확인
 - [x] 웹콘솔 RHOAI 대시보드 접근 — `data-science-gateway` / `rhods-dashboard` Route 확인
 - [ ] 워크벤치 1개 생성 성공
 
@@ -141,6 +144,7 @@
 - **2026-04-29** — 사용자 결정: 새 샌드박스 RHOAI 목표를 3.4.0으로 확정
 - **2026-04-29** Session 12 — 실제 클러스터 접근 확인, Console/API URL 확인, GitOps 1.20.2 설치 확인, DSC NotReady 원인 확인
 - **2026-04-29** Session 13 — 프로젝트 목적을 운영 유지관리로 재정의, 부트스트랩 권한과 운영 권한 분리
+- **2026-04-29** Session 14 — JobSet Operator, LeaderWorkerSet Operator, MaaS Gateway 의존성 보강, `default-dsc` Ready 확인
 
 ---
 

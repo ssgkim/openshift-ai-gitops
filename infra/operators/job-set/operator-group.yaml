@@ -1,0 +1,10 @@
+# 출처: oc get packagemanifest job-set 2026-04-29 실행 결과
+# OwnNamespace 설치 모드 사용
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: job-set-operator
+  namespace: openshift-jobset-operator
+spec:
+  targetNamespaces:
+    - openshift-jobset-operator

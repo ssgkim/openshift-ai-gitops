@@ -1,0 +1,9 @@
+# Source: leader-worker-set package manifest supports OwnNamespace install mode.
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: leader-worker-set-operator
+  namespace: openshift-lws-operator
+spec:
+  targetNamespaces:
+    - openshift-lws-operator

@@ -1,0 +1,10 @@
+# Source: leader-worker-set.v1.0.0 CSV alm-examples.
+# Purpose: activate the LWS operand for RHOAI KServe LLMInferenceService WEP.
+apiVersion: operator.openshift.io/v1
+kind: LeaderWorkerSetOperator
+metadata:
+  name: cluster
+spec:
+  logLevel: Normal
+  managementState: Managed
+  operatorLogLevel: Normal
