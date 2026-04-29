@@ -2,13 +2,13 @@
 
 전체 로드맵의 체크리스트. 세션 단위의 세부 상태는 [`claude-context/current-state.md`](claude-context/current-state.md), 누적 인수인계는 [`claude-context/handoff-notes.md`](claude-context/handoff-notes.md) 참조.
 
-**진척 요약**: Phase 0 완료 ✅ · Phase 1 준비 (사람 입력 대기)
+**진척 요약**: 이전 샌드박스 기준 Phase 0~4 기반 완료 ✅ · 새 샌드박스 survey(OCP 4.21.9 / RHOAI 3.4.0-ea.1 / DSC NotReady) 발견 · 현재 타깃 재확정 대기
 
 ---
 
 ## 📍 현재 Phase
 
-> **Phase 0 완료 → Phase 1 착수 준비 중** (`.env` 작성 및 RHOAI 목표 버전 결정 대기)
+> **환경 재정렬 대기** — 이전 샌드박스는 DSC Ready까지 완료됐으나, 새 샌드박스 survey 결과가 발견됨. 새 환경을 현재 타깃으로 전환할지 결정한 뒤 Phase 2~4 상태를 재산정해야 한다.
 
 ---
 
@@ -46,13 +46,14 @@
 
 **목표**: 재사용할 클러스터의 현황을 파악하고 `version-matrix.md`·`constraints.md`를 채운다.
 
-- [ ] `.env` 작성 (`KUBECONFIG`, `CLUSTER_DOMAIN`, `OCP_AI_ENV_MODE` 등)
-- [ ] `runbooks/00-preflight.md` 작성 (읽기 전용 점검 스크립트)
-- [ ] OpenShift 버전 확인 → `version-matrix.md`
-- [ ] 기존 설치된 Operator 목록 → `version-matrix.md`
-- [ ] 기존 네임스페이스·ArgoCD 유무 → `constraints.md`
-- [ ] RHOAI 호환 매트릭스에서 목표 버전 확정 → `version-matrix.md`
-- [ ] `work-plans/001-dual-env-strategy.md` Open Questions 해소 (구조 옵션 B 확정 / ApplicationSet 여부 / Quay vs internal registry 역할)
+- [x] `.env` 작성 (Session 03)
+- [x] `runbooks/00-preflight.md` 작성 (Session 02)
+- [x] `runbooks/01-cluster-survey.md` + `scripts/cluster-survey.sh` (Session 04)
+- [x] OpenShift 버전 확인 → `version-matrix.md` (4.20.18 / stable-4.20)
+- [x] 기존 설치된 Operator 목록 → `version-matrix.md` (cert-manager 1.18.1만 존재, GitOps/RHOAI 미설치)
+- [x] 기존 네임스페이스·ArgoCD 유무 → `constraints.md` (ArgoCD/RHOAI 미설치, proxy 오브젝트 존재, GPU 없음, 자가서명 TLS)
+- [x] RHOAI 호환 매트릭스에서 목표 버전 확정 → `version-matrix.md` (3.3 / stable-3.3)
+- [ ] `work-plans/001-dual-env-strategy.md` Open Questions 해소 (※ Air-gap 이행 시점까지 보류)
 - [ ] `work-plans/002-gitops-boundary.md` — Day-0/1 경계 결정 (※ 듀얼 환경 확정 후 작성)
 
 **완료 기준**: `current-state.md`의 placeholder 3개 (버전·endpoint·도메인) 모두 채워짐 + `version-matrix.md` 주요 행 확정 + `001-dual-env-strategy.md` Decision 확정.
@@ -63,13 +64,13 @@
 
 **목표**: ArgoCD 설치 + App-of-Apps 구조로 이후 자동화의 기반 마련.
 
-- [ ] `work-plans/002-argocd-strategy.md` (AppProject 분리 정책 등)
-- [ ] `infra/argocd/bootstrap/` — App-of-Apps 루트 매니페스트
-- [ ] `infra/argocd/applications/` — 각 Application CR
-- [ ] `runbooks/10-argocd-operator-install.md`
-- [ ] `runbooks/20-app-of-apps.md`
-- [ ] OpenShift GitOps Operator 설치 성공
-- [ ] 첫 App-of-Apps sync 성공
+- [ ] `work-plans/002-argocd-strategy.md` (AppProject 분리 정책 등) — ※ 직접 `oc apply` 방식 채택으로 보류
+- [ ] `infra/argocd/bootstrap/` — App-of-Apps 루트 매니페스트 (※ 미적용)
+- [ ] `infra/argocd/applications/` — 각 Application CR (※ 미적용)
+- [x] `runbooks/10-argocd-operator-install.md` (Session 07)
+- [ ] `runbooks/20-app-of-apps.md` (※ 현재는 단순 `oc apply` 경로, 향후 App-of-Apps 재검토 필요)
+- [x] OpenShift GitOps Operator 설치 성공 — v1.20.1 / latest (Session 08, Route 확인)
+- [ ] 첫 App-of-Apps sync 성공 (※ 보류)
 
 **완료 기준**: ArgoCD 웹콘솔 접속 + App-of-Apps가 `Synced & Healthy`.
 
@@ -79,14 +80,14 @@
 
 **목표**: RHOAI 선행 조건 Operator를 GitOps로 설치.
 
-- [ ] `work-plans/003-operator-dependency.md` — 의존성·설치 순서
-- [ ] `infra/operators/subscriptions/` — 각 Subscription YAML
-- [ ] `runbooks/30-platform-operators.md`
-- [ ] cert-manager Operator
-- [ ] ServiceMesh Operator
-- [ ] Serverless Operator
-- [ ] Pipelines Operator
-- [ ] (선택) NFD + NVIDIA GPU Operator → `runbooks/45-gpu-stack.md`
+- [ ] `work-plans/003-operator-dependency.md` — 의존성·설치 순서 (※ OLM 의존성 자동 해결로 보류)
+- [ ] `infra/operators/subscriptions/` — 각 Subscription YAML (※ RHOAI가 ServiceMesh 자동 설치)
+- [ ] `runbooks/30-platform-operators.md` (※ 개별 runbook 불필요)
+- [x] cert-manager Operator — 클러스터 기존 설치 (Session 06, v1.18.1 / stable-v1)
+- [x] ServiceMesh Operator — RHOAI 의존성으로 자동 설치 (Session 09, servicemeshoperator3.v3.1.0)
+- [ ] Serverless Operator — RHOAI 3.3의 KServe RawDeployment 사용 시 불필요
+- [ ] Pipelines Operator — RHOAI 내장 `datasciencepipelines` 사용 (별도 설치 불필요)
+- ⛔ NFD + NVIDIA GPU Operator — GPU 노드 없음 (N/A)
 
 **완료 기준**: 모든 Operator CSV가 `Succeeded`, ArgoCD에서 모두 Healthy.
 
@@ -96,12 +97,12 @@
 
 **목표**: RHOAI Operator + DataScienceCluster 적용, 워크벤치까지 생성.
 
-- [ ] `work-plans/004-openshift-ai-topology.md` — 컴포넌트 선택 근거
-- [ ] `infra/openshift-ai/subscription.yaml` — RHOAI Operator
-- [ ] `infra/openshift-ai/datasciencecluster.yaml` — 최소 컴포넌트 구성
-- [ ] `runbooks/50-openshift-ai-install.md`
-- [ ] DSC 상태 `Ready`
-- [ ] 웹콘솔 RHOAI 대시보드 접근
+- [ ] `work-plans/004-openshift-ai-topology.md` — 컴포넌트 선택 근거 (※ 사후 문서화 필요)
+- [x] `infra/rhoai/subscription.yaml` — RHOAI Operator (Session 07, 실제 경로 `infra/rhoai/`)
+- [x] `infra/rhoai/datasciencecluster.yaml` — `default-dsc` 구성 (Session 07)
+- [x] `runbooks/20-rhoai-operator-install.md` (Session 09) — ※ 번호는 `guidelines/01-layer-contracts.md` 할당(50)과 상이. 재정렬 여부 별도 결정.
+- [x] DSC 상태 `Ready` — `default-dsc` Ready (Session 09, DashboardReady · AIPipelinesReady · ComponentsReady)
+- [x] 웹콘솔 RHOAI 대시보드 접근 — Gateway `data-science-gateway.apps.<cluster>` (Session 09)
 - [ ] 워크벤치 1개 생성 성공
 
 **완료 기준**: 워크벤치에서 Python 셀 실행 성공.
@@ -129,6 +130,13 @@
 상세는 [`claude-context/handoff-notes.md`](claude-context/handoff-notes.md). 여기는 Phase 전환·큰 마일스톤만.
 
 - **2026-04-17** Session 01 — Phase 0 시작 및 완료 (방법론 체계 구축)
+- **2026-04-18** Session 02 — 듀얼 환경 전략 초안 + Preflight 런북
+- **2026-04-19** Session 03~06 — Phase 1 완료 (cluster survey, `.env`, constraints 확정)
+- **2026-04-19** Session 07 — Phase 2 IaC 준비 (GitOps 채널 확정 · `infra/` · runbook 작성)
+- **2026-04-20** Session 08 — Phase 2 완료 (GitOps v1.20.1 설치)
+- **2026-04-20** Session 09 — Phase 3 완료 (RHOAI 3.3.2 설치, DSC Ready, ServiceMesh 자동 설치)
+- **2026-04-22** Session 10 — `state.md` 동기화 + `odh-gitops` 레퍼런스 분석 (향후 Phase 5 참조용)
+- **2026-04-29** Session 10 복구 — 새 샌드박스 survey 발견(OCP 4.21.9, RHOAI 3.4.0-ea.1, GitOps 미설치, DSC NotReady) → 현재 타깃 재확정 필요
 
 ---
 

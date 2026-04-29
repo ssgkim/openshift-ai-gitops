@@ -1,0 +1,405 @@
+[0;32m[INFO][0m 결과를 파일에도 저장합니다: /Users/sanggon-kim/projects/openshift-ai-gitops/survey-output/survey-20260422-210156.txt
+
+[1m=====================================================[0m
+[1m  OpenShift Cluster Survey — Phase 1[0m
+[1m  실행 시각: 2026-04-22 21:01:56 KST[0m
+[1m  대상 클러스터: https://api.ocp.9qn8g.sandbox805.opentlc.com:6443[0m
+[1m=====================================================[0m
+
+[1m[0;36m══════════════════════════════════════[0m
+[1m[0;36m  1-A. 클러스터 로그인[0m
+[1m[0;36m══════════════════════════════════════[0m
+WARNING: Using insecure TLS client config. Setting this option is not supported!
+
+Login successful.
+
+You have access to 82 projects, the list has been suppressed. You can list all projects with 'oc projects'
+
+Using project "default".
+[1;33m[WARN][0m 자가서명 인증서 — TLS 검증 비활성화로 로그인 (constraints.md에 기록 필요)
+로그인 사용자: admin
+서버 주소:     https://api.ocp.9qn8g.sandbox805.opentlc.com:6443
+
+[1m[0;36m══════════════════════════════════════[0m
+[1m[0;36m  1-B. OCP 버전 및 노드 구성[0m
+[1m[0;36m══════════════════════════════════════[0m
+--- ClusterVersion ---
+버전: 4.21.9
+채널: stable-4.21
+업데이트 이력(최근 3): 4.21.9(Completed) 
+
+--- 노드 목록 ---
+NAME                                        STATUS   OS                                                      K8S
+ip-10-0-16-100.us-east-2.compute.internal   Ready    Red Hat Enterprise Linux CoreOS 9.6.20260401-0 (Plow)   v1.34.6
+ip-10-0-41-2.us-east-2.compute.internal     Ready    Red Hat Enterprise Linux CoreOS 9.6.20260401-0 (Plow)   v1.34.6
+ip-10-0-57-9.us-east-2.compute.internal     Ready    Red Hat Enterprise Linux CoreOS 9.6.20260401-0 (Plow)   v1.34.6
+ip-10-0-77-100.us-east-2.compute.internal   Ready    Red Hat Enterprise Linux CoreOS 9.6.20260401-0 (Plow)   v1.34.6
+ip-10-0-9-240.us-east-2.compute.internal    Ready    Red Hat Enterprise Linux CoreOS 9.6.20260401-0 (Plow)   v1.34.6
+
+--- 역할별 노드 수 ---
+Control-plane: 3
+Worker:        5
+Infra:         0
+
+[1m[0;36m══════════════════════════════════════[0m
+[1m[0;36m  1-C. 워커 노드 리소스 여유[0m
+[1m[0;36m══════════════════════════════════════[0m
+--- Capacity ---
+NAME                                        CPU   MEMORY       PODS
+ip-10-0-16-100.us-east-2.compute.internal   8     32217220Ki   250
+ip-10-0-41-2.us-east-2.compute.internal     8     32217224Ki   250
+ip-10-0-57-9.us-east-2.compute.internal     8     32217212Ki   250
+ip-10-0-77-100.us-east-2.compute.internal   8     32217220Ki   250
+ip-10-0-9-240.us-east-2.compute.internal    8     32217220Ki   250
+
+--- Allocatable ---
+NAME                                        CPU     MEMORY
+ip-10-0-16-100.us-east-2.compute.internal   7500m   30017668Ki
+ip-10-0-41-2.us-east-2.compute.internal     7500m   30017672Ki
+ip-10-0-57-9.us-east-2.compute.internal     7500m   31066236Ki
+ip-10-0-77-100.us-east-2.compute.internal   7500m   31066244Ki
+ip-10-0-9-240.us-east-2.compute.internal    7500m   31066244Ki
+
+--- Top Nodes (metrics-server 필요) ---
+NAME                                        CPU(cores)   CPU(%)   MEMORY(bytes)   MEMORY(%)   
+ip-10-0-16-100.us-east-2.compute.internal   206m         2%       3498Mi          11%         
+ip-10-0-41-2.us-east-2.compute.internal     208m         2%       3142Mi          10%         
+ip-10-0-57-9.us-east-2.compute.internal     1508m        20%      13000Mi         42%         
+ip-10-0-77-100.us-east-2.compute.internal   1439m        19%      12142Mi         40%         
+ip-10-0-9-240.us-east-2.compute.internal    1205m        16%      13658Mi         45%         
+
+[1m[0;36m══════════════════════════════════════[0m
+[1m[0;36m  1-D. 설치된 Operator 목록 (CSV)[0m
+[1m[0;36m══════════════════════════════════════[0m
+--- ClusterServiceVersions ---
+NAMESPACE                                          NAME                            VERSION          PHASE
+cert-manager                                       rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+cert-manager                                       servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+cert-manager-operator                              cert-manager-operator.v1.19.0   1.19.0           Succeeded
+cert-manager-operator                              rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+cert-manager-operator                              servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+default                                            rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+default                                            servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+keycloak                                           rhbk-operator.v26.4.11-opr.1    26.4.11-opr.1    Succeeded
+keycloak                                           rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+keycloak                                           servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+kube-node-lease                                    rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+kube-node-lease                                    servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+kube-public                                        rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+kube-public                                        servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+kube-system                                        rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+kube-system                                        servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift                                          servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift                                          rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-apiserver                                rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-apiserver                                servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-apiserver-operator                       rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-apiserver-operator                       servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-authentication                           rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-authentication                           servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-authentication-operator                  rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-authentication-operator                  servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-catalogd                                 rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-catalogd                                 servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-cloud-controller-manager                 rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-cloud-controller-manager                 servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-cloud-controller-manager-operator        rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-cloud-controller-manager-operator        servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-cloud-credential-operator                rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-cloud-credential-operator                servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-cloud-network-config-controller          servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-cloud-network-config-controller          rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-cloud-platform-infra                     servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-cloud-platform-infra                     rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-cluster-csi-drivers                      rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-cluster-csi-drivers                      servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-cluster-machine-approver                 rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-cluster-machine-approver                 servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-cluster-node-tuning-operator             rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-cluster-node-tuning-operator             servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-cluster-olm-operator                     rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-cluster-olm-operator                     servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-cluster-samples-operator                 rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-cluster-samples-operator                 servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-cluster-storage-operator                 rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-cluster-storage-operator                 servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-cluster-version                          servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-cluster-version                          rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-config                                   rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-config                                   servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-config-managed                           servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-config-managed                           rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-config-operator                          rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-config-operator                          servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-console                                  servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-console                                  rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-console-operator                         rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-console-operator                         servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-console-user-settings                    servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-console-user-settings                    rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-controller-manager                       rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-controller-manager                       servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-controller-manager-operator              rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-controller-manager-operator              servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-dns                                      servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-dns                                      rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-dns-operator                             servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-dns-operator                             rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-etcd                                     rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-etcd                                     servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-etcd-operator                            rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-etcd-operator                            servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-host-network                             servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-host-network                             rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-image-registry                           servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-image-registry                           rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-infra                                    rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-infra                                    servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-ingress                                  servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-ingress                                  rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-ingress-canary                           servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-ingress-canary                           rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-ingress-operator                         rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-ingress-operator                         servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-insights                                 rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-insights                                 servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-kni-infra                                rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-kni-infra                                servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-kube-apiserver                           servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-kube-apiserver                           rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-kube-apiserver-operator                  servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-kube-apiserver-operator                  rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-kube-controller-manager                  rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-kube-controller-manager                  servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-kube-controller-manager-operator         rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-kube-controller-manager-operator         servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-kube-scheduler                           rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-kube-scheduler                           servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-kube-scheduler-operator                  rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-kube-scheduler-operator                  servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-kube-storage-version-migrator            servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-kube-storage-version-migrator            rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-kube-storage-version-migrator-operator   servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-kube-storage-version-migrator-operator   rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-lightspeed                               lightspeed-operator.v1.0.11     1.0.11           Succeeded
+openshift-lightspeed                               rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-lightspeed                               servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-machine-api                              rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-machine-api                              servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-machine-config-operator                  rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-machine-config-operator                  servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-marketplace                              rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-marketplace                              servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-monitoring                               rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-monitoring                               servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-multus                                   servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-multus                                   rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-network-console                          rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-network-console                          servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-network-diagnostics                      rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-network-diagnostics                      servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-network-node-identity                    rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-network-node-identity                    servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-network-operator                         rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-network-operator                         servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-node                                     rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-node                                     servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-nutanix-infra                            rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-nutanix-infra                            servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-oauth-apiserver                          rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-oauth-apiserver                          servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-openstack-infra                          servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-openstack-infra                          rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-operator-controller                      servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-operator-controller                      rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-operator-lifecycle-manager               packageserver                   0.0.1-snapshot   Succeeded
+openshift-operator-lifecycle-manager               rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-operator-lifecycle-manager               servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-operators                                rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-operators                                servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-ovirt-infra                              servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-ovirt-infra                              rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-ovn-kubernetes                           rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-ovn-kubernetes                           servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-route-controller-manager                 rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-route-controller-manager                 servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-service-ca                               rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-service-ca                               servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-service-ca-operator                      rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-service-ca-operator                      servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-user-workload-monitoring                 servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+openshift-user-workload-monitoring                 rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-vsphere-infra                            rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+openshift-vsphere-infra                            servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+redhat-ods-applications                            servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+redhat-ods-applications                            rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+redhat-ods-monitoring                              rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+redhat-ods-monitoring                              servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+redhat-ods-operator                                rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+redhat-ods-operator                                servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+rhoai-model-registries                             rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+rhoai-model-registries                             servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+rhods-notebooks                                    rhods-operator.3.4.0-ea.1       3.4.0-ea.1       Succeeded
+rhods-notebooks                                    servicemeshoperator3.v3.2.0     3.2.0            Succeeded
+
+--- Subscriptions (채널 정보) ---
+NAMESPACE               PACKAGE                           CHANNEL        SOURCE             APPROVAL
+cert-manager-operator   openshift-cert-manager-operator   stable-v1      redhat-operators   Automatic
+keycloak                rhbk-operator                     stable-v26.4   redhat-operators   Automatic
+openshift-lightspeed    lightspeed-operator               stable         redhat-operators   Automatic
+openshift-operators     servicemeshoperator3              stable         redhat-operators   Manual
+redhat-ods-operator     rhods-operator                    beta           redhat-operators   Automatic
+
+--- CatalogSources (OperatorHub 상태) ---
+NAME                  STATE   UPDATED
+certified-operators   READY   2026-04-22T11:58:16Z
+community-operators   READY   2026-04-22T12:00:31Z
+redhat-marketplace    READY   2026-04-22T12:00:31Z
+redhat-operators      READY   2026-04-22T12:00:33Z
+
+[1m[0;36m══════════════════════════════════════[0m
+[1m[0;36m  1-E. RHOAI / OpenShift AI 상태[0m
+[1m[0;36m══════════════════════════════════════[0m
+--- RHOAI/ODH CSV ---
+cert-manager-operator                              rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+cert-manager                                       rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+default                                            rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+keycloak                                           rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+kube-node-lease                                    rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+kube-public                                        rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+kube-system                                        rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-apiserver-operator                       rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-apiserver                                rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-authentication-operator                  rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-authentication                           rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-catalogd                                 rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-cloud-controller-manager-operator        rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-cloud-controller-manager                 rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-cloud-credential-operator                rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-cloud-network-config-controller          rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-cloud-platform-infra                     rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-cluster-csi-drivers                      rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-cluster-machine-approver                 rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-cluster-node-tuning-operator             rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-cluster-olm-operator                     rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-cluster-samples-operator                 rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-cluster-storage-operator                 rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-cluster-version                          rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-config-managed                           rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-config-operator                          rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-config                                   rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-console-operator                         rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-console-user-settings                    rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-console                                  rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-controller-manager-operator              rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-controller-manager                       rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-dns-operator                             rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-dns                                      rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-etcd-operator                            rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-etcd                                     rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-host-network                             rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-image-registry                           rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-infra                                    rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-ingress-canary                           rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-ingress-operator                         rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-ingress                                  rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-insights                                 rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-kni-infra                                rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-kube-apiserver-operator                  rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-kube-apiserver                           rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-kube-controller-manager-operator         rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-kube-controller-manager                  rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-kube-scheduler-operator                  rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-kube-scheduler                           rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-kube-storage-version-migrator-operator   rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-kube-storage-version-migrator            rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-lightspeed                               rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-machine-api                              rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-machine-config-operator                  rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-marketplace                              rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-monitoring                               rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-multus                                   rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-network-console                          rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-network-diagnostics                      rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-network-node-identity                    rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-network-operator                         rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-node                                     rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-nutanix-infra                            rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-oauth-apiserver                          rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-openstack-infra                          rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-operator-controller                      rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-operator-lifecycle-manager               rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-operators                                rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-ovirt-infra                              rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-ovn-kubernetes                           rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-route-controller-manager                 rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-service-ca-operator                      rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-service-ca                               rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-user-workload-monitoring                 rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift-vsphere-infra                            rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+openshift                                          rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+redhat-ods-applications                            rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+redhat-ods-monitoring                              rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+redhat-ods-operator                                rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+rhoai-model-registries                             rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+rhods-notebooks                                    rhods-operator.3.4.0-ea.1       Red Hat OpenShift AI                          3.4.0-ea.1                                       Succeeded
+rhods-notebooks                                    servicemeshoperator3.v3.2.0     Red Hat OpenShift Service Mesh 3              3.2.0            servicemeshoperator3.v3.1.7     Succeeded
+
+--- DataScienceCluster CR ---
+NAME          READY   REASON
+default-dsc   False   NotReady
+
+--- DSCInitialization CR ---
+NAME           AGE   PHASE   CREATED AT
+default-dsci   8h    Ready   2026-04-22T03:48:54Z
+
+--- RHOAI 관련 네임스페이스 ---
+rhoai-model-registries                             Active   8h
+rhods-notebooks                                    Active   8h
+
+[1m[0;36m══════════════════════════════════════[0m
+[1m[0;36m  1-F. ArgoCD / OpenShift GitOps 상태[0m
+[1m[0;36m══════════════════════════════════════[0m
+--- GitOps Operator CSV ---
+(none — OpenShift GitOps 미설치)
+
+--- GitOps 관련 네임스페이스 ---
+(none)
+
+--- ArgoCD CR ---
+(조회 결과 없음 — 리소스 미존재 또는 권한 부족)
+
+[1m[0;36m══════════════════════════════════════[0m
+[1m[0;36m  1-G. 기반 인프라[0m
+[1m[0;36m══════════════════════════════════════[0m
+--- Ingress 도메인 ---
+Ingress 도메인: apps.ocp.9qn8g.sandbox805.opentlc.com
+
+--- StorageClass ---
+NAME                PROVISIONER       RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
+gp2-csi             ebs.csi.aws.com   Delete          WaitForFirstConsumer   true                   35h
+gp3-csi (default)   ebs.csi.aws.com   Delete          WaitForFirstConsumer   true                   35h
+
+--- Cluster Proxy 설정 ---
+{
+    "trustedCA": {
+        "name": ""
+    }
+}
+[1;33m[WARN][0m Proxy 설정 발견 → constraints.md에 기록 필요
+
+--- Image Mirror Policy ---
+
+--- GPU 노드 ---
+(GPU 라벨 노드 없음)
+
+--- GPU/NFD Operator CSV ---
+(GPU stack 미설치)
+
+[1m=====================================================[0m
+[1m  Survey 완료: 2026-04-22 21:02:28 KST[0m
+[1m  결과 파일: /Users/sanggon-kim/projects/openshift-ai-gitops/survey-output/survey-20260422-210156.txt[0m
+[1m=====================================================[0m
+
+[0;32m[INFO][0m 다음 단계: 위 결과를 claude-context/current-state.md, version-matrix.md, constraints.md에 반영하세요.
+[0;32m[INFO][0m 반영 가이드: runbooks/01-cluster-survey.md 참조

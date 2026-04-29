@@ -88,3 +88,13 @@
   - Layer 3 `runbooks/`의 이미지·registry URL은 **하드코딩 금지**, `.env` 또는 `infra/` 값 참조
   - `guidelines/`는 "AI 필수 전제" 표현 금지 (Air-gap에서는 사람만 실행)
 - 참조: `work-plans/001-dual-env-strategy.md`
+
+---
+
+## 2026-04-29: 샌드박스 교체 시 상태 재확정 필요
+
+- 맥락: 중단점 복구 중 `survey-output/survey-20260422-210156.txt` 확인
+- 내용: 기존 완료 상태는 OCP 4.20.18 / RHOAI 3.3.2 샌드박스 기준이나, 새 survey는 OCP 4.21.9 / RHOAI 3.4.0-ea.1 / GitOps 미설치 / DSC NotReady를 보고한다.
+- 영향 범위:
+  - 새 샌드박스를 현재 타깃으로 전환하면 `current-state.md`, `version-matrix.md`, `infra/`, `runbooks/`의 버전·채널 재검토 필요
+  - `version-matrix.md`는 사람 결정 파일이므로 3.4.0-ea.1 수용 여부를 사람에게 확인 전 확정하지 않는다.

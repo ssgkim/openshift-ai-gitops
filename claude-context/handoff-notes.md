@@ -154,3 +154,34 @@
   1. `bash scripts/cluster-survey.sh --save` 로컬 실행 후 출력 공유
   2. Claude가 `constraints.md` 갱신, 사람이 `version-matrix.md` 갱신
   3. ArgoCD · RHOAI 채널 확정 → Phase 2(`runbooks/10-argocd-operator-install.md`) 시작
+
+---
+
+## 2026-04-22 Session 10 — state.md 동기화 + odh-gitops 레퍼런스 분석
+
+- 완료:
+  - `opendatahub-io/odh-gitops` 레포 구조 분석 — `components/` / `dependencies/` / `configurations/` 3층 패턴, 12개 Operator 포함 (cert-manager · Kueue · LWS · KEDA · Tempo · NFD · GPU 등). GitOps·RHOAI 본체는 범위 밖(전제조건).
+  - 세션 진입 시 상태 파악 혼선 해소 — `current-state.md` · `active-task.md` · `version-matrix.md` · `handoff-notes.md`가 이미 Session 07~09를 통해 Phase 3까지 완료 상태였음 확인.
+  - `state.md` 동기화 — Phase 0~4 실제 진척 반영 (Phase 0~2 ✅, Phase 3 부분 완료, Phase 4 기반 완료, Phase 5 대기). Session 02~10 히스토리 추가.
+  - 세션 중 일시 작성한 `infra/operators/subscriptions/openshift-gitops/{subscription,kustomization}.yaml` 2개는 기존 `infra/argocd/` 경로와 불일치하여 제거 (옵션 1 채택).
+- 진행중: 없음
+- 블로커: 클러스터 샌드박스 DNS 해석 실패 (`api.cluster-95w9g.95w9g.sandbox2661.opentlc.com`) — 실제 클러스터 확인 작업은 재접속 필요.
+- 다음 세션이 할 일:
+  1. 사람이 새 샌드박스 kubeconfig 확보 후 `.env` 재작성 + 접속 복구
+  2. `active-task.md` 기반 — PoC 항목 결정(사람 판단) + `runbooks/60-a-notebook.md` 작성
+  3. 워크벤치 1개 생성 → Phase 4 완결
+- 발견 사항:
+  - `runbooks/20-rhoai-operator-install.md` 번호는 `guidelines/01-layer-contracts.md` 할당(20=App-of-Apps / 50=RHOAI)과 상이. 번호 재정렬 여부는 다음 세션에서 결정.
+  - `current-state.md` 설치 상태의 ServiceMesh가 `[ ] 미설치`로 되어 있으나 Session 09 기록은 "RHOAI 의존성 자동 설치(v3.1.0)". 다음 세션에서 체크박스 정합성 확인 권장.
+  - `work-plans/001-dual-env-strategy.md` Open Questions는 Air-gap 실제 이행 시점까지 보류 가능.
+  - `odh-gitops` 레포는 Kueue/LWS/KEDA 등이 필요해지는 Phase 5 PoC 시점에 `infra/` 참조 자료로 재활용 가능.
+
+---
+
+## 2026-04-29 Session 10 복구 — 새 샌드박스 survey 발견
+
+- 완료: 중단점 복구 중 `survey-output/survey-20260422-210156.txt` 확인, `current-state.md`/`active-task.md`/`state.md`를 환경 재정렬 대기 상태로 보정
+- 진행중: 새 샌드박스를 현재 타깃으로 전환할지 결정 필요
+- 블로커: 새 survey는 OCP 4.21.9 / RHOAI 3.4.0-ea.1 / GitOps 미설치 / DSC NotReady이며 기존 version-matrix와 불일치
+- 다음 세션이 할 일: 사람이 새 샌드박스 전환 여부와 RHOAI 3.4.0-ea.1 수용 여부 결정
+- 발견된 제약: 샌드박스 교체 시 상태 재확정 필요 (`constraints.md` 반영)
