@@ -109,3 +109,15 @@
   - IaC는 `infra/rhoai/subscription.yaml`의 채널을 `beta`로 맞춘다.
   - runbook은 CSV명을 고정하지 말고 Subscription의 `status.currentCSV`를 조회해서 대기한다.
   - `default-dsc NotReady` 원인 확인 전에는 Phase 4 완료로 표시하지 않는다.
+
+---
+
+## 2026-04-29: DSC NotReady 원인 — ModelsAsService / Trainer 의존성
+
+- 맥락: 실제 클러스터 접근 후 `oc get datasciencecluster default-dsc -o yaml` 확인
+- 내용: `default-dsc` Ready=False. 원인은 `ModelsAsServiceReady=False` 및 `TrainerReady=False`.
+  - ModelsAsService: `gateway openshift-ingress/maas-default-gateway not found`
+  - Trainer: `JobSet operator not installed`
+- 영향 범위:
+  - PoC에 ModelsAsService/Trainer가 필요 없으면 `infra/rhoai/datasciencecluster.yaml`에서 해당 컴포넌트를 Removed로 명시하는 방향이 단순하다.
+  - 해당 기능을 검증하려면 Gateway 및 JobSet/LWS 계열 의존성 설치 계획을 별도 work-plan으로 결정해야 한다.
