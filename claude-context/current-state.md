@@ -85,4 +85,4 @@
 - ArgoCD App-of-Apps/ApplicationSet 구조 미완성 — Scope 3 완료. 다음은 Scope 4(PoC `workbench-smoke`/`llm-cpu` Application 편입)만 진행.
 - 운영 모드 전환 트리거는 부분 실행됨 — RHOAI core와 의존성은 ArgoCD owned. PoC는 아직 별도 Application으로 편입 전.
 - CPU LLM PoC는 직접 적용 상태다. OPS 전환 전 `infra/poc/llm-cpu`를 별도 ArgoCD Application 또는 ApplicationSet에 편입 필요.
-- PoC 항목(스모크/CPU LLM 외) 미정 — Phase 5에서 결정 (사람 판단 필요).
+- PoC 항목(스모크/CPU LLM 외) 미정 — 후속 후보 카탈로그는 `work-plans/003-test-capability-catalog.md` 참조. 이 문서는 현재 active task를 대체하지 않으며 Scope 4/5 이후 하나씩 승격한다.

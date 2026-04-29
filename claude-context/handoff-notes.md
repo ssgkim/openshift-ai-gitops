@@ -122,3 +122,13 @@
 - 블로커: Scope 4에서 PoC를 개별 Application으로 둘지 묶을지 결정 필요
 - 다음 세션이 할 일: [CHECKPOINT] 후 Scope 4 Application IaC 작성/dry-run/sync
 - 발견된 제약: MaaS Gateway sync에는 Gateway API ClusterRole/Binding 필요, `argocd` CLI 없으면 Application operation patch 사용
+
+---
+
+## 2026-04-30 Session 24 — 후속 테스트 기능 카탈로그 작성
+
+- 완료: `work-plans/003-test-capability-catalog.md` 작성 — K8S/HA/Gateway/CI-CD/AI/MCP/가상화/네트워크/멀티클러스터 후보 정리
+- 진행중: 실행 중단지점은 변경 없음 — Scope 4 PoC Application 편입 대기
+- 블로커: 후속 테스트는 Scope 4/5 완료 후 사람 선택으로 하나씩 `active-task.md`에 승격 필요
+- 다음 세션이 할 일: [CHECKPOINT] 후 Scope 4 Application IaC 작성/dry-run/sync
+- 발견된 제약: 카탈로그는 새 Scope가 아니며 현재 active task를 대체하지 않음

@@ -67,11 +67,12 @@ Session 23에서 Scope 3을 완료했다. `jobset`, `lws`, `maas-gateway` Applic
 
 - [ ] ApplicationSet 승격 검토 — Scope 2~4 안정화 이후
 - [ ] `automated.prune/selfHeal` 활성화 검토 (drift 안정화 후)
-- [ ] PoC 항목 결정 (Phase 5)
+- [ ] PoC 항목 결정 (Phase 5) — 후보 백로그는 `work-plans/003-test-capability-catalog.md` 참조. 현재 Scope 4 태스크를 대체하지 않음.
 
 ## 참조 (Required Inputs)
 
 - `work-plans/002-gitops-handover-scope.md` — GitOps 인계 범위와 단계별 편입 계획
+- `work-plans/003-test-capability-catalog.md` — Scope 4/5 이후 승격할 후속 테스트 후보 카탈로그 (현재 실행 Scope 아님)
 - `runbooks/30-argocd-app-sync.md` — ArgoCD Application 등록/diff/sync 표준 절차
 - `infra/argocd/bootstrap/kustomization.yaml` — Scope 1에서 작성한 repo config/AppProject/Application 묶음
 - `infra/argocd/applications/rhoai.yaml` — RHOAI Application CR (repoURL 치환 완료)
