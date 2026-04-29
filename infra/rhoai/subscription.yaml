@@ -1,13 +1,13 @@
-# 출처: oc get packagemanifest rhods-operator 2026-04-19 실행 결과
-# stable-3.3 채널 / currentCSV: rhods-operator.3.3.2
-# claude-context/version-matrix.md — RHOAI 3.3 목표 버전
+# 출처: survey-output/survey-20260422-210156.txt 및 사용자 결정(2026-04-29)
+# RHOAI 목표: 3.4.0 / 관측 CSV: rhods-operator.3.4.0-ea.1 / 관측 채널: beta
+# claude-context/version-matrix.md 참조
 apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
   name: rhods-operator
   namespace: redhat-ods-operator
 spec:
-  channel: stable-3.3
+  channel: beta
   installPlanApproval: Automatic
   name: rhods-operator
   source: redhat-operators

@@ -1,6 +1,6 @@
 # 출처: Red Hat OpenShift AI 공식 설치 문서
 # RHOAI는 AllNamespaces 모드로 설치 (targetNamespaces 비어있음)
-# claude-context/version-matrix.md — RHOAI 3.3 / stable-3.3
+# claude-context/version-matrix.md — RHOAI 3.4.0 / beta
 apiVersion: operators.coreos.com/v1
 kind: OperatorGroup
 metadata:

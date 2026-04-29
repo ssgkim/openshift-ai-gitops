@@ -4,29 +4,30 @@
 
 ## 태스크
 
-**새 샌드박스 survey 반영 여부 결정 → 현재 상태 재정렬**
+**RHOAI 3.4.0 타깃 확정 → 새 샌드박스 상태 재정렬**
 
-이전 샌드박스는 RHOAI 3.3.2 + DSC Ready까지 완료됐으나, 중단점 복구 중 새 샌드박스 survey(`survey-output/survey-20260422-210156.txt`)가 발견됨. 새 survey는 OCP 4.21.9, RHOAI 3.4.0-ea.1, GitOps 미설치, DSC NotReady 상태이므로 현재 타깃을 새 샌드박스로 전환할지 먼저 확정해야 한다.
+사용자가 새 샌드박스의 RHOAI 목표를 3.4.0으로 확정함. survey(`survey-output/survey-20260422-210156.txt`) 기준 관측 CSV는 `rhods-operator.3.4.0-ea.1`, Subscription 채널은 `beta`, GitOps는 미설치, `default-dsc`는 NotReady 상태다.
 
 ## 성공 기준 (Capabilities)
 
-- [x] Phase 3 완료 — RHOAI 3.3.2 CSV Succeeded, DataScienceCluster Ready ✅
-- [x] `runbooks/20-rhoai-operator-install.md` 작성 완료 ✅
-- [x] RHOAI Dashboard Gateway URL 확인 — `data-science-gateway.apps.cluster-95w9g.95w9g.sandbox2661.opentlc.com` ✅
+- [x] 이전 샌드박스 Phase 3 완료 기록 보존 — RHOAI 3.3.2 / DataScienceCluster Ready
+- [x] 새 샌드박스 survey 확인 — OCP 4.21.9 / RHOAI 관측 CSV 3.4.0-ea.1 / DSC NotReady
 - [x] 새 샌드박스 survey 결과 파일 확인 — `survey-output/survey-20260422-210156.txt`
-- [ ] 새 샌드박스를 현재 타깃으로 전환할지 사람 결정
-- [ ] 전환 시 `current-state.md` / `constraints.md` / `version-matrix.md` 재정렬
-- [ ] RHOAI 목표 버전 결정 — 기존 3.3.x 유지 vs 새 survey의 3.4.0-ea.1 수용
+- [x] 새 샌드박스 RHOAI 목표 버전 결정 — 3.4.0
+- [ ] 새 샌드박스에 OpenShift GitOps 설치 여부 결정 및 Phase 2 재적용
+- [ ] `default-dsc NotReady` 원인 조사
+- [ ] `runbooks/20-rhoai-operator-install.md`를 3.4.0 계열 검증에 맞게 실행/보정
 
 ## 참조 (Required Inputs)
 
 - `.env` — 클러스터 접속 정보
-- `claude-context/version-matrix.md` — RHOAI 3.3.2 설치 확인
+- `claude-context/version-matrix.md` — RHOAI 3.4.0 목표 확정
 - `claude-context/handoff-notes.md` — Session 10 중단 지점
 - `survey-output/survey-20260422-210156.txt` — 새 샌드박스 survey 결과
 
 ## 블로커 (Constraints)
 
-- 현재 프로젝트 상태가 이전 샌드박스 완료 기록과 새 샌드박스 survey 결과를 동시에 포함
-- `version-matrix.md`는 사람 결정 파일이므로 RHOAI 3.4.0-ea.1 반영 전 사람 확인 필요
+- 새 survey의 실제 CSV는 `3.4.0-ea.1`로, 사용자 목표 `3.4.0`과 표기 차이가 있음
+- 새 샌드박스에는 OpenShift GitOps가 미설치
+- `default-dsc`가 NotReady
 - PoC 항목은 사람이 결정 (Phase 5 계획 필요)

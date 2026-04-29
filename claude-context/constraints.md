@@ -97,4 +97,15 @@
 - 내용: 기존 완료 상태는 OCP 4.20.18 / RHOAI 3.3.2 샌드박스 기준이나, 새 survey는 OCP 4.21.9 / RHOAI 3.4.0-ea.1 / GitOps 미설치 / DSC NotReady를 보고한다.
 - 영향 범위:
   - 새 샌드박스를 현재 타깃으로 전환하면 `current-state.md`, `version-matrix.md`, `infra/`, `runbooks/`의 버전·채널 재검토 필요
-  - `version-matrix.md`는 사람 결정 파일이므로 3.4.0-ea.1 수용 여부를 사람에게 확인 전 확정하지 않는다.
+  - `version-matrix.md`는 사람 결정 파일이므로 RHOAI 목표 버전은 사람 확인 후 확정한다. 2026-04-29 사용자 지시로 목표는 3.4.0으로 확정됨.
+
+---
+
+## 2026-04-29: RHOAI 3.4.0 목표 확정, 관측 CSV는 3.4.0-ea.1
+
+- 맥락: 사용자가 새 샌드박스 RHOAI 목표를 3.4.0으로 확정
+- 내용: `survey-output/survey-20260422-210156.txt` 기준 현재 클러스터의 `rhods-operator` Subscription 채널은 `beta`, 관측 CSV는 `rhods-operator.3.4.0-ea.1`.
+- 영향 범위:
+  - IaC는 `infra/rhoai/subscription.yaml`의 채널을 `beta`로 맞춘다.
+  - runbook은 CSV명을 고정하지 말고 Subscription의 `status.currentCSV`를 조회해서 대기한다.
+  - `default-dsc NotReady` 원인 확인 전에는 Phase 4 완료로 표시하지 않는다.

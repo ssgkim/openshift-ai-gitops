@@ -45,7 +45,12 @@ oc apply -f infra/rhoai/subscription.yaml --insecure-skip-tls-verify=true
 oc get installplan -n redhat-ods-operator --insecure-skip-tls-verify=true
 
 # CSV Succeeded 대기
-oc wait csv rhods-operator.3.3.2 \
+RHOAI_CSV="$(oc get subscription rhods-operator \
+  -n redhat-ods-operator \
+  -o jsonpath='{.status.currentCSV}' \
+  --insecure-skip-tls-verify=true)"
+
+oc wait "csv/${RHOAI_CSV}" \
   -n redhat-ods-operator \
   --for=jsonpath='{.status.phase}'=Succeeded \
   --timeout=900s \
@@ -108,6 +113,7 @@ oc get pods -n redhat-ods-applications --insecure-skip-tls-verify=true | head -2
 ## 실패 시
 
 - **CSV가 `Installing`에서 멈춤** → `oc get installplan -n redhat-ods-operator` 확인. `oc describe installplan <name>` 으로 에러 확인.
+- **Subscription의 `currentCSV`가 비어 있음** → `oc describe subscription rhods-operator -n redhat-ods-operator` 로 CatalogSource/채널 오류 확인.
 - **DataScienceCluster가 `Progressing`에서 멈춤** → `oc describe datasciencecluster default-dsc` 로 conditions 확인. 개별 컴포넌트 Pod 상태 점검.
 - **`rhods-dashboard` Route 없음** → `oc get routes -n redhat-ods-applications` 로 실제 Route 이름 확인.
 - **ImagePullBackOff** → `oc describe pod <pod> -n redhat-ods-operator` 로 레지스트리 접근 오류 확인. pull-secret 누락 가능성.

@@ -185,3 +185,13 @@
 - 블로커: 새 survey는 OCP 4.21.9 / RHOAI 3.4.0-ea.1 / GitOps 미설치 / DSC NotReady이며 기존 version-matrix와 불일치
 - 다음 세션이 할 일: 사람이 새 샌드박스 전환 여부와 RHOAI 3.4.0-ea.1 수용 여부 결정
 - 발견된 제약: 샌드박스 교체 시 상태 재확정 필요 (`constraints.md` 반영)
+
+---
+
+## 2026-04-29 Session 11 — RHOAI 3.4.0 목표 확정
+
+- 완료: 사용자 결정에 따라 새 샌드박스 RHOAI 목표를 3.4.0으로 확정하고 `version-matrix.md`, `current-state.md`, `active-task.md`, `infra/rhoai/`, `runbooks/20-rhoai-operator-install.md` 반영
+- 진행중: 새 샌드박스 Phase 2~4 재검증
+- 블로커: survey 기준 GitOps 미설치, `default-dsc NotReady`, 관측 CSV가 `3.4.0-ea.1`
+- 다음 세션이 할 일: GitOps 설치 여부 확정 후 `default-dsc NotReady` 원인 조사
+- 발견된 제약: RHOAI 3.4.0 목표와 관측 CSV 표기 차이 기록 (`constraints.md` 반영)

@@ -2,13 +2,13 @@
 
 전체 로드맵의 체크리스트. 세션 단위의 세부 상태는 [`claude-context/current-state.md`](claude-context/current-state.md), 누적 인수인계는 [`claude-context/handoff-notes.md`](claude-context/handoff-notes.md) 참조.
 
-**진척 요약**: 이전 샌드박스 기준 Phase 0~4 기반 완료 ✅ · 새 샌드박스 survey(OCP 4.21.9 / RHOAI 3.4.0-ea.1 / DSC NotReady) 발견 · 현재 타깃 재확정 대기
+**진척 요약**: 새 샌드박스 기준으로 재정렬 중 · OCP 4.21.9 / RHOAI 목표 3.4.0(관측 CSV 3.4.0-ea.1) 확정 · GitOps 미설치 · DSC NotReady 원인 조사 대기
 
 ---
 
 ## 📍 현재 Phase
 
-> **환경 재정렬 대기** — 이전 샌드박스는 DSC Ready까지 완료됐으나, 새 샌드박스 survey 결과가 발견됨. 새 환경을 현재 타깃으로 전환할지 결정한 뒤 Phase 2~4 상태를 재산정해야 한다.
+> **새 샌드박스 재정렬 중** — RHOAI 목표는 3.4.0으로 확정. 새 환경에는 OpenShift GitOps가 아직 없고 `default-dsc`가 NotReady라 Phase 2~4를 새 환경 기준으로 재검증해야 한다.
 
 ---
 
@@ -49,10 +49,10 @@
 - [x] `.env` 작성 (Session 03)
 - [x] `runbooks/00-preflight.md` 작성 (Session 02)
 - [x] `runbooks/01-cluster-survey.md` + `scripts/cluster-survey.sh` (Session 04)
-- [x] OpenShift 버전 확인 → `version-matrix.md` (4.20.18 / stable-4.20)
-- [x] 기존 설치된 Operator 목록 → `version-matrix.md` (cert-manager 1.18.1만 존재, GitOps/RHOAI 미설치)
-- [x] 기존 네임스페이스·ArgoCD 유무 → `constraints.md` (ArgoCD/RHOAI 미설치, proxy 오브젝트 존재, GPU 없음, 자가서명 TLS)
-- [x] RHOAI 호환 매트릭스에서 목표 버전 확정 → `version-matrix.md` (3.3 / stable-3.3)
+- [x] OpenShift 버전 확인 → `version-matrix.md` (새 샌드박스 4.21.9 / stable-4.21)
+- [x] 기존 설치된 Operator 목록 → `version-matrix.md` (cert-manager 1.19.0, ServiceMesh 3.2.0, RHOAI 3.4.0-ea.1 관측, GitOps 미설치)
+- [x] 기존 네임스페이스·ArgoCD 유무 → `constraints.md` (새 샌드박스 ArgoCD 미설치, proxy 오브젝트 존재, GPU 없음, 자가서명 TLS)
+- [x] RHOAI 호환 매트릭스에서 목표 버전 확정 → `version-matrix.md` (3.4.0 / beta, 관측 CSV 3.4.0-ea.1)
 - [ ] `work-plans/001-dual-env-strategy.md` Open Questions 해소 (※ Air-gap 이행 시점까지 보류)
 - [ ] `work-plans/002-gitops-boundary.md` — Day-0/1 경계 결정 (※ 듀얼 환경 확정 후 작성)
 
@@ -69,7 +69,7 @@
 - [ ] `infra/argocd/applications/` — 각 Application CR (※ 미적용)
 - [x] `runbooks/10-argocd-operator-install.md` (Session 07)
 - [ ] `runbooks/20-app-of-apps.md` (※ 현재는 단순 `oc apply` 경로, 향후 App-of-Apps 재검토 필요)
-- [x] OpenShift GitOps Operator 설치 성공 — v1.20.1 / latest (Session 08, Route 확인)
+- [ ] OpenShift GitOps Operator 설치 성공 — 새 샌드박스 기준 미설치
 - [ ] 첫 App-of-Apps sync 성공 (※ 보류)
 
 **완료 기준**: ArgoCD 웹콘솔 접속 + App-of-Apps가 `Synced & Healthy`.
@@ -83,9 +83,9 @@
 - [ ] `work-plans/003-operator-dependency.md` — 의존성·설치 순서 (※ OLM 의존성 자동 해결로 보류)
 - [ ] `infra/operators/subscriptions/` — 각 Subscription YAML (※ RHOAI가 ServiceMesh 자동 설치)
 - [ ] `runbooks/30-platform-operators.md` (※ 개별 runbook 불필요)
-- [x] cert-manager Operator — 클러스터 기존 설치 (Session 06, v1.18.1 / stable-v1)
-- [x] ServiceMesh Operator — RHOAI 의존성으로 자동 설치 (Session 09, servicemeshoperator3.v3.1.0)
-- [ ] Serverless Operator — RHOAI 3.3의 KServe RawDeployment 사용 시 불필요
+- [x] cert-manager Operator — 새 샌드박스 기존 설치 (v1.19.0)
+- [x] ServiceMesh Operator — 새 샌드박스 설치됨 (servicemeshoperator3.v3.2.0)
+- [ ] Serverless Operator — RHOAI 3.4.0 PoC 구성에 따라 재검토
 - [ ] Pipelines Operator — RHOAI 내장 `datasciencepipelines` 사용 (별도 설치 불필요)
 - ⛔ NFD + NVIDIA GPU Operator — GPU 노드 없음 (N/A)
 
@@ -101,8 +101,8 @@
 - [x] `infra/rhoai/subscription.yaml` — RHOAI Operator (Session 07, 실제 경로 `infra/rhoai/`)
 - [x] `infra/rhoai/datasciencecluster.yaml` — `default-dsc` 구성 (Session 07)
 - [x] `runbooks/20-rhoai-operator-install.md` (Session 09) — ※ 번호는 `guidelines/01-layer-contracts.md` 할당(50)과 상이. 재정렬 여부 별도 결정.
-- [x] DSC 상태 `Ready` — `default-dsc` Ready (Session 09, DashboardReady · AIPipelinesReady · ComponentsReady)
-- [x] 웹콘솔 RHOAI 대시보드 접근 — Gateway `data-science-gateway.apps.<cluster>` (Session 09)
+- [ ] DSC 상태 `Ready` — 새 샌드박스 `default-dsc NotReady`
+- [ ] 웹콘솔 RHOAI 대시보드 접근 — 새 샌드박스 기준 재확인 필요
 - [ ] 워크벤치 1개 생성 성공
 
 **완료 기준**: 워크벤치에서 Python 셀 실행 성공.
@@ -137,6 +137,7 @@
 - **2026-04-20** Session 09 — Phase 3 완료 (RHOAI 3.3.2 설치, DSC Ready, ServiceMesh 자동 설치)
 - **2026-04-22** Session 10 — `state.md` 동기화 + `odh-gitops` 레퍼런스 분석 (향후 Phase 5 참조용)
 - **2026-04-29** Session 10 복구 — 새 샌드박스 survey 발견(OCP 4.21.9, RHOAI 3.4.0-ea.1, GitOps 미설치, DSC NotReady) → 현재 타깃 재확정 필요
+- **2026-04-29** — 사용자 결정: 새 샌드박스 RHOAI 목표를 3.4.0으로 확정
 
 ---
 
