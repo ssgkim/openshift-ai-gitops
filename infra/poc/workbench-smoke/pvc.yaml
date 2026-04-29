@@ -1,0 +1,19 @@
+# 출처: PoC 워크벤치 home volume PVC (Session 15)
+# 의도: notebook.yaml 의 /opt/app-root/src 마운트용. 1Gi로 최소화 (스모크 전용).
+# storageClassName: 기본 SC를 명시 (current-state.md — gp3-csi default).
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: smoke-wb-pv
+  namespace: rhoai-poc-smoke
+  labels:
+    app: smoke-wb
+    opendatahub.io/dashboard: "true"
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: gp3-csi
+  volumeMode: Filesystem

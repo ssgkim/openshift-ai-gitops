@@ -1,0 +1,45 @@
+# 출처: 본 프로젝트 운영 모드 전환을 위한 부트스트랩 산출물 (Session 15)
+# 대상: `infra/rhoai/` 디렉터리(namespace, operator-group, subscription, datasciencecluster)
+# 의도:
+#   - 운영 모드 트리거 시 이 Application을 `oc apply`해 ArgoCD가 RHOAI IaC를 인계받게 한다.
+#   - 부트스트랩 단계에서는 적용하지 않는다 (직접 apply로 이미 클러스터에 존재 — drift 0 확인됨).
+#   - 의존성(JobSet Operator / LeaderWorkerSet Operator / MaaS Gateway)은
+#     별도 Application으로 분리해 추후 ApplicationSet으로 흡수한다.
+# 운영 모드 전환 체크리스트:
+#   1. .env의 GITHUB_REMOTE를 실제 https URL로 교체 (예: https://github.com/<org>/openshift-ai-gitops.git)
+#   2. 본 파일의 spec.source.repoURL을 실제 URL로 치환
+#   3. runbooks/30-argocd-app-sync.md 절차에 따라 diff → sync
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: rhoai
+  namespace: openshift-gitops
+  labels:
+    app.kubernetes.io/part-of: openshift-ai-gitops
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    # 부트스트랩 단계 placeholder. 운영 모드 전환 전에 실제 URL로 치환할 것.
+    repoURL: https://github.com/REPLACE-ORG/openshift-ai-gitops.git
+    targetRevision: main
+    path: infra/rhoai
+    directory:
+      recurse: false  # gateway/ 등 하위는 별도 Application에서 관리
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: redhat-ods-operator
+  syncPolicy:
+    # 부트스트랩 직후에는 수동 sync로 시작 — drift 발견 시 사람이 차이 검토.
+    # 운영 안정화 후 automated.prune/selfHeal 활성화 검토.
+    syncOptions:
+      - CreateNamespace=false       # namespace.yaml로 명시 관리
+      - ApplyOutOfSyncOnly=true
+      - ServerSideApply=true
+    retry:
+      limit: 3
+      backoff:
+        duration: 30s
+        factor: 2
+        maxDuration: 5m

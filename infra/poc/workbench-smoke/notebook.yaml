@@ -1,0 +1,46 @@
+# 출처: PoC 워크벤치 (Session 15)
+# 의도: rhoai-poc-smoke 네임스페이스의 최소 Jupyter 워크벤치.
+#       RHOAI 운영자가 oauth-proxy 사이드카·라벨·env를 자동 주입하므로 IaC는 핵심만 정의.
+# 이미지: ImageStream 조회로 확인된 RHOAI 3.4 빌드 (s2i-minimal-notebook:3.4).
+# 검증: oc rsh로 `python -c "print(1+1)"` 실행 → 2 출력.
+apiVersion: kubeflow.org/v1
+kind: Notebook
+metadata:
+  name: smoke-wb
+  namespace: rhoai-poc-smoke
+  labels:
+    app: smoke-wb
+    opendatahub.io/dashboard: "true"
+    opendatahub.io/odh-managed: "true"
+  annotations:
+    notebooks.opendatahub.io/inject-auth: "true"
+    notebooks.opendatahub.io/last-image-selection: "s2i-minimal-notebook:3.4"
+    opendatahub.io/image-display-name: "Jupyter | Minimal | CPU | Python 3.12"
+    openshift.io/display-name: "smoke-wb"
+    openshift.io/description: "PoC 스모크 워크벤치 (Session 15)"
+spec:
+  template:
+    spec:
+      containers:
+        - name: smoke-wb
+          image: image-registry.openshift-image-registry.svc:5000/redhat-ods-applications/s2i-minimal-notebook:3.4
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8888
+              name: notebook-port
+              protocol: TCP
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "1Gi"
+            limits:
+              cpu: "1"
+              memory: "2Gi"
+          volumeMounts:
+            - name: smoke-wb-pv
+              mountPath: /opt/app-root/src
+          workingDir: /opt/app-root/src
+      volumes:
+        - name: smoke-wb-pv
+          persistentVolumeClaim:
+            claimName: smoke-wb-pv

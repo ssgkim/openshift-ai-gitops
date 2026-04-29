@@ -52,3 +52,13 @@
 - 블로커: App-of-Apps/ArgoCD 소유권 구조 미완성, PoC 항목 미정
 - 다음 세션이 할 일: DSC IaC 정합화 후 워크벤치 1개 생성 및 Python 셀 스모크 검증
 - 발견된 제약: JobSet은 `openshift-jobset-operator`, LWS는 `openshift-lws-operator`, MaaS는 `maas-default-gateway` 필요
+
+---
+
+## 2026-04-29 Session 15 — RHOAI IaC 정합화 + PoC 워크벤치 스모크
+
+- 완료: `infra/rhoai/datasciencecluster.yaml`를 live v2 스펙과 정합화(`oc diff` exit 0), `infra/argocd/applications/rhoai.yaml` + `runbooks/30-argocd-app-sync.md` 작성, `infra/poc/workbench-smoke/{namespace,pvc,notebook}.yaml` 작성·적용 후 `smoke-wb-0` 2/2 Running 및 `python -c 'print(1+1)'` 검증 통과
+- 진행중: 부트스트랩 단계 종료, 운영 모드 전환 트리거 대기
+- 블로커: `.env`의 `GITHUB_REMOTE`가 placeholder, ArgoCD repository 인증 수단 미확정
+- 다음 세션이 할 일: `runbooks/30-argocd-app-sync.md` 따라 RHOAI Application 등록 → diff → sync 후 drift 0 유지 확인
+- 발견된 제약: RHOAI 3.4의 워크벤치 인증 사이드카는 `oauth-proxy`가 아니라 `kube-rbac-proxy`로 자동 주입됨 (ArgoCD `ignoreDifferences` 후보)

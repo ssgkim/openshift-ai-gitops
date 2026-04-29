@@ -1,0 +1,15 @@
+# 출처: PoC 워크벤치 격리용 Data Science Project 네임스페이스 (Session 15)
+# 의도: 운영 워크벤치(model-a, fraud-detection)와 분리된 PoC smoke 검증 공간.
+#       RHOAI 대시보드에서 "Data Science Project"로 인식되도록 라벨/주석 부여.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: rhoai-poc-smoke
+  labels:
+    opendatahub.io/dashboard: "true"
+    modelmesh-enabled: "false"
+    kubernetes.io/metadata.name: rhoai-poc-smoke
+  annotations:
+    openshift.io/display-name: "RHOAI PoC Smoke"
+    openshift.io/description: "PoC 워크벤치 스모크 검증용 격리 네임스페이스 (Session 15)"
+    opendatahub.io/dashboard: "true"

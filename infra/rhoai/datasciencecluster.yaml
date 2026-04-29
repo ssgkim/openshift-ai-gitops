@@ -1,34 +1,65 @@
-# 출처: Red Hat OpenShift AI 3.4.0 DataScienceCluster API 스펙 기준으로 재검토 필요
-# claude-context/constraints.md — GPU 노드 없음, ray/codeflare/kueue/trainingoperator Removed
-# claude-context/version-matrix.md — RHOAI 3.4.0 / beta
-# kserve: ServiceMesh + Serverless 미설치 시 Removed (Phase 3 진입 시 재검토)
-apiVersion: datasciencecluster.opendatahub.io/v1
+# 출처: live `default-dsc` 스펙 (RHOAI 3.4.0-ea.1, 2026-04-29 Session 14에서 Ready 확인)
+# 정합화 결정: claude-context/version-matrix.md = RHOAI 3.4.0 / DSC API v2
+# 의도:
+#   - 운영 모드 전환 시 ArgoCD가 이 매니페스트를 SoT로 sync — drift 0 목표
+#   - 의존성: JobSet Operator(`openshift-jobset-operator`),
+#             LeaderWorkerSet Operator(`openshift-lws-operator`),
+#             MaaS Gateway(`openshift-ingress/maas-default-gateway`)
+#     모두 사전 존재해야 Ready 수렴 (Session 14에서 보강 완료)
+#   - 비활성: kueue / mlflowoperator / trainingoperator (PoC 범위 외)
+#   - 활성: aipipelines, dashboard, feastoperator, kserve(+modelsAsService/nim/Headless),
+#           llamastackoperator, modelregistry, ray, sparkoperator, trainer, trustyai, workbenches
+# 주의: `ops.openshift-ai-gitops/reconcile-request` 주석은 일회성 강제 reconcile 트리거이므로
+#       IaC에 포함하지 않는다 (포함 시 매 sync 마다 drift 발생).
+apiVersion: datasciencecluster.opendatahub.io/v2
 kind: DataScienceCluster
 metadata:
   name: default-dsc
+  labels:
+    app.kubernetes.io/name: datasciencecluster
 spec:
   components:
+    aipipelines:
+      argoWorkflowsControllers:
+        managementState: Managed
+      managementState: Managed
     dashboard:
+      managementState: Managed
+    feastoperator:
+      managementState: Managed
+    kserve:
+      managementState: Managed
+      modelsAsService:
+        managementState: Managed
+      nim:
+        airGapped: false
+        managementState: Managed
+      rawDeploymentServiceConfig: Headless
+    kueue:
+      defaultClusterQueueName: default
+      defaultLocalQueueName: default
+      managementState: Removed
+    llamastackoperator:
+      managementState: Managed
+    mlflowoperator:
+      managementState: Removed
+    modelregistry:
+      managementState: Managed
+      registriesNamespace: rhoai-model-registries
+    ray:
+      managementState: Managed
+    sparkoperator:
+      managementState: Managed
+    trainer:
+      managementState: Managed
+    trainingoperator:
+      managementState: Removed
+    trustyai:
+      eval:
+        lmeval:
+          permitCodeExecution: allow
+          permitOnline: allow
       managementState: Managed
     workbenches:
       managementState: Managed
-    datasciencepipelines:
-      managementState: Managed
-    modelmeshserving:
-      managementState: Managed
-    # GPU 워크로드 비활성화 (constraints.md — GPU 노드 없음)
-    ray:
-      managementState: Removed
-    codeflare:
-      managementState: Removed
-    kueue:
-      managementState: Removed
-    trainingoperator:
-      managementState: Removed
-    # ServiceMesh + Serverless 미설치 → KServe 비활성화 (Phase 3 재검토)
-    kserve:
-      managementState: Removed
-    modelregistry:
-      managementState: Removed
-    trustyai:
-      managementState: Removed
+      workbenchNamespace: rhods-notebooks
