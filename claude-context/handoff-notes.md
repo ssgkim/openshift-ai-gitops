@@ -32,3 +32,13 @@
 - 블로커: ModelsAsService는 `maas-default-gateway` 없음, Trainer는 JobSet Operator 없음
 - 다음 세션이 할 일: PoC 범위 기준으로 ModelsAsService/Trainer를 Removed 처리할지 의존성 설치할지 결정
 - 발견된 제약: DSC NotReady 원인 기록 (`constraints.md` 반영)
+
+---
+
+## 2026-04-29 Session 13 — 운영 유지관리 모드 전환
+
+- 완료: 프로젝트 목적을 부트스트랩 실행에서 운영 유지관리로 재정의하고 `CLAUDE.md`, `README.md`, state/context에 권한 경계 반영
+- 진행중: DSC NotReady 해소 방향 결정
+- 블로커: 운영 모드에서는 직접 클러스터 변경이 기본 경로가 아니며 Git/IaC + ArgoCD 반영 절차 필요
+- 다음 세션이 할 일: ModelsAsService/Trainer 처리 방향을 IaC 변경안으로 정리
+- 발견된 제약: 부트스트랩 권한은 예외, 운영 기본 권한은 읽기 진단 중심 (`constraints.md` 반영)

@@ -1,13 +1,16 @@
 # OpenShift AI GitOps
 
-기존 OpenShift 클러스터에 GitOps(ArgoCD) 기반으로 **OpenShift AI 스택**과 **PoC 검증**을 구축하는 프로젝트.
+기존 OpenShift 클러스터에 GitOps(ArgoCD) 기반으로 **OpenShift AI 스택**과 **PoC 검증 환경**을 유지관리·운영하는 프로젝트.
+
+초기 구축 단계에서는 부트스트랩을 위해 넓은 클러스터 권한을 사용했다. 현재 프로젝트의 기본 목적은 운영 레벨 유지관리이며, 변경은 Git/IaC와 ArgoCD를 통한 선언형 흐름으로 관리한다.
 
 ---
 
 ## 🎯 목표
 
-- OpenShift AI Operator + DataScienceCluster를 GitOps로 배포
+- OpenShift AI Operator + DataScienceCluster 구성을 GitOps 기준으로 유지관리
 - 주요 PoC 항목 검증 (노트북 / KServe 서빙 / Pipelines / 분산 훈련)
+- 운영 중 drift, 버전, 의존성, 장애 원인을 문서화하고 재현 가능한 변경 절차로 관리
 - AI(Claude / Gemini / Codex)를 동료로 활용하되 **안전한 구조** 유지
 - 세션이 단절돼도 누구든 이어받을 수 있는 **재현 가능성** 보장
 
@@ -40,6 +43,13 @@ Layer 4 (infra/)            불변 IaC (YAML)
 4. **번호 순서는 강제력** — `runbooks/`는 건너뛰기 금지
 5. **실패는 데이터** — 은폐 금지, `constraints.md`에 누적
 6. **계약 위반 시 중단** — 사람 승인 없이 우회 금지
+
+### 운영 모드 원칙
+
+- 부트스트랩 권한은 초기 설치·복구용 예외로만 사용한다.
+- 현재 기본 모드는 운영 유지관리다. 읽기 진단, 문서 갱신, IaC 변경안 작성, ArgoCD diff 확인이 기본 작업이다.
+- `oc apply/create/patch/delete`, `argocd app sync` 같은 변경 명령은 사람의 명시 승인과 CHECKPOINT 이후에만 실행한다.
+- ArgoCD가 관리하는 리소스는 Git/IaC를 고친 뒤 ArgoCD로 반영한다.
 
 ---
 

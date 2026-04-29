@@ -121,3 +121,14 @@
 - 영향 범위:
   - PoC에 ModelsAsService/Trainer가 필요 없으면 `infra/rhoai/datasciencecluster.yaml`에서 해당 컴포넌트를 Removed로 명시하는 방향이 단순하다.
   - 해당 기능을 검증하려면 Gateway 및 JobSet/LWS 계열 의존성 설치 계획을 별도 work-plan으로 결정해야 한다.
+
+---
+
+## 2026-04-29: 운영 유지관리 모드 전환
+
+- 맥락: 사용자가 초기 구축은 부트스트랩 전제였고, 현 프로젝트는 운영 레벨 유지관리 목적이라고 명확히 함
+- 내용: 넓은 클러스터 권한은 초기 구축/복구용 예외다. 현재 기본 모드는 운영 유지관리이며 직접 변경보다 읽기 진단, Git/IaC 변경안, ArgoCD 기반 반영을 우선한다.
+- 영향 범위:
+  - `oc apply/create/patch/delete`, `argocd app sync` 등은 CHECKPOINT와 사람 승인 후에만 실행한다.
+  - DSC NotReady 해소도 우선 `infra/rhoai/datasciencecluster.yaml` 변경안으로 관리하고, 운영 반영은 ArgoCD 경로를 따른다.
+  - 로컬 도구 권한 설정은 가능하면 읽기 중심으로 낮추고, 부트스트랩 권한은 별도 예외로 취급한다.

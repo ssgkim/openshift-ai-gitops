@@ -10,7 +10,7 @@
 - Ingress 도메인: `.env`의 `${OCP_DOMAIN}` 참조 ✅ (`apps.ocp.9qn8g.sandbox805.opentlc.com` 새 survey 확인)
 - OS: Red Hat Enterprise Linux CoreOS 9.6.20260401-0 (Plow)
 - Kubernetes: v1.34.6
-- 환경: DEV / Connected (인터넷 연결 가능)
+- 환경: OPS 유지관리 / Connected (인터넷 연결 가능)
 - 인증: htpasswd (`admin` / cluster-admin) ✅ — 로그인 확인
 - TLS: 자가서명 인증서 ⚠️ — `--insecure-skip-tls-verify` 필요 (`constraints.md` 참조)
 - 접근 가능 프로젝트: 96개 (2026-04-29 로그인 확인)
@@ -74,4 +74,5 @@
 
 - `default-dsc NotReady` 원인: `modelsasservice`는 `openshift-ingress/maas-default-gateway` 없음, `trainer`는 JobSet Operator 미설치
 - GPU Operator/NFD는 설치됐지만 GPU allocatable 노드는 없음
+- 프로젝트 운영 모드 전환 반영: 부트스트랩 권한은 예외, 기본은 읽기 진단 + Git/IaC 변경안 + ArgoCD 기반 반영
 - PoC 항목 미정 — Phase 5에서 결정 (사람 판단 필요)

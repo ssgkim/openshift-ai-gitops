@@ -2,13 +2,13 @@
 
 전체 로드맵의 체크리스트. 세션 단위의 세부 상태는 [`claude-context/current-state.md`](claude-context/current-state.md), 누적 인수인계는 [`claude-context/handoff-notes.md`](claude-context/handoff-notes.md) 참조.
 
-**진척 요약**: 새 샌드박스 접근 확인 완료 · OCP 4.21.9 / RHOAI 목표 3.4.0(관측 CSV 3.4.0-ea.1) 확정 · GitOps 1.20.2 설치됨 · DSC NotReady 원인 확인됨
+**진척 요약**: 새 샌드박스 접근 확인 완료 · OCP 4.21.9 / RHOAI 목표 3.4.0(관측 CSV 3.4.0-ea.1) 확정 · GitOps 1.20.2 설치됨 · 운영 유지관리 모드로 전환 · DSC NotReady 원인 확인됨
 
 ---
 
 ## 📍 현재 Phase
 
-> **Phase 4 복구 중** — 새 샌드박스 접근과 GitOps/RHOAI 설치는 확인됨. `default-dsc`가 ModelsAsService/Trainer 의존성 때문에 NotReady라 컴포넌트 제거 또는 의존성 설치 결정을 해야 한다.
+> **운영 유지관리 모드 / Phase 4 복구 중** — 새 샌드박스 접근과 GitOps/RHOAI 설치는 확인됨. `default-dsc`가 ModelsAsService/Trainer 의존성 때문에 NotReady라 Git/IaC 기반으로 컴포넌트 제거 또는 의존성 설치 결정을 해야 한다.
 
 ---
 
@@ -37,6 +37,7 @@
 - [x] `claude-context/handoff-notes.md` Session 01 엔트리
 - [x] `.env.example` 템플릿
 - [x] `GEMINI.md` / `AGENTS.md` 심볼릭 링크 (Codex / Gemini CLI 호환)
+- [x] 운영 유지관리 모드 권한 원칙 반영 — 부트스트랩 권한은 예외, 기본은 읽기 진단 + Git/IaC 변경안
 
 **완료 기준**: 처음 보는 사람이 `README.md` + `guidelines/` 읽고 작업 이어받을 수 있음.
 
@@ -139,6 +140,7 @@
 - **2026-04-29** Session 10 복구 — 새 샌드박스 survey 발견(OCP 4.21.9, RHOAI 3.4.0-ea.1, GitOps 미설치, DSC NotReady) → 현재 타깃 재확정 필요
 - **2026-04-29** — 사용자 결정: 새 샌드박스 RHOAI 목표를 3.4.0으로 확정
 - **2026-04-29** Session 12 — 실제 클러스터 접근 확인, Console/API URL 확인, GitOps 1.20.2 설치 확인, DSC NotReady 원인 확인
+- **2026-04-29** Session 13 — 프로젝트 목적을 운영 유지관리로 재정의, 부트스트랩 권한과 운영 권한 분리
 
 ---
 
