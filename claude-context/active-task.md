@@ -18,35 +18,9 @@ Session 23에서 Scope 3을 완료했다. `jobset`, `lws`, `maas-gateway` Applic
 
 ## 성공 기준 (Capabilities)
 
-- [x] `infra/argocd/applications/rhoai.yaml` 의 `spec.source.repoURL` 을 실제 URL로 치환
-- [x] CPU LLM PoC IaC 작성 및 적용 — `infra/poc/llm-cpu`
-- [x] CPU LLM InferenceService Ready=True
-- [x] CPU LLM `/v1/models`, `/v1/completions` smoke 검증 통과
-- [x] `ai-accelerator` 참고 항목 검토 — bootstrap/cluster/components 분리, AppProject/ApplicationSet, repoURL replacement 패턴
-- [x] GitOps 인계 범위 계획 추가 — `work-plans/002-gitops-handover-scope.md`
-- [x] [CHECKPOINT] Scope 1 진행 승인 확인
-- [x] `.env` 의 `GITHUB_REMOTE` 가 ArgoCD repoURL과 일치하는지 확인
-- [x] (필요 시) ArgoCD에 repository secret 등록 — public repo로 확인되어 현재 불필요
-- [x] Scope 1: AppProject/repo config/root bootstrap 구조 설계 또는 IaC 작성
-- [x] Scope 1: `kustomize build` 또는 `oc apply --dry-run=client`로 로컬 검증
-- [x] Scope 1 종료 시 다음 Scope 2 체크리스트로 `active-task.md` 갱신
-- [x] [CHECKPOINT] Scope 2 진행 승인 확인
-- [x] 로컬 커밋이 GitHub `main`에 push되어 ArgoCD가 읽을 수 있는지 확인
-- [x] `oc apply --dry-run=server -k infra/argocd/bootstrap` 또는 동등한 server-side dry-run 검증
-- [x] `oc apply -k infra/argocd/bootstrap`로 AppProject/repo config/`rhoai` Application 등록
-- [x] `oc -n openshift-gitops get appproject rhoai-core` 확인
-- [x] `oc -n openshift-gitops get applications.argoproj.io rhoai` 확인
-- [x] `oc diff` 기반 차이 확인 — OperatorGroup 이름/RBAC/tracking annotation 정합화 후 exit 0
-- [x] 승인 후 `rhoai` sync를 `prune=false`로 실행
-- [x] `oc -n openshift-gitops get applications.argoproj.io rhoai` → `Synced/Healthy`
-- [x] `oc diff -f infra/rhoai/...` → exit 0
-- [x] `oc get datasciencecluster default-dsc` → `Ready=True` 유지
-- [x] [CHECKPOINT] Scope 3 진행 승인 확인
-- [x] Scope 3 편입 방식 결정 — JobSet/LWS/MaaS Gateway를 각각 분리
-- [x] `infra/argocd/applications`에 의존성 Application IaC 작성
-- [x] `oc apply --dry-run=server -k infra/argocd/bootstrap` 검증
-- [x] 의존성 Application 등록 후 `Synced/Healthy` 확인
-- [x] `default-dsc Ready=True` 유지 확인
+- [x] Scope 1~3 완료 — repoURL 정합화, AppProject/repo config/root bootstrap, `rhoai`, `jobset`, `lws`, `maas-gateway` Application `Synced/Healthy`
+- [x] RHOAI/의존성 기준선 유지 — `default-dsc Ready=True`, RHOAI/JobSet/LWS/Gateway drift 0
+- [x] CPU LLM PoC IaC 작성·적용 및 `/v1/models`, `/v1/completions` smoke 검증 완료
 - [ ] [CHECKPOINT] Scope 4 진행 승인 확인
 - [ ] Scope 4 편입 방식 결정 — `workbench-smoke`와 `llm-cpu`를 각각 분리할지 하나의 PoC 묶음으로 둘지
 - [ ] `infra/argocd/applications`에 PoC Application IaC 작성
