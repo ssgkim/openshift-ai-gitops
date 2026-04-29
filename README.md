@@ -18,7 +18,7 @@
 
 ## 📐 설계 원칙 — 4계층 문서 체계
 
-본 프로젝트는 [요즘IT: "제한된 DevOps 리소스로 AI와 함께 쿠버네티스 운영하기"](https://yozm.wishket.com/magazine/detail/3710/) 의 4계층 방법론을 채택한다.
+본 프로젝트는 4계층 방법론을 채택한다.
 
 ```
 Layer 1 (work-plans/)       사람이 의사결정 (Why/How/Tradeoffs)
