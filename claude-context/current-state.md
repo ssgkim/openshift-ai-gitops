@@ -1,6 +1,6 @@
-# 현재 상태 (2026-04-29 Session 16 기준)
+# 현재 상태 (2026-04-29 Session 17 기준)
 
-> **현재 상태: 부트스트랩 단계 마무리. RHOAI 기준선 정상 (`default-dsc Ready=True`, drift 0), `infra/rhoai/datasciencecluster.yaml` 가 live v2 스펙과 정합화됨. ArgoCD Application IaC + sync runbook 작성으로 운영 모드 전환 준비 완료. PoC 스모크 워크벤치(`rhoai-poc-smoke/smoke-wb`) 생성 + Python 셀 스모크 통과.** 이 파일을 읽으면 클러스터 설치 현황, 미결 사항, 최근 이벤트를 한눈에 파악할 수 있다.
+> **현재 상태: 부트스트랩 단계 마무리. RHOAI 기준선 정상 (`default-dsc Ready=True`, drift 0), PoC 스모크 워크벤치 통과, CPU LLM 모델(`smollm2-135m-cpu`) KServe 배포 및 OpenAI-compatible completion 검증 완료. ArgoCD Application IaC + sync runbook 작성으로 운영 모드 전환 준비 완료.** 이 파일을 읽으면 클러스터 설치 현황, 미결 사항, 최근 이벤트를 한눈에 파악할 수 있다.
 
 ## 클러스터
 
@@ -20,10 +20,11 @@
 | 역할 | 수 | CPU (Allocatable) | Memory (Allocatable) | Max Pods |
 |---|---|---|---|---|
 | control-plane | 3 | — | — | — |
-| worker | 5 | 7500m x5 | ~30 GB x5 | 250 |
+| worker | 8 | 7500m x8 | ~30 GB x5 / ~60 GB x3 | 250 |
 | infra | 0 | — | — | — |
 
-- 워커 실사용률: CPU 2~20%, Memory 10~45% (새 survey 기준)
+- GPU allocatable 노드: 3개 (`nvidia.com/gpu=1`, L40S 계열 기존 샘플 관측)
+- 워커 실사용률: CPU/Memory는 워크로드 변동 큼. CPU LLM Pod는 `rhoai-poc-llm-cpu`에서 500m request / 2 CPU limit / 8Gi limit로 실행.
 
 ## 스토리지
 
@@ -39,8 +40,8 @@
 - [x] ServiceMesh Operator — **v3.3.2** (stable)
 - [ ] Serverless Operator — 미설치 (RHOAI 의존성 여부 확인 필요)
 - [x] Pipelines Operator — **v1.22.0 / latest**
-- [x] NFD Operator — **4.21.0-202604200440 / stable** (GPU 노드 없음)
-- [x] NVIDIA GPU Operator — **v26.3.1 / v26.3** (GPU 노드 없음)
+- [x] NFD Operator — **4.21.0-202604200440 / stable** (GPU 노드 3개 관측)
+- [x] NVIDIA GPU Operator — **v26.3.1 / v26.3** (GPU 노드 3개 관측)
 - [x] OpenShift AI Operator (RHOAI) — 목표 **3.4.0**, 관측 CSV **3.4.0-ea.1** / beta (새 survey)
 - [x] JobSet Operator — **v1.0.0 / stable-v1.0** (`openshift-jobset-operator`)
 - [x] LeaderWorkerSet Operator — **v1.0.0 / stable-v1.0** (`openshift-lws-operator`)
@@ -49,6 +50,7 @@
 - [x] DataScienceCluster IaC 정합화 — `infra/rhoai/datasciencecluster.yaml` v2, drift 0 (Session 15)
 - [x] ArgoCD Application IaC + sync runbook 작성 — `infra/argocd/applications/rhoai.yaml`, `runbooks/30-argocd-app-sync.md` (Session 15)
 - [x] 워크벤치 1개 생성 — `rhoai-poc-smoke/smoke-wb` Pod Running 2/2, Python 셀 스모크 통과 (Session 15)
+- [x] CPU LLM 모델 배포 — `rhoai-poc-llm-cpu/smollm2-135m-cpu` Ready=True, `/v1/completions` 응답 확인 (Session 17)
 
 ## OperatorHub 카탈로그 상태
 
@@ -71,13 +73,13 @@
 
 ## 최근 이벤트 (최대 3건)
 
-- 2026-04-29 Session 16: 프레임워크 정합화 — BOOTSTRAP → 완료 선언 → OPS 단계 모델로 진입 문서/state/context를 정리하고, runbook 번호·infra 디렉토리·PoC 네이밍 계약을 실제 구조에 맞춤.
+- 2026-04-29 Session 17: 초기 PoC 프로젝트 세팅 및 CPU LLM 배포 — `rhoai-poc-llm-cpu` 네임스페이스, vLLM CPU x86 ServingRuntime, `SmolLM2-135M-Instruct` InferenceService 적용. `/v1/models`, `/v1/completions` 검증 통과.
 - 2026-04-29 Session 15: 부트스트랩 마무리 — DSC IaC를 v2 live 스펙과 정합화(drift 0), ArgoCD `rhoai` Application IaC + `runbooks/30-argocd-app-sync.md` 작성, PoC 스모크 워크벤치(`rhoai-poc-smoke/smoke-wb`) 생성 및 Python 셀 스모크 통과.
-- 2026-04-29 Session 14: 사용자 승인 하에 RHOAI 의존성 보강 — JobSet Operator, LeaderWorkerSet Operator, `maas-default-gateway` 생성, `default-dsc` Ready 확인.
+- 2026-04-29 Session 16: 프레임워크 정합화 — BOOTSTRAP → 완료 선언 → OPS 단계 모델로 진입 문서/state/context를 정리하고, runbook 번호·infra 디렉토리·PoC 네이밍 계약을 실제 구조에 맞춤.
 
 ## 미결 사항
 
 - ArgoCD App-of-Apps/ApplicationSet 구조 미완성 — Session 15에서 RHOAI 단일 Application IaC만 작성, 의존성(JobSet/LWS/MaaS Gateway/PoC)은 운영 모드 트리거 시 ApplicationSet으로 흡수 필요.
 - 운영 모드 전환 트리거 미실행 — `infra/argocd/applications/rhoai.yaml`의 repoURL은 실제 URL로 치환 완료. 다음은 `runbooks/30-argocd-app-sync.md` 절차로 Application 등록/diff/sync 검증 필요.
-- GPU Operator/NFD는 설치됐지만 GPU allocatable 노드는 없음.
-- PoC 항목(스모크 외) 미정 — Phase 5에서 결정 (사람 판단 필요).
+- CPU LLM PoC는 직접 적용 상태다. OPS 전환 전 `infra/poc/llm-cpu`를 별도 ArgoCD Application 또는 ApplicationSet에 편입 필요.
+- PoC 항목(스모크/CPU LLM 외) 미정 — Phase 5에서 결정 (사람 판단 필요).

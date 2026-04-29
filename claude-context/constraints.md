@@ -157,3 +157,24 @@
   - `CLAUDE.md`, `README.md`, `state.md`, `claude-context/active-task.md`는 BOOTSTRAP → 완료 선언 → OPS 전환 모델을 기준으로 해석한다.
   - BOOTSTRAP 단계의 승인된 직접 적용은 허용되지만, 반드시 IaC와 상태 문서에 정합화해야 한다.
   - OPS 전환 후에는 ArgoCD 관리 리소스 직접 변경을 break-glass로 취급한다.
+
+---
+
+## 2026-04-29: CPU LLM serving PoC 리소스 튜닝
+
+- 맥락: Session 17 `rhoai-poc-llm-cpu/smollm2-135m-cpu` 배포 중 발견
+- 내용: RHOAI vLLM CPU x86 런타임은 기본 설정에서 `max_model_len=8192` 및 큰 KV cache를 잡아 8Gi limit에서 OOMKilled 가능. CPU request 2코어는 현재 클러스터 상황에서 Pending을 유발했다.
+- 영향 범위:
+  - CPU LLM PoC는 `cpu request=500m`, `cpu limit=2`, `memory limit=8Gi`, `VLLM_CPU_KVCACHE_SPACE=2`, `--max-model-len=1024` 기준으로 유지한다.
+  - 단일 replica 모델은 `deploymentStrategy.type: Recreate`를 사용해 구 ReplicaSet OOM 루프가 새 rollout을 방해하지 않게 한다.
+  - `hf://` storageUri는 public Hugging Face 모델에는 동작한다. private/gated 모델은 HF token secret과 ServiceAccount가 필요하다.
+
+---
+
+## 2026-04-29: GPU 노드 상태 재확인 필요
+
+- 맥락: Session 17 `oc get nodes` 확인
+- 내용: 이전 state에는 GPU allocatable 노드 없음으로 기록됐으나 현재 클러스터에는 `nvidia.com/gpu=1` 노드 3개가 관측된다.
+- 영향 범위:
+  - GPU PoC를 완전히 제외하지 말고 Phase 5에서 선택 가능한 항목으로 재검토한다.
+  - CPU LLM PoC는 GPU request를 넣지 않았으므로 이번 배포와는 무관하다.

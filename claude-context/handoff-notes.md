@@ -72,3 +72,13 @@
 - 블로커: ArgoCD Application sync 검증과 사람의 초기 구축 완료 선언 필요
 - 다음 세션이 할 일: `runbooks/30-argocd-app-sync.md`로 `rhoai` Application 등록/diff/sync 검증
 - 발견된 제약: 단계 모델 정정은 `constraints.md`에 append-only로 기록
+
+---
+
+## 2026-04-29 Session 17 — CPU LLM PoC 배포
+
+- 완료: `rhoai-poc-llm-cpu` 프로젝트, vLLM CPU x86 ServingRuntime, `smollm2-135m-cpu` InferenceService 적용 및 `/v1/completions` 검증 통과
+- 진행중: BOOTSTRAP 산출물의 ArgoCD Application/ApplicationSet 편입
+- 블로커: OPS 전환 전 PoC/의존성 리소스 관리 범위 결정 필요
+- 다음 세션이 할 일: `rhoai`, JobSet/LWS/MaaS Gateway, PoC 리소스를 ArgoCD 관리 범위에 편입 후 sync 검증
+- 발견된 제약: CPU vLLM은 KV cache/model length 튜닝과 Recreate rollout 필요 (`constraints.md` 반영)

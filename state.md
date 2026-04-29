@@ -2,13 +2,13 @@
 
 전체 로드맵의 체크리스트. 세션 단위의 세부 상태는 [`claude-context/current-state.md`](claude-context/current-state.md), 누적 인수인계는 [`claude-context/handoff-notes.md`](claude-context/handoff-notes.md) 참조.
 
-**진척 요약**: 새 샌드박스 접근 확인 완료 · OCP 4.21.9 / RHOAI 목표 3.4.0(관측 CSV 3.4.0-ea.1) 확정 · GitOps 1.20.2 설치됨 · JobSet/LeaderWorkerSet/MaaS Gateway 의존성 보강 완료 · DSC Ready 및 drift 0 확인 · PoC 스모크 워크벤치 통과 · 운영 전환 트리거 대기
+**진척 요약**: 새 샌드박스 접근 확인 완료 · OCP 4.21.9 / RHOAI 목표 3.4.0(관측 CSV 3.4.0-ea.1) 확정 · GitOps 1.20.2 설치됨 · JobSet/LeaderWorkerSet/MaaS Gateway 의존성 보강 완료 · DSC Ready 및 drift 0 확인 · PoC 스모크 워크벤치 통과 · CPU LLM 모델 배포/검증 완료 · 운영 전환 트리거 대기
 
 ---
 
 ## 📍 현재 Phase
 
-> **BOOTSTRAP 마무리 / OPS 전환 대기** — 새 샌드박스 접근과 GitOps/RHOAI 설치 확인 완료. RHOAI 의존성 보강, `default-dsc` Ready, DSC IaC drift 0, 워크벤치 스모크 검증까지 완료했다. 다음은 ArgoCD `rhoai` Application 인계/sync를 검증하고 사람이 초기 구축 완료를 선언하는 것이다.
+> **BOOTSTRAP 마무리 / OPS 전환 대기** — 새 샌드박스 접근과 GitOps/RHOAI 설치 확인 완료. RHOAI 의존성 보강, `default-dsc` Ready, DSC IaC drift 0, 워크벤치 스모크, CPU LLM 모델 serving 검증까지 완료했다. 다음은 PoC/의존성 리소스를 ArgoCD 관리 범위에 편입하고 사람이 초기 구축 완료를 선언하는 것이다.
 
 ---
 
@@ -90,7 +90,7 @@
 - [x] Pipelines Operator — 새 샌드박스 설치됨 (openshift-pipelines-operator-rh.v1.22.0)
 - [x] JobSet Operator — RHOAI Trainer 의존성, v1.0.0 / stable-v1.0
 - [x] LeaderWorkerSet Operator — RHOAI KServe LLMInferenceService WEP 의존성, v1.0.0 / stable-v1.0
-- [x] NFD + NVIDIA GPU Operator — Operator 설치됨, GPU allocatable 노드 없음
+- [x] NFD + NVIDIA GPU Operator — Operator 설치됨, GPU allocatable 노드 3개 관측
 
 **완료 기준**: 모든 Operator CSV가 `Succeeded`, ArgoCD에서 모두 Healthy.
 
@@ -119,8 +119,10 @@
 
 - [ ] `work-plans/005-poc-success-criteria.md` — 항목·합격 기준 정의
 - [ ] PoC 항목 선정 (2–4개, 예: 노트북 / KServe / Pipelines / Ray)
-- [ ] 항목별 `runbooks/60-a-*`, `60-b-*`, ... 작성
-- [ ] 항목별 `infra/poc/<item>/` 매니페스트
+- [x] `runbooks/60-a-llm-cpu.md` — CPU LLM serving 검증 절차
+- [x] `infra/poc/llm-cpu/` — CPU LLM 매니페스트
+- [ ] 추가 항목별 `runbooks/60-b-*`, ... 작성
+- [ ] 추가 항목별 `infra/poc/<item>/` 매니페스트
 - [ ] 서브에이전트 + worktree로 **병렬 검증**
 - [ ] `runbooks/70-validate-all.md` — 종합 스모크
 - [ ] 종합 리포트 작성
@@ -147,6 +149,7 @@
 - **2026-04-29** Session 14 — JobSet Operator, LeaderWorkerSet Operator, MaaS Gateway 의존성 보강, `default-dsc` Ready 확인
 - **2026-04-29** Session 15 — DSC v2 IaC 정합화(drift 0), `rhoai` Application IaC 작성, PoC 스모크 워크벤치 통과, repoURL 치환
 - **2026-04-29** Session 16 — BOOTSTRAP/OPS 단계 모델, runbook 번호 계약, infra 디렉토리 계약, PoC 네이밍 정합화
+- **2026-04-29** Session 17 — `rhoai-poc-llm-cpu` 초기 프로젝트 세팅, vLLM CPU x86 기반 `smollm2-135m-cpu` 배포, OpenAI-compatible completion 검증
 
 ---
 

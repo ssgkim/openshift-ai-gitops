@@ -17,8 +17,8 @@
 | Pipelines | **1.22.0** | **latest** | redhat-operators | ✅ 설치됨 (Succeeded) |
 | JobSet Operator | **1.0.0** | **stable-v1.0** | redhat-operators | ✅ 설치됨 (Succeeded) |
 | LeaderWorkerSet Operator | **1.0.0** | **stable-v1.0** | redhat-operators | ✅ 설치됨 (Succeeded) |
-| NFD | **4.21.0-202604200440** | **stable** | redhat-operators | ✅ 설치됨, GPU 노드 없음 |
-| NVIDIA GPU Operator | **26.3.1** | **v26.3** | certified-operators | ✅ 설치됨, GPU 노드 없음 |
+| NFD | **4.21.0-202604200440** | **stable** | redhat-operators | ✅ 설치됨, GPU 노드 3개 관측 |
+| NVIDIA GPU Operator | **26.3.1** | **v26.3** | certified-operators | ✅ 설치됨, GPU 노드 3개 관측 |
 
 ---
 
@@ -48,6 +48,7 @@
 - 2026-04-29: 새 샌드박스 타깃을 RHOAI 3.4.0으로 확정 — 사용자 지시. survey-20260422-210156.txt 기준 관측 CSV는 rhods-operator.3.4.0-ea.1, Subscription 채널은 beta.
 - 2026-04-29: 실제 클러스터 접근 확인 — OpenShift GitOps 1.20.2, ServiceMesh 3.3.2, Pipelines 1.22.0, NFD 4.21.0, GPU Operator 26.3.1 확인.
 - 2026-04-29: RHOAI Trainer 의존성으로 JobSet Operator 1.0.0 / stable-v1.0 설치 확정. KServe LLMInferenceService WEP 의존성으로 LeaderWorkerSet Operator 1.0.0 / stable-v1.0 설치 확정. ModelsAsService 의존성으로 `openshift-ingress/maas-default-gateway` 생성. `default-dsc` Ready 확인.
+- 2026-04-29: Session 17에서 GPU allocatable 노드 3개 관측. CPU LLM PoC는 GPU request 없이 별도 검증 완료.
 
 ---
 

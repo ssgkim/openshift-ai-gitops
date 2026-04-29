@@ -1,0 +1,14 @@
+# Source: BOOTSTRAP PoC project for CPU-only LLM serving, Session 17.
+# Intent: isolated RHOAI Data Science Project for CPU LLM deployment.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: rhoai-poc-llm-cpu
+  labels:
+    opendatahub.io/dashboard: "true"
+    modelmesh-enabled: "false"
+    kubernetes.io/metadata.name: rhoai-poc-llm-cpu
+  annotations:
+    openshift.io/display-name: "RHOAI PoC LLM CPU"
+    openshift.io/description: "CPU-only LLM serving PoC project"
+    opendatahub.io/dashboard: "true"

@@ -1,0 +1,38 @@
+# Source: KServe v1beta1 InferenceService with hf:// storageUri.
+# Model: HuggingFaceTB/SmolLM2-135M-Instruct, selected for CPU-only smoke serving.
+# Intent: prove a small OpenAI-compatible LLM endpoint can run without GPU requests.
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  name: smollm2-135m-cpu
+  namespace: rhoai-poc-llm-cpu
+  labels:
+    networking.kserve.io/visibility: exposed
+    opendatahub.io/dashboard: "true"
+  annotations:
+    openshift.io/display-name: "SmolLM2 135M CPU"
+    openshift.io/description: "CPU-only LLM PoC using vLLM and KServe RawDeployment"
+    opendatahub.io/model-type: generative
+    opendatahub.io/hardware-profile-name: default-profile
+    opendatahub.io/hardware-profile-namespace: redhat-ods-applications
+    security.opendatahub.io/enable-auth: "false"
+    serving.kserve.io/deploymentMode: RawDeployment
+spec:
+  predictor:
+    automountServiceAccountToken: false
+    deploymentStrategy:
+      type: Recreate
+    minReplicas: 1
+    maxReplicas: 1
+    model:
+      modelFormat:
+        name: vLLM
+      runtime: vllm-cpu-x86-runtime
+      storageUri: hf://HuggingFaceTB/SmolLM2-135M-Instruct
+      resources:
+        requests:
+          cpu: "500m"
+          memory: 4Gi
+        limits:
+          cpu: "2"
+          memory: 8Gi
