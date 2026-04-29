@@ -102,3 +102,13 @@
 - 블로커: ArgoCD가 최신 IaC를 읽으려면 로컬 커밋을 GitHub `main`에 push해야 함
 - 다음 세션이 할 일: [CHECKPOINT] 후 Scope 2 server dry-run → apply → diff → sync
 - 발견된 제약: GitHub repo는 public 조회 가능해 repository secret은 현재 불필요
+
+---
+
+## 2026-04-30 Session 22 — Scope 2 RHOAI Application sync 완료
+
+- 완료: `rhoai` Application 등록/sync 완료, `Synced/Healthy`, `default-dsc Ready=True`, `oc diff` exit 0
+- 진행중: Scope 3 RHOAI 의존성(JobSet/LWS/MaaS Gateway) Application 편입 대기
+- 블로커: Scope 3에서 의존성을 하나로 묶을지 각각 분리할지 결정 필요
+- 다음 세션이 할 일: [CHECKPOINT] 후 Scope 3 Application IaC 작성/dry-run/sync
+- 발견된 제약: ArgoCD DSC 전용 RBAC, OperatorGroup live 이름, tracking annotation 정합화 필요

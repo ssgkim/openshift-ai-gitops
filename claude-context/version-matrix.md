@@ -49,6 +49,7 @@
 - 2026-04-29: 실제 클러스터 접근 확인 — OpenShift GitOps 1.20.2, ServiceMesh 3.3.2, Pipelines 1.22.0, NFD 4.21.0, GPU Operator 26.3.1 확인.
 - 2026-04-29: RHOAI Trainer 의존성으로 JobSet Operator 1.0.0 / stable-v1.0 설치 확정. KServe LLMInferenceService WEP 의존성으로 LeaderWorkerSet Operator 1.0.0 / stable-v1.0 설치 확정. ModelsAsService 의존성으로 `openshift-ingress/maas-default-gateway` 생성. `default-dsc` Ready 확인.
 - 2026-04-29: Session 17에서 GPU allocatable 노드 3개 관측. CPU LLM PoC는 GPU request 없이 별도 검증 완료.
+- 2026-04-30: Scope 2에서 RHOAI core(`infra/rhoai`)가 ArgoCD `rhoai` Application으로 인계됨. Revision `bafae9e54b7b21c593e9dcb8f551335489822737`, `Synced/Healthy`, `default-dsc Ready=True`.
 
 ---
 
