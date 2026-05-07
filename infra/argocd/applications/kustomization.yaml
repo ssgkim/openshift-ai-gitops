@@ -5,3 +5,5 @@ resources:
   - jobset.yaml
   - lws.yaml
   - maas-gateway.yaml
+  - workbench-smoke.yaml
+  - llm-cpu.yaml

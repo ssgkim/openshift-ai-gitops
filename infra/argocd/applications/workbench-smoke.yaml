@@ -1,0 +1,41 @@
+# 출처: work-plans/002-gitops-handover-scope.md Scope 4 — PoC 편입 (Session 27)
+# 대상: infra/poc/workbench-smoke (namespace, pvc, notebook)
+# 의도:
+#   - PoC 워크벤치 스모크 검증 환경을 ArgoCD가 인계받게 한다.
+#   - drift 0 상태에서 prune=false로 안전 sync.
+#   - RHOAI core와 분리해 PoC 장애가 기준선 sync 판단을 흐리지 않게 한다.
+# 운영 모드 전환 체크리스트:
+#   1. infra/argocd/bootstrap/kustomization.yaml의 gitops-repo-config로 repoURL/targetRevision 자동 주입
+#   2. runbooks/30-argocd-app-sync.md 절차에 따라 dry-run → diff → sync
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: workbench-smoke
+  namespace: openshift-gitops
+  labels:
+    app.kubernetes.io/part-of: openshift-ai-gitops
+    app.kubernetes.io/component: rhoai-poc
+spec:
+  project: rhoai-poc
+  source:
+    # bootstrap kustomization의 gitops-repo-config replacement로 동일 값을 재주입한다.
+    repoURL: https://github.com/ssgkim/openshift-ai-gitops.git
+    targetRevision: main
+    path: infra/poc/workbench-smoke
+    directory:
+      recurse: false
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: rhoai-poc-smoke
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=false       # namespace.yaml로 명시 관리
+      - ApplyOutOfSyncOnly=true
+      - Prune=false
+      - ServerSideApply=true
+    retry:
+      limit: 3
+      backoff:
+        duration: 30s
+        factor: 2
+        maxDuration: 5m
